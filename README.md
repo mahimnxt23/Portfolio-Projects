@@ -1,2 +1,2 @@
 # Portfolio-Projects
-All of my curious projects will be here... ☺
+All of my curious and inspired projects will be here... ☺
