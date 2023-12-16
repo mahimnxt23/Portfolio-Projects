@@ -47,20 +47,24 @@ def check_stats():
 # TODO-3, dealing with player turns...
 def play_turns(xoro):
     print(f'{xoro}\'s turn...')
+    # taking user input...
     location = int(input('To play, select a position among (1-9): -> '))
 
+    # checking if the user entered a valid input...
     while location not in range(1, 10):
         location = int(input('Invalid input, only enter position numbers from 1 to 9. -> '))
         location -= 1
 
+    # checking if the place is used-up...
     while placeholder[location] != '-':
         location = int(input('Position is already taken, choose another one. -> '))
 
     placeholder[location] = xoro
     print_playing_board()
-    
+
 
 # TODO-4, make a function to run the game...
+
 
 if __name__ == '__main__':
     print_playing_board()
