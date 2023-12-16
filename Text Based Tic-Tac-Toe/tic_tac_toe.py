@@ -16,7 +16,7 @@ def print_playing_board():
     print(placeholder[6] + '   |   ' + placeholder[7] + '   |   ' + placeholder[8], end='\n')
 
 
-# TODO-2, dealing with win/lose/draw stats...
+# TODO-2, dealing with win/lose/draw conditions...
 def check_stats():
     # checking for win...
     if (
@@ -31,8 +31,8 @@ def check_stats():
             (placeholder[2] == placeholder[5] == placeholder[8] != '-') or
 
             # lastly, check diagonal winning possibilities...
-            (placeholder[0] == placeholder[1] == placeholder[2] != '-') or
-            (placeholder[0] == placeholder[1] == placeholder[2] != '-')):
+            (placeholder[0] == placeholder[4] == placeholder[8] != '-') or
+            (placeholder[2] == placeholder[4] == placeholder[6] != '-')):
 
         return 'You Win!'
 
