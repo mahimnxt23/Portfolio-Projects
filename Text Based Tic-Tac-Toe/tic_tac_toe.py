@@ -55,7 +55,7 @@ def play_turns(x_or_o):
         location = int(input('Invalid input, only enter position numbers from 1 to 9. -> '))
 
     # checking if the place is used-up...
-    while placeholder[location] != '-':
+    while placeholder[location - 1] != '-':
         location = int(input('Position is already taken, choose another one. -> '))
 
     placeholder[location - 1] = x_or_o
