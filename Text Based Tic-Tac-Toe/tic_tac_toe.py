@@ -8,8 +8,7 @@ placeholder = [
 
 # function for displaying the board...
 def print_playing_board():
-    print('\nHorizontally, each "-" refers to numbers from 1-9 from top left to bottom right. To play, select a '
-          'position among (1-9): -> ')
+    print('\nHorizontally, each "-" refers to numbers from 1-9 from top left to bottom right.')
     print('\n')
     print(placeholder[0] + '   |   ' + placeholder[1] + '   |   ' + placeholder[2], end='\n\n')
     print(placeholder[3] + '   |   ' + placeholder[4] + '   |   ' + placeholder[5], end='\n\n')
@@ -46,7 +45,20 @@ def check_stats():
 
 
 # TODO-3, dealing with player turns...
+def play_turns(xoro):
+    print(f'{xoro}\'s turn...')
+    location = int(input('To play, select a position among (1-9): -> '))
 
+    while location not in range(1, 10):
+        location = int(input('Invalid input, only enter position numbers from 1 to 9. -> '))
+        location -= 1
+
+    while placeholder[location] != '-':
+        location = int(input('Position is already taken, choose another one. -> '))
+
+    placeholder[location] = xoro
+    print_playing_board()
+    
 
 # TODO-4, make a function to run the game...
 
