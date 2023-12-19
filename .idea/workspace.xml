@@ -5,9 +5,8 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="complete automatic watermarker project">
-      <change afterPath="$PROJECT_DIR$/Typing Speed Checker/main.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Typing Speed Checker/words.py" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/test/test.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Automatic Photo Watermarker/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Typing Speed Checker/README.md" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
