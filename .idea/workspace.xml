@@ -5,10 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="complete automatic watermarker project">
-      <change afterPath="$PROJECT_DIR$/Breakout Game with Turtle/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Text Based Tic-Tac-Toe/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Text to Morse Code Converter/requirements.txt" afterDir="false" />
-      <change afterPath="$PROJECT_DIR$/Typing Speed Checker/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cafe List Website/README.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cafe List Website/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cafe List Website/templates/add_cafes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cafe List Website/templates/base.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cafe List Website/templates/cafes.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Cafe List Website/templates/index.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
