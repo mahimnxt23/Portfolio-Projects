@@ -5,9 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="complete automatic watermarker project">
+      <change afterPath="$PROJECT_DIR$/Breakout Game with Turtle/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Text Based Tic-Tac-Toe/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Text to Morse Code Converter/requirements.txt" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Typing Speed Checker/requirements.txt" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Breakout Game with Turtle/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Breakout Game with Turtle/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Breakout Game with Turtle/scoreboard.py" beforeDir="false" afterPath="$PROJECT_DIR$/Breakout Game with Turtle/scoreboard.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -64,12 +66,17 @@
     "RunOnceActivity.OpenProjectViewOnStart": "true",
     "RunOnceActivity.ShowReadmeOnStart": "true",
     "git-widget-placeholder": "main",
-    "last_opened_file_path": "D:/( - - Portfolio-Projects - - )/Portfolio-Projects",
+    "last_opened_file_path": "D:/( - - Portfolio-Projects - - )/Portfolio-Projects/Breakout Game with Turtle",
     "settings.editor.selected.configurable": "preferences.pluginManager",
     "settings.editor.splitter.proportion": "0.2925586"
   }
 }]]></component>
   <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Breakout Game with Turtle" />
+      <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Text Based Tic-Tac-Toe" />
+      <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Text to Morse Code Converter" />
+    </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Typing Speed Checker" />
       <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Automatic Photo Watermarker" />
