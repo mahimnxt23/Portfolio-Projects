@@ -10,5 +10,10 @@ def homepage():
     return render_template('index.html', year=current_year)
 
 
+@app.route('/description')
+def post_page():
+    return render_template('single.html')
+
+
 if __name__ == '__main__':
     app.run(debug=True)
