@@ -76,9 +76,9 @@ def show_cafe(cafe_id):
 def search():
     key = request.args.get('key')
     if key:
-        searched_cafe = Cafe.query.filter_by(Cafe.location.contains(key) or Cafe.name.contains(key))
-    # else:
-    #     searched_cafe = Cafe.query.all()
+        searched_cafe = Cafe.query.filter(Cafe.location.contains(key) | Cafe.name.contains(key))
+    else:
+        searched_cafe = Cafe.query.all()
     return render_template('index.html', all_cafes=searched_cafe, year=current_year)
 
 
