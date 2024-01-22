@@ -70,7 +70,7 @@
 		<a href="#" class="fh5co-close-offcanvas js-fh5co-close-offcanvas"><span><i class="icon-cross3"></i> <span>Close</span></span></a>
 		<div class="fh5co-bio">
 			<figure>
-				<img src="static/images/blog_dp.png" alt="Owner DP" class="img-responsive">
+				<img src="{{ url_for('static', filename='/images/blog_dp.png') }}" alt="Owner DP" class="img-responsive">
 			</figure>
 			<h3 class="heading">About Me</h3>
 			<h2>Mahi-Bi Alam</h2>
@@ -113,7 +113,7 @@
 			<div class="row">
 				<a href="#" class="js-fh5co-nav-toggle fh5co-nav-toggle"><i></i></a>
 				<ul class="fh5co-social">
-					<li><a href="{{ url_for('add_cafe') }}" target="_blank" class="btn btn-primary">Add Cafe</a></li>
+					<li><a href="{{ url_for('add_cafe') }}" class="btn btn-primary">Add Cafe</a></li>
 					<li><a href="https://twitter.com/mahim_nxt/" target="_blank"><i class="icon-twitter"></i></a></li>
 					<li><a href="https://facebook.com/andrew.matt.543/" target="_blank"><i class="icon-facebook"></i></a></li>
 					<li><a href="https://instagram.com/mahimnxt23/" target="_blank"><i class="icon-instagram"></i></a></li>

@@ -747,6 +747,29 @@ figure figcaption {
   animation-fill-mode: both;
 }
 
+/*
+.box-container {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: space-between;
+  margin-left: 2px;
+  margin-right: 2px;
+}
+*/
+
+.cat {
+  width: auto;
+  margin-bottom: 10px;
+  border: 1px solid;
+  padding: 10px;
+  justify-content: center;
+}
+
+.custom_text {
+  font-family: "Playfair Display", times, serif;
+  color: #000;
+}
+
 .rp-b {
   padding-bottom: 40px;
 }
