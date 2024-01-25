@@ -11,7 +11,7 @@
 		<img src="{{url_for('static', filename='images/sign-up.png')}}" class="card-img-top"
 		     alt="https://www.pngarts.com/explore/256694">
 		<div class="card-body">
-			<p class="card-text">{{ wtf.quick_form(register_form, novalidate=True, button_map={'submit': 'primary'}) }}</p>
+			<p class="card-text">{{ wtf.quick_form(form, novalidate=True, button_map={'submit': 'primary'}) }}</p>
 		</div>
 	</div>
 
