@@ -99,3 +99,9 @@ reset_button = Button(text='Reset Everything!', fg=FG, bg=BG, font=PARA_FONT, bo
                       highlightcolor=FG, highlightthickness=0, width=50, command=reset_app)
 save_button = Button(text='Save!', fg=FG, bg=BG, font=PARA_FONT, border=3, highlightbackground=FG, width=50,
                      highlightcolor=FG, highlightthickness=0, command=save_text)
+
+heading_label.grid(row=0, column=0, columnspan=3)
+heading_label.grid(row=0, column=0, columnspan=3)
+heading_label.grid(row=0, column=0, columnspan=3)
+heading_label.grid(row=0, column=0)
+heading_label.grid(row=0, column=0)
