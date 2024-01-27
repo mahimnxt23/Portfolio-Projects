@@ -1,8 +1,9 @@
 import ctypes
 from tkinter import *
-from time import sleep
+
 
 ctypes.windll.shcore.SetProcessDpiAwareness(1)  # for setting the screen sharper...
+
 
 user_writen_texts = ''
 timer = None
@@ -11,6 +12,7 @@ timer = None
 # helper functions stay here...
 def start_calculating(event):  # as it listens at keypress...
     global timer, user_writen_texts
+
     if timer is not None:
         window.after_cancel(timer)
     if event.keysym == 'BackSpace':
@@ -23,6 +25,7 @@ def start_calculating(event):  # as it listens at keypress...
 
 def reset_app():
     global timer, user_writen_texts
+
     typing_area.delete('1.0', 'end')
     user_writen_texts = ''
     timer = None
@@ -31,15 +34,19 @@ def reset_app():
 
 def save_text():
     global user_writen_texts
+
     if user_writen_texts == '':
         return
+
     try:
         file = open('writen_text.txt', mode='r')
+
     except FileNotFoundError:
         file = open('writen_text.txt', mode='w')
         file.write(user_writen_texts)
         user_writen_texts = ''
         return
+
     else:
         content = file.read()
         if content == '':
@@ -49,6 +56,7 @@ def save_text():
         with open('writen_text.txt', 'a') as file:
             file.write(text_to_write)
             user_writen_texts = ''
+
     finally:
         return
 
@@ -73,7 +81,7 @@ PARA_FONT = (FONT_FAMILY1, FONT_SIZE1, FONT_STYLE3)
 PARA_FONT2 = (FONT_FAMILY1, 12, FONT_STYLE2)
 HEAD_FONT = (FONT_FAMILY2, FONT_SIZE3, FONT_STYLE1)
 
-heading = 'WRITE WITH MAGICAL INK'
+heading = 'CONSIDER WRITING WITH MAGICAL INK'
 instruction = 'If you don\'t press any key for 5 seconds, the text you have written will disappear'
 # - - - - - - - - - - - - - - - - - - - - - - - - - STYLING - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -
 
@@ -105,3 +113,6 @@ instruction_label.grid(row=2, column=0, columnspan=3)
 typing_area.grid(row=3, column=0, columnspan=3)
 reset_button.grid(row=4, column=0)
 save_button.grid(row=4, column=2)
+
+
+window.mainloop()
