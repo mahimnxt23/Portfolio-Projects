@@ -10,12 +10,12 @@
 				<h1 class="text-head">
 					Create your own To-Do-List
 				</h1>
-				<a href="#" class="btn btn btn-info btn btn-outline-success btn-lg">
+				<a href="{{ url_for('create_task') }}" class="btn btn btn-info btn btn-outline-success btn-lg">
 					CREATE TO-DO LIST
 				</a>
 			</div>
 			<div class="col-lg-6">
-				<img class="todo-image" src="{{url_for('static', filename='images/todo-list.png')}}">
+				<img class="todo-image" src="{{ url_for('static', filename='images/todo-list.png') }}">
 			</div>
 		</div>
 	</div>

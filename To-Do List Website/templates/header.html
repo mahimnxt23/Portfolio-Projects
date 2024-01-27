@@ -2,6 +2,7 @@
 
 <!DOCTYPE html>
 <html lang="en">
+
 	<head>
 		<meta charset="UTF-8">
 		<meta name="viewport" content="width=device-width, initial-scale=1">
@@ -18,17 +19,17 @@
 		<section>
 			<nav class="navbar navbar-primary bg-light">
 				<div class="container-fluid">
-					<a class="navbar-brand" href="{{url_for('home_page')}}">
-						<img src="{{url_for('static', filename='images/task-list.png')}}" alt="Task Icon" width="30" height="25"
+					<a class="navbar-brand" href="{{ url_for('home_page') }}">
+						<img src="{{ url_for('static', filename='images/task-list.png') }}" alt="Task Icon" width="30" height="25"
 						     class="d-inline-block align-text-top ">
 						To-Do's
 					</a>
 					<ul class="nav justify-content-end">
 						<li class="nav-item">
-							<a class="nav-link active" href="#">LOGIN</a>
+							<a class="nav-link active" href="{{ url_for('login_page') }}">LOGIN</a>
 						</li>
 						<li class="nav-item">
-							<a class="nav-link active" href="#">SIGN UP</a>
+							<a class="nav-link active" href="{{ url_for('register_page') }}">SIGN UP</a>
 						</li>
 					</ul>
 				</div>

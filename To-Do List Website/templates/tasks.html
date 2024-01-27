@@ -7,8 +7,12 @@
 {% include 'header.html' %}
 
 
-	<div>
-
+	<div class="container">
+		<div class="row">
+			{% for task in tasks: %}
+				<div class="col-lg-8 col-md-10 mx-auto">{{ task.todo }}</div>
+			{% endfor %}
+		</div>
 	</div>
 
 

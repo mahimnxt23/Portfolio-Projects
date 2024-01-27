@@ -1,14 +1,12 @@
 from datetime import datetime, timezone
 from forms import RegisterForm, LoginForm, ToDoListForm
-from flask import Flask, render_template, redirect, url_for, request, flash, abort
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap
-from flask_ckeditor import CKEditor
 from flask_sqlalchemy import SQLAlchemy
-from flask_login import UserMixin, LoginManager, login_user, login_required, current_user, logout_user
-from sqlalchemy import String, Integer, Boolean, Float, Text, ForeignKey, DateTime
-from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column, Relationship
+from flask_login import UserMixin, LoginManager, login_user, current_user
+from sqlalchemy import String, Integer, DateTime
+from sqlalchemy.orm import DeclarativeBase, Mapped, mapped_column
 from werkzeug.security import generate_password_hash, check_password_hash
-from functools import wraps
 
 
 current_year = datetime.now().year
@@ -59,8 +57,8 @@ class TodoList(db.Model):
         return f'Todo_list{self.todo}'
 
 
-with app.app_context():
-    db.create_all()
+# with app.app_context():
+#     db.create_all()
 
 
 @login_manager.user_loader
@@ -88,6 +86,7 @@ def register_page():
 
         encrypted_password = generate_password_hash(entered_password, method='pbkdf2:sha256', salt_length=8)
 
+        # noinspection PyArgumentList
         new_user = User(username=entered_username, password=encrypted_password, email=entered_email)
         db.session.add(new_user)
         db.session.commit()
@@ -108,7 +107,7 @@ def login_page():
 
         if not this_user:
             flash(message=f'This email({entered_email}) does not exist. Please check and try again!')
-            return redirect(url_for('login_page'))
+            return redirect(url_for('register_page'))
 
         elif not check_password_hash(this_user.password, entered_password):
             flash(message='Oh no! You might have mistaken the password. Because it does not match.')
@@ -122,15 +121,26 @@ def login_page():
 
 
 @app.route('/setup-todo', methods=['GET', 'POST'])
+# @login_required
 def create_task():
     todo_form = ToDoListForm()
 
-    if todo_form.validate_on_submit():
-        new_todo = TodoList(date=todo_form.date.data, todo=todo_form.work_todo.data)
-        db.session.add(new_todo)
-        db.session.commit()
-        return redirect(url_for('home_page'))
-    return render_template('to-do.html', form=todo_form, year=current_year)
+    if not current_user.is_authenticated:
+        return redirect(url_for('register_page'))
+
+    else:
+        if todo_form.validate_on_submit():
+            new_todo = TodoList(date=todo_form.date.data, todo=todo_form.work_todo.data)
+            db.session.add(new_todo)
+            db.session.commit()
+            return redirect(url_for('show_tasks'))
+        return render_template('to-do.html', form=todo_form, year=current_year)
+
+
+@app.route('/all-tasks')
+def show_tasks():
+    running_tasks = TodoList.query.all()
+    return render_template('tasks.html', tasks=running_tasks)
 
 
 if __name__ == '__main__':

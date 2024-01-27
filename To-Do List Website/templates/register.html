@@ -1,17 +1,17 @@
 
 
 {% extends 'bootstrap/base.html' %}
-{% import bootstrap/wtf.html as wtf %}
+{% import 'bootstrap/wtf.html' as wtf %}
 
 {% block content %}
 {% include 'header.html' %}
 
 
-	<div class="card" style="width: 48rem;">
-		<img src="{{url_for('static', filename='images/sign-up.png')}}" class="card-img-top"
-		     alt="https://www.pngarts.com/explore/256694">
-		<div class="card-body">
-			<p class="card-text">{{ wtf.quick_form(form, novalidate=True, button_map={'submit': 'primary'}) }}</p>
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-8 col-md-10 mx-auto">
+				{{ wtf.quick_form(form, novalidate=True, button_map={'submit': 'primary'}) }}
+			</div>
 		</div>
 	</div>
 
