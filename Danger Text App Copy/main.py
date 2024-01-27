@@ -87,3 +87,15 @@ window.configure(bg=BG, padx=20, pady=10)
 # using 'consolas' font for Labels and Buttons...
 window.option_add(pattern='*Label.Font', value='consolas 30')
 window.option_add(pattern='*Button.Font', value='consolas 30')
+
+heading_label = Label(text=heading, font=HEAD_FONT, bg=BG, fg=FG, padx=10, pady=10)
+instruction_label = Label(text=instruction, font=PARA_FONT2, bg=BG, fg=FG, pady=10)
+
+typing_area = Text(font=PARA_FONT, bg=BG, fg=FG, width=100, height=15, wrap='w', highlightcolor=BORDER,
+                   highlightthickness=4, highlightbackground=BORDER, padx=5, pady=5)
+typing_area.bind('<KeyPress>', start_calculating)
+
+reset_button = Button(text='Reset Everything!', fg=FG, bg=BG, font=PARA_FONT, border=3, highlightbackground=FG,
+                      highlightcolor=FG, highlightthickness=0, width=50, command=reset_app)
+save_button = Button(text='Save!', fg=FG, bg=BG, font=PARA_FONT, border=3, highlightbackground=FG, width=50,
+                     highlightcolor=FG, highlightthickness=0, command=save_text)
