@@ -101,7 +101,7 @@ save_button = Button(text='Save!', fg=FG, bg=BG, font=PARA_FONT, border=3, highl
                      highlightcolor=FG, highlightthickness=0, command=save_text)
 
 heading_label.grid(row=0, column=0, columnspan=3)
-heading_label.grid(row=0, column=0, columnspan=3)
-heading_label.grid(row=0, column=0, columnspan=3)
-heading_label.grid(row=0, column=0)
-heading_label.grid(row=0, column=0)
+instruction_label.grid(row=2, column=0, columnspan=3)
+typing_area.grid(row=3, column=0, columnspan=3)
+reset_button.grid(row=4, column=0)
+save_button.grid(row=4, column=2)
