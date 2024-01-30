@@ -1,4 +1,4 @@
-from tkinter import filedialog
+from tkinter import Tk, filedialog, Scrollbar
 from PyPDF2 import PdfReader
 from pyttsx3 import init
 import pdfplumber as pdp
@@ -39,3 +39,16 @@ def speak_text():
 
     speaker.say(text_i_am_reading)  # making it say while reading...
     speaker.runAndWait()  # holding it till everything is narrated...
+
+
+window = Tk()
+window.title('PDF to AudioBook')
+window.minsize(width=720, height=480)
+window.maxsize(width=720, height=480)
+
+scrollbar = Scrollbar(window)
+scrollbar.pack(side='right', fill='y')
+
+
+
+window.mainloop()
