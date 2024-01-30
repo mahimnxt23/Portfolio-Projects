@@ -1,4 +1,4 @@
-from tkinter import Tk, filedialog, Scrollbar
+from tkinter import Tk, filedialog, Scrollbar, Text, Button, END
 from PyPDF2 import PdfReader
 from pyttsx3 import init
 import pdfplumber as pdp
@@ -22,9 +22,12 @@ def read_from_file():
     with pdp.open(desired_file) as pdf:
         for index in range(num_of_pages):
             page = pdf.pages[index]
+            text = page.extract_text()  # extracting texts from the pdf page on current index...
 
-            text_i_am_reading = page.extract_text()  # extracting texts from the pdf page on current index...
-            print(text_i_am_reading)
+            text_i_am_reading += f'{text}\n\n'
+
+    print(text_i_am_reading)
+    text_box.insert(END, text_i_am_reading)
 
 
 def speak_text():
@@ -33,7 +36,7 @@ def speak_text():
     # voice_property = speaker.getProperty('voices')
 
     # print(speech_rate)
-    speaker.setProperty('rate', 275)
+    speaker.setProperty('rate', 250)
     # speaker.setProperty('voice', voice_property[0].id)  # for male voice...
     # speaker.setProperty('voice', voice_property[1].id)  # for female voice...
 
@@ -43,12 +46,22 @@ def speak_text():
 
 window = Tk()
 window.title('PDF to AudioBook')
-window.minsize(width=720, height=480)
-window.maxsize(width=720, height=480)
+window.minsize(width=720, height=430)
+window.maxsize(width=720, height=430)
+window.config(padx=20, pady=20)
 
-scrollbar = Scrollbar(window)
+scrollbar = Scrollbar(window, orient='vertical', jump=True)
 scrollbar.pack(side='right', fill='y')
 
+text_box = Text(window, font=('consolas', 14, 'normal'), width=50, height=15, highlightthickness=2, padx=5, pady=5,
+                wrap='w', yscrollcommand=scrollbar.set)
+text_box.pack()
+
+open_button = Button(window, text='Choose PDF File', command=read_from_file)
+open_button.pack(side='left', pady=10)
+
+narrate_button = Button(window, text='Narrate it', command=speak_text)
+narrate_button.pack(side='right', pady=10)
 
 
 window.mainloop()
