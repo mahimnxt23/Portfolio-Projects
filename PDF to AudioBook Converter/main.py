@@ -16,4 +16,10 @@ def read_from_file():
     pdf_reader = PdfReader(pdf_object)
     num_of_pages = len(pdf_reader.pages)  # knowing total pages available...
 
+    with pdp.open(desired_file) as pdf:
+        for index in range(num_of_pages):
+            page = pdf.pages[index]
+            text = page.extract_text()  # extracting texts from the pdf page on current index...
+            print(text)
+
 
