@@ -12,6 +12,7 @@ def get_file():
 
 
 def read_from_file():
+    global text_i_am_reading
     desired_file = get_file()
 
     pdf_object = open(desired_file, mode='rb')  # making everything in readable binary format...
@@ -21,8 +22,9 @@ def read_from_file():
     with pdp.open(desired_file) as pdf:
         for index in range(num_of_pages):
             page = pdf.pages[index]
-            text = page.extract_text()  # extracting texts from the pdf page on current index...
-            print(text)
+
+            text_i_am_reading = page.extract_text()  # extracting texts from the pdf page on current index...
+            print(text_i_am_reading)
 
 
 def speak_text():
@@ -33,7 +35,7 @@ def speak_text():
     print(speech_rate)
     speaker.setProperty('rate', 275)
     # speaker.setProperty('voice', voice_property[0].id)  # for male voice...
-    speaker.setProperty('voice', voice_property[1].id)  # for female voice...
+    # speaker.setProperty('voice', voice_property[1].id)  # for female voice...
 
-    speaker.say(text)  # making it say while reading...
+    speaker.say(text_i_am_reading)  # making it say while reading...
     speaker.runAndWait()  # holding it till everything is narrated...
