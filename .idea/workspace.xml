@@ -4,7 +4,13 @@
     <option name="autoReloadType" value="SELECTIVE" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website" />
+    <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website">
+      <change afterPath="$PROJECT_DIR$/Color Extractor from Image/Procfile" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Color Extractor from Image/main.py" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Color Extractor from Image/static/css/main.css" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Color Extractor from Image/templates/colors.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Color Extractor from Image/templates/index.html" afterDir="false" />
+    </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
     <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
@@ -48,37 +54,37 @@
     <option name="showLibraryContents" value="true" />
     <option name="sortKey" value="BY_TIME_DESCENDING" />
   </component>
-  <component name="PropertiesComponent">{
-  &quot;keyToString&quot;: {
-    &quot;ASKED_ADD_EXTERNAL_FILES&quot;: &quot;true&quot;,
-    &quot;ASKED_SHARE_PROJECT_CONFIGURATION_FILES&quot;: &quot;true&quot;,
-    &quot;DefaultHtmlFileTemplate&quot;: &quot;HTML File&quot;,
-    &quot;Python.ball.executor&quot;: &quot;Run&quot;,
-    &quot;Python.main.executor&quot;: &quot;Run&quot;,
-    &quot;Python.photo_watermark.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test1.executor&quot;: &quot;Run&quot;,
-    &quot;Python.test2.executor&quot;: &quot;Run&quot;,
-    &quot;Python.text_to_morse.executor&quot;: &quot;Run&quot;,
-    &quot;Python.tic_tac_toe.executor&quot;: &quot;Run&quot;,
-    &quot;Python.watermark.executor&quot;: &quot;Run&quot;,
-    &quot;RunOnceActivity.OpenProjectViewOnStart&quot;: &quot;true&quot;,
-    &quot;RunOnceActivity.ShowReadmeOnStart&quot;: &quot;true&quot;,
-    &quot;deletionFromPopupRequiresConfirmation&quot;: &quot;false&quot;,
-    &quot;git-widget-placeholder&quot;: &quot;main&quot;,
-    &quot;ignore.virus.scanning.warn.message&quot;: &quot;true&quot;,
-    &quot;last_opened_file_path&quot;: &quot;D:/Portfolio-Projects/PDF to AudioBook Converter&quot;,
-    &quot;settings.editor.selected.configurable&quot;: &quot;reference.settingsdialog.IDE.editor.colors&quot;,
-    &quot;settings.editor.splitter.proportion&quot;: &quot;0.2925586&quot;
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.ball.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.photo_watermark.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.test1.executor": "Run",
+    "Python.test2.executor": "Run",
+    "Python.text_to_morse.executor": "Run",
+    "Python.tic_tac_toe.executor": "Run",
+    "Python.watermark.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Portfolio-Projects/Color Extractor from Image",
+    "settings.editor.selected.configurable": "reference.settingsdialog.IDE.editor.colors",
+    "settings.editor.splitter.proportion": "0.2925586"
   }
-}</component>
+}]]></component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Portfolio-Projects\Color Extractor from Image" />
       <recent name="D:\Portfolio-Projects\PDF to AudioBook Converter" />
       <recent name="D:\Portfolio-Projects\Cafe List Website" />
       <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Breakout Game with Turtle" />
       <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Text Based Tic-Tac-Toe" />
-      <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Text to Morse Code Converter" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
       <recent name="D:\Portfolio-Projects\Cafe List Website\instance" />
