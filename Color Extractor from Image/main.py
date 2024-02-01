@@ -4,7 +4,7 @@ from werkzeug.utils import secure_filename
 import os
 
 app = Flask(__name__)
-app.config['UPLOAD_FOLDER'] = "static/"
+app.config['UPLOAD_FOLDER'] = "static/images/"
 
 
 @app.route('/')
@@ -17,7 +17,7 @@ def get_colors():
     image = request.files['file']
     filename = secure_filename(image.filename)
     image.save(os.path.join(app.config['UPLOAD_FOLDER'], filename))
-    full_image_path = f"static/{image.filename}"
+    full_image_path = f"/static/images/{image.filename}"
 
     color_thief = ColorThief(full_image_path)
     top_colors = color_thief.get_palette(color_count=11)
