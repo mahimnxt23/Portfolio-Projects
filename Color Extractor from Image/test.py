@@ -15,4 +15,3 @@ plt.show()
 for color in palette:
     print(color)
     print(f'#{color[0]:02x}{color[1]:02x}{color[2]:02x}')
-
