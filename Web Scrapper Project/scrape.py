@@ -22,14 +22,18 @@ def sort_stories_by_votes(hnlist):
 
 def create_custom_hn(links, subtext):
     hn = []
+
     for idx, item in enumerate(links):
         title = item.getText()
         href = item.get("href", None)
         vote = subtext[idx].select(".score")
+
         if len(vote):
             points = int(vote[0].getText().replace(" points", ""))
+
             if points > 99:
                 hn.append({"title": title, "link": href, "subtexts": points})
+
     return sort_stories_by_votes(hn)
 
 
