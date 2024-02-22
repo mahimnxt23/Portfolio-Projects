@@ -1,10 +1,12 @@
 <?xml version="1.0" encoding="UTF-8"?>
 <project version="4">
   <component name="AutoImportSettings">
-    <option name="autoReloadType" value="SELECTIVE" />
+    <option name="autoReloadType" value="ALL" />
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website">
+      <change afterPath="$PROJECT_DIR$/Web Scrapper Project/scrape.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Web Scrapper Project/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Web Scrapper Project/main.py" afterDir="false" />
     </list>
@@ -59,6 +61,7 @@
     "Python.ball.executor": "Run",
     "Python.main.executor": "Run",
     "Python.photo_watermark.executor": "Run",
+    "Python.scrape.executor": "Run",
     "Python.test.executor": "Run",
     "Python.test1.executor": "Run",
     "Python.test2.executor": "Run",
@@ -71,7 +74,8 @@
     "git-widget-placeholder": "main",
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/Portfolio-Projects",
-    "settings.editor.selected.configurable": "com.tabnineCommon.userSettings.AppSettingsConfigurable",
+    "settings.build.tools.auto.reload": "ALL",
+    "settings.editor.selected.configurable": "terminal",
     "settings.editor.splitter.proportion": "0.2925586"
   }
 }]]></component>
@@ -84,11 +88,11 @@
       <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Breakout Game with Turtle" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Portfolio-Projects\Web Scrapper Project" />
       <recent name="D:\Portfolio-Projects\Cafe List Website\instance" />
       <recent name="D:\Portfolio-Projects\Cafe List Website" />
       <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Typing Speed Checker" />
       <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Automatic Photo Watermarker" />
-      <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\test" />
     </key>
   </component>
   <component name="RunManager">
