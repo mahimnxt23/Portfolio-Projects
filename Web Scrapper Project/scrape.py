@@ -1,6 +1,6 @@
 import requests
 from bs4 import BeautifulSoup
-import pprint
+from pprint import pprint
 
 res = requests.get("https://news.ycombinator.com/news")
 res2 = requests.get("https://news.ycombinator.com/news?p=2")
@@ -33,4 +33,4 @@ def create_custom_hn(links, subtext):
     return sort_stories_by_votes(hn)
 
 
-pprint.pprint(create_custom_hn(mega_links, mega_subtext))
+pprint(create_custom_hn(mega_links, mega_subtext))
