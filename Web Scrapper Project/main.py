@@ -4,7 +4,7 @@ from pprint import pprint
 
 CURRENT_PAGE = 1
 
-url = f"https://news.ycombinator.com/news?p={CURRENT_PAGE}"
+url = f'https://news.ycombinator.com/news?p={CURRENT_PAGE}'
 
 response = requests.get(url)
 soup = BeautifulSoup(response.text, features='html.parser')
