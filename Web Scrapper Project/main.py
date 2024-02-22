@@ -1,12 +1,38 @@
 import requests
 from bs4 import BeautifulSoup
-import pprint
 
 res = requests.get("https://news.ycombinator.com/news")
 soup = BeautifulSoup(res.text, features="html.parser")
 
 # print(soup.body.prettify())
 # posts = soup.select('.titleline')
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 posts = soup.findAll(name="span", attrs={"class": "titleline"})
 links = soup.select("span > a")
