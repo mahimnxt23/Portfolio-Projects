@@ -11,10 +11,10 @@ posts = soup.findAll(name="span", attrs={"class": "titleline"})
 links = soup.select("span > a")
 votes = soup.findAll(name="span", attrs={"class": "score"})
 
-# votes = soup.select('.score')
+# subtexts = soup.select('.score')
 
 # print(posts[0])
-# print(votes[0])
+# print(subtexts[0])
 # print(links)
 
 for link in links:
@@ -28,7 +28,7 @@ def run_scrapper():
         title = posts[index].getText()
         # href = posts[index].find_next_sibling('a').get('href', None)
         href = links[index].get("href", None)
-        # points = votes[index].getText()
+        # points = subtexts[index].getText()
 
         hot_news.append({"title": title, "link": href})
     return hot_news

@@ -17,7 +17,7 @@ mega_subtext = subtext + subtext2
 
 
 def sort_stories_by_votes(hnlist):
-    return sorted(hnlist, key=lambda k: k["votes"], reverse=True)
+    return sorted(hnlist, key=lambda k: k["subtexts"], reverse=True)
 
 
 def create_custom_hn(links, subtext):
@@ -29,7 +29,7 @@ def create_custom_hn(links, subtext):
         if len(vote):
             points = int(vote[0].getText().replace(" points", ""))
             if points > 99:
-                hn.append({"title": title, "link": href, "votes": points})
+                hn.append({"title": title, "link": href, "subtexts": points})
     return sort_stories_by_votes(hn)
 
 
