@@ -30,7 +30,7 @@ def run_scrapper(post, link, vote):
         vote_texts = vote[index].select('.score')
 
         if len(vote_texts):
-            points = int(vote[0].getText().replace(' points', ''))
+            points = int(vote_texts[0].getText().replace(' points', ''))
 
             if points > 99:
                 hot_news.append({'title': title, 'link': href, 'votes': points})

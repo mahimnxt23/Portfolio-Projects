@@ -2,39 +2,44 @@ import requests
 from bs4 import BeautifulSoup
 from pprint import pprint
 
-res = requests.get("https://news.ycombinator.com/news")
-res2 = requests.get("https://news.ycombinator.com/news?p=2")
-soup = BeautifulSoup(res.text, "html.parser")
-soup2 = BeautifulSoup(res2.text, "html.parser")
+response = requests.get("https://news.ycombinator.com/news")
+soup = BeautifulSoup(response.text, "html.parser")
 
-links = soup.select(".titleline")
-subtext = soup.select(".subtext")
-links2 = soup2.select(".titleline")
-subtext2 = soup2.select(".subtext")
+response2 = requests.get("https://news.ycombinator.com/news?p=2")
+soup2 = BeautifulSoup(response2.text, "html.parser")
 
+posts = soup.select(".titleline")
+links = soup.select("span.titleline > a")
+subtexts = soup.select(".subtext")
+
+posts2 = soup2.select(".titleline")
+links2 = soup2.select("span.titleline > a")
+subtexts2 = soup2.select(".subtext")
+
+mega_posts = posts + posts2
 mega_links = links + links2
-mega_subtext = subtext + subtext2
+mega_subtexts = subtexts + subtexts2
 
 
-def sort_stories_by_votes(hnlist):
-    return sorted(hnlist, key=lambda k: k["subtexts"], reverse=True)
+def sort_posts_by_votes(custom_list):
+    return sorted(custom_list, key=lambda k: k["votes"], reverse=True)
 
 
-def create_custom_hn(links, subtext):
-    hn = []
+def run_scrapper(post, link, vote):
+    hot_news = []
 
-    for idx, item in enumerate(links):
+    for index, item in enumerate(post):
         title = item.getText()
-        href = item.get("href", None)
-        vote = subtext[idx].select(".score")
+        href = link[index].get("href", None)
+        vote_texts = vote[index].select(".score")
 
-        if len(vote):
-            points = int(vote[0].getText().replace(" points", ""))
+        if len(vote_texts):
+            points = int(vote_texts[0].getText().replace(" points", ""))
 
             if points > 99:
-                hn.append({"title": title, "link": href, "subtexts": points})
+                hot_news.append({"title": title, "link": href, "votes": points})
 
-    return sort_stories_by_votes(hn)
+    return sort_posts_by_votes(hot_news)
 
 
-pprint(create_custom_hn(mega_links, mega_subtext))
+pprint(run_scrapper(mega_posts, mega_links, mega_subtexts))
