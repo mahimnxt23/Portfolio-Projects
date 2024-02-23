@@ -2,41 +2,46 @@ import requests
 from bs4 import BeautifulSoup
 from pprint import pprint
 
-CURRENT_PAGE = 1
-
-url = f'https://news.ycombinator.com/news?p={CURRENT_PAGE}'
-
-response = requests.get(url)
-soup = BeautifulSoup(response.text, features='html.parser')
-
-posts = soup.select('.titleline')
-links = soup.select('span.titleline > a')
-subtexts = soup.select('.subtext')
+NUMBER_OF_PAGES = 3
+current_page = 1
+curated_news_list = []
 
 
-def get_top_three_pages():
-    pass
+def get_pages():
+    global current_page
+
+    for i in range(NUMBER_OF_PAGES):
+        run_scrapper()
+        current_page += 1
+
+    return sort_posts_by_votes(curated_news_list)
+    # print(curated_news_list)
 
 
 def sort_posts_by_votes(custom_list):
-    return sorted(custom_list, key=lambda x: x['votes'], reverse=True)
+    return sorted(custom_list, key=lambda x: x["votes"], reverse=True)
 
 
-def run_scrapper(post, link, vote):
-    hot_news = []
+def run_scrapper():
 
-    for index, item in enumerate(post):
-        title = post[index].getText()
-        href = link[index].get(key='href', default=None)
-        vote_texts = vote[index].select('.score')
+    url = f"https://news.ycombinator.com/news?p={current_page}"
+    response = requests.get(url)
+    soup = BeautifulSoup(response.text, features="html.parser")
+
+    posts = soup.select(".titleline")
+    links = soup.select("span.titleline > a")
+    subtexts = soup.select(".subtext")
+
+    for index, item in enumerate(posts):
+        title = posts[index].getText()
+        href = links[index].get(key="href", default=None)
+        vote_texts = subtexts[index].select(".score")
 
         if len(vote_texts):
-            points = int(vote_texts[0].getText().replace(' points', ''))
+            points = int(vote_texts[0].getText().replace(" points", ""))
 
             if points > 99:
-                hot_news.append({'title': title, 'link': href, 'votes': points})
-
-    return sort_posts_by_votes(hot_news)
+                curated_news_list.append({"title": title, "link": href, "votes": points})
 
 
-pprint(run_scrapper(post=posts, link=links, vote=subtexts))
+pprint(get_pages())
