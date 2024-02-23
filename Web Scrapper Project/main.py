@@ -46,9 +46,7 @@ def run_scrapper():
         vote_texts = subtexts[index].select(".score")
 
         if len(vote_texts):
-            points = int(
-                vote_texts[0].getText().replace(" points", "")
-            )  # converting into an integer...
+            points = int(vote_texts[0].getText().replace(" points", ""))  # converting into an integer...
 
             if points > 99:  # only adding if votes are over 100...
                 curated_news_list.append({"Title": title, "Link": href, "Votes": points})
