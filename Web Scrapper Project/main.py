@@ -51,9 +51,7 @@ def run_scrapper():
             )  # converting into an integer...
 
             if points > 99:  # only adding if votes are over 100...
-                curated_news_list.append(
-                    {"Title": title, "Link": href, "Votes": points}
-                )
+                curated_news_list.append({"Title": title, "Link": href, "Votes": points})
 
 
 def export_as_csv():
