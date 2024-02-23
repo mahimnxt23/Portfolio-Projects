@@ -13,8 +13,9 @@ posts = soup.select('.titleline')
 links = soup.select('span.titleline > a')
 subtexts = soup.select('.subtext')
 
-# for link in links:
-#     print(link.get('href', default=None))
+
+def get_top_three_pages():
+    pass
 
 
 def sort_posts_by_votes(custom_list):
