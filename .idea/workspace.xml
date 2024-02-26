@@ -5,8 +5,12 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website">
-      <change afterPath="$PROJECT_DIR$/ul.md" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Chrome Dino Player Bot/dino.jpg" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/Chrome Dino Player Bot/test.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/csv-editor.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/csv-editor.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/requirements.txt" beforeDir="false" afterPath="$PROJECT_DIR$/requirements.txt" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -56,7 +60,10 @@
     "ASKED_ADD_EXTERNAL_FILES": "true",
     "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
     "DefaultHtmlFileTemplate": "HTML File",
+    "Python.Udemy Free Coupons.executor": "Run",
     "Python.ball.executor": "Run",
+    "Python.example.executor": "Run",
+    "Python.laaf.executor": "Run",
     "Python.main.executor": "Run",
     "Python.photo_watermark.executor": "Run",
     "Python.scrape.executor": "Run",
@@ -74,10 +81,18 @@
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/Portfolio-Projects",
     "settings.build.tools.auto.reload": "ALL",
-    "settings.editor.selected.configurable": "preferences.sourceCode",
+    "settings.editor.selected.configurable": "com.jetbrains.python.black.configuration.BlackFormatterConfigurable",
     "settings.editor.splitter.proportion": "0.2925586"
   }
 }]]></component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="Portfolio-Projects" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="Portfolio-Projects" />
+      </console-settings>
+    </option>
+  </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
       <recent name="D:\Portfolio-Projects" />
