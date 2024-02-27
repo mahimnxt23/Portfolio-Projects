@@ -1,4 +1,5 @@
-import pyautogui as gui
+
+# import pyautogui as gui
 from PIL import ImageGrab
 from time import sleep
 import keyboard
@@ -7,15 +8,18 @@ x_start, x_end = (235, 350)
 
 
 def smash_key(key):
-    gui.keyDown(key)
+    keyboard.press(key)
 
 
 def is_colliding(pos):
     # bird triggering...
-    for x in range((x_start - 50), (x_end - 50)):
+    for x in range(x_start, x_end):
         for y in range(320, 395):
             if pos[x, y] > 100:
                 smash_key("down")
+                # keyboard.press("down")
+                sleep(0.2)
+                keyboard.release("down")
                 return
 
     # cactus triggering...
@@ -24,15 +28,20 @@ def is_colliding(pos):
             if pos[x, y] > 100:
                 smash_key("up")
                 return
-        
+
     return
 
 
 def start_bot():
     sleep(1)
     keyboard.press_and_release("space")
+    # smash_key("space")
 
     while True:
+        
+        if keyboard.is_pressed('q'):
+            break
+            
         image = ImageGrab.grab().convert("L")
         data = image.load()
         is_colliding(data)
