@@ -3,39 +3,39 @@ from PIL import ImageGrab
 from time import sleep
 import keyboard
 
-x_start, x_end = (215, 350)
+x_start, x_end = (235, 350)
 
 
-def hit(key):
+def smash_key(key):
     gui.keyDown(key)
 
 
 def is_colliding(pos):
+    # bird triggering...
+    for x in range((x_start - 50), (x_end - 50)):
+        for y in range(320, 395):
+            if pos[x, y] > 100:
+                smash_key("down")
+                return
 
     # cactus triggering...
     for x in range(x_start, x_end):
         for y in range(440, 480):
             if pos[x, y] > 100:
-                hit("up")
-                return True
-
-    # bird triggering...
-    for x in range(x_start, x_end):
-        for y in range(320, 395):
-            if pos[x, y] > 100:
-                hit("down")
-                sleep(0.2)
-                keyboard.release('down')
-                return True
-
-    return False
+                smash_key("up")
+                return
+        
+    return
 
 
-if __name__ == "__main__":
+def start_bot():
     sleep(1)
-    keyboard.press_and_release('space')
+    keyboard.press_and_release("space")
 
     while True:
         image = ImageGrab.grab().convert("L")
         data = image.load()
         is_colliding(data)
+
+
+start_bot()
