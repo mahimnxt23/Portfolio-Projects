@@ -1,18 +1,41 @@
-import cv2
-import numpy as np
 import pyautogui as gui
-from PIL import Image, ImageGrab
-from time import sleep, time
-from math import floor
+from PIL import ImageGrab
+from time import sleep
+import keyboard
+
+x_start, x_end = (215, 350)
 
 
-def grab_screen(bbox=None):
-    img = ImageGrab.grab(bbox=bbox)
-    img = np.array(img)
-    return cv2.cvtColor(img, cv2.COLOR_RGB2BGR)
+def hit(key):
+    gui.keyDown(key)
 
 
-while True:
-    img = grab_screen()
-    cv2.imshow('screen', img)
-    cv2.waitKey(0)
+def is_colliding(pos):
+
+    # cactus triggering...
+    for x in range(x_start, x_end):
+        for y in range(440, 480):
+            if pos[x, y] > 100:
+                hit("up")
+                return True
+
+    # bird triggering...
+    for x in range(x_start, x_end):
+        for y in range(320, 395):
+            if pos[x, y] > 100:
+                hit("down")
+                sleep(0.2)
+                keyboard.release('down')
+                return True
+
+    return False
+
+
+if __name__ == "__main__":
+    sleep(1)
+    keyboard.press_and_release('space')
+
+    while True:
+        image = ImageGrab.grab().convert("L")
+        data = image.load()
+        is_colliding(data)
