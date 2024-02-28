@@ -64,6 +64,7 @@ pyasn1-modules==0.3.0
 PyAutoGUI==0.9.54
 pycparser==2.21
 PyDispatcher==2.0.7
+pygame==2.5.2
 PyGetWindow==0.0.9
 PyMsgBox==1.0.9
 pyOpenSSL==24.0.0

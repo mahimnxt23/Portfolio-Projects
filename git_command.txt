@@ -1,1 +1,1 @@
-git add -A && git commit -m "trials for Chrome Dino Player Bot 2" && git push
+git add -A && git commit -m "initial commit for Space Invaders Clone" && git push
