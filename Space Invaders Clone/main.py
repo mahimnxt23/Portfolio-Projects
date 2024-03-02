@@ -77,7 +77,7 @@ for enemy in enemiesList:
 
 enemyspeed = 2
 
-# Create the player's bullet
+# Create the player's missile
 bullet = turtle.Turtle()
 bullet.color("yellow")
 bullet.shape("triangle")
@@ -89,12 +89,12 @@ bullet.hideturtle()
 
 bulletspeed = 20
 
-# Define bullet state
+# Define missile state
 # we have 2 states:
-# ready - ready to fire bullet
-# fire - bullet is firing
+# ready - ready to fire missile
+# fire - missile is firing
 
-bulletstate = "ready"
+missile_state = "ready"
 
 
 # Move the player left and right
@@ -117,12 +117,12 @@ def move_right():
 
 
 def fire_bullet():
-    # Declare bulletstate as a global if it needs change
-    global bulletstate
+    # Declare missile_state as a global if it needs change
+    global missile_state
     if bulletstate == "ready":
         # os.system("afplay laser.wav&")
         # for linux use os.system("aplay laser.wav&")
-        # Move the bullet to just above the player
+        # Move the missile to just above the player
         x = player.xcor()
         y = player.ycor() + 10
         bullet.setposition(x, y)
@@ -168,13 +168,13 @@ while True:
             y = y - 40
             enemy.sety(y)
 
-        # Check for collision between bullet and enemy
+        # Check for collision between missile and enemy
         if is_colliding(bullet, enemy):
             # os.system("afplay explosion.wav&")
             # for linux use os.system("aplay explosion.wav&")
-            # Reset the bullet
+            # Reset the missile
             bullet.hideturtle()
-            bulletstate = "ready"
+            missile_state = "ready"
             bullet.setposition(0, -400)
             # Reset the enemy
             x = random.randint(-200, 200)
@@ -197,15 +197,15 @@ while True:
             print("GAME OVER")
             break
 
-    # Move the bullet only when bulletstate is "fire"
-    if bulletstate == "fire":
+    # Move the missile only when missile_state is "fire"
+    if missile_state == "fire":
         y = bullet.ycor()
         y = y + bulletspeed
         bullet.sety(y)
 
-    # Check to see if bullet has reached the top
+    # Check to see if missile has reached the top
     if bullet.ycor() > 275:
         bullet.hideturtle()
-        bulletstate = "ready"
+        missile_state = "ready"
 
     win.update()

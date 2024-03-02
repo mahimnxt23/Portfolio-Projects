@@ -2,7 +2,6 @@ from turtle import Screen, Turtle, register_shape
 from winsound import PlaySound, SND_ASYNC
 from math import sqrt, pow
 from random import randint
-# from keyboard import is_pressed
 
 
 border_range = (-300, -300)
@@ -12,6 +11,8 @@ player_move_distance = 15
 number_of_enemies = 5
 enemy_move_distance = 2
 current_score = 0
+missile_move_distance = 20
+missile_state = "armed"
 
 
 # Set up the screen
@@ -43,10 +44,12 @@ for each_side in range(4):
 
 def update_scorecard():
     global current_score
-    
+
     scorestring = f"Score: {current_score}"
-    score_card.write(scorestring, move=False, align="left", font=("Courier", 14, "normal"))
-    
+    score_card.write(
+        scorestring, move=False, align="left", font=("Courier", 14, "normal")
+    )
+
 
 # Draw the current_score
 score_card = Turtle()
@@ -68,70 +71,64 @@ player.setposition(player_position)
 player.setheading(to_angle=90)
 
 
-enemies = []
+enemie_ufos = []
 for _ in range(number_of_enemies):  # Add enemies to the list
-    x, y = ((randint(-200, 200)), (randint(100, 250)))
+    enemy_x_position, enemy_y_position = ((randint(-200, 200)), (randint(100, 250)))
     an_enemy_ufo = Turtle()
     an_enemy_ufo.speed(0)
     an_enemy_ufo.penup()
     an_enemy_ufo.shape("invader.gif")
-    an_enemy_ufo.setposition(x, y)
+    an_enemy_ufo.setposition(enemy_x_position, enemy_y_position)
 
-    enemies.append(an_enemy_ufo)
+    enemie_ufos.append(an_enemy_ufo)
 
 
-# Create the player's bullet
-bullet = Turtle()
-bullet.color("yellow")
-bullet.shape("triangle")
-bullet.penup()
-bullet.speed(0)
-bullet.setheading(90)
-bullet.shapesize(0.5, 0.5)
-bullet.hideturtle()
-
-bulletspeed = 20
-
-# Define bullet state
-# ready state means ready to launch
-# fire state means bullet is firing
-bulletstate = "ready"
+# Create the player's missile
+missile = Turtle()
+missile.speed(0)
+missile.penup()
+missile.color("yellow")
+missile.shape("triangle")
+missile.shapesize(0.5, 0.5)
+missile.setheading(to_angle=90)
+missile.hideturtle()
 
 
 # Move the player left and right
-def move_left():
-    x = player.xcor()
-    x -= player_move_distance
-    if x < -280:
-        x = -280
-    player.setx(x)
+def player_moves_left():
+    player_x_position = player.xcor()
+    player_x_position -= player_move_distance
+
+    players_boundary_limit = border_range[0] + 20
+    if player_x_position <= players_boundary_limit:
+        player_x_position = players_boundary_limit
+    player.setx(player_x_position)
 
 
-def move_right():
-    x = player.xcor()
-    x += player_move_distance
-    if x > 280:
-        x = 280
-    player.setx(x)
+def player_moves_right():
+    player_x_position = player.xcor()
+    player_x_position += player_move_distance
+
+    players_boundary_limit = abs(border_range[0]) - 20
+    if player_x_position >= players_boundary_limit:
+        player_x_position = players_boundary_limit
+    player.setx(player_x_position)
 
 
-def fire_bullet():
-    # Declare bulletstate as a global if it needs be changed
-    global bulletstate
-    if bulletstate == "ready":
+def fire_missile():
+    global missile_state
+
+    if missile_state == "armed":
         PlaySound("laser.wav", SND_ASYNC)
-        bulletstate = "fire"
-        # Move the bullet to the just above the player
-        x = player.xcor()
-        y = player.ycor() + 10
-        bullet.setposition(x, y)
-        bullet.showturtle()
+        missile_state = "launch_missile"
+
+        missile_arming_point = ((player.xcor()), (player.ycor() + 10))  # appear just above the player...
+        missile.setposition(missile_arming_point)
+        missile.showturtle()
 
 
 def is_colliding(t1, t2):
-    distance = sqrt(
-        pow(t1.xcor() - t2.xcor(), 2) + pow(t1.ycor() - t2.ycor(), 2)
-    )
+    distance = sqrt(pow(t1.xcor() - t2.xcor(), 2) + pow(t1.ycor() - t2.ycor(), 2))
     if distance < 15:
         return True
     else:
@@ -140,14 +137,14 @@ def is_colliding(t1, t2):
 
 # Create keyboard bindings
 screen.listen()
-screen.onkeypress(move_left, "Left")
-screen.onkeypress(move_right, "Right")
-screen.onkeypress(fire_bullet, "space")
+screen.onkeypress(player_moves_left, "Left")
+screen.onkeypress(player_moves_right, "Right")
+screen.onkey(fire_missile, "space")
 
 # Main game loop
 while True:
 
-    for enemy in enemies:
+    for enemy in enemie_ufos:
         # Move the enemy
         x = enemy.xcor()
         x += enemy_move_distance
@@ -156,7 +153,7 @@ while True:
         # Move the enemy back and down
         if enemy.xcor() > 280:
             # Move all enemies down
-            for e in enemies:
+            for e in enemie_ufos:
                 y = e.ycor()
                 y -= 40
                 e.sety(y)
@@ -165,21 +162,20 @@ while True:
 
         if enemy.xcor() < -280:
             # Move all enemies down
-            for e in enemies:
+            for e in enemie_ufos:
                 y = e.ycor()
                 y -= 40
                 e.sety(y)
             # Change enemy direction
             enemy_move_distance *= -1
 
-        # Check for a collision between the bullet and the enemy
-        if is_colliding(bullet, enemy):
-            
+        # Check for a collision between the missile and the enemy
+        if is_colliding(missile, enemy):
             PlaySound("explosion.wav", SND_ASYNC)
-            # Reset the bullet
-            bullet.hideturtle()
-            bulletstate = "ready"
-            bullet.setposition(0, -400)
+            # Reset the missile
+            missile.hideturtle()
+            missile_state = "armed"
+            missile.setposition(0, -400)
             # Reset the enemy
             x = randint(-200, 200)
             y = randint(100, 250)
@@ -196,13 +192,13 @@ while True:
             print("Game Over")
             break
 
-    # Move the bullet
-    if bulletstate == "fire":
-        y = bullet.ycor()
-        y += bulletspeed
-        bullet.sety(y)
+    # Move the missile
+    if missile_state == "launch_missile":
+        y = missile.ycor()
+        y += missile_move_distance
+        missile.sety(y)
 
-    # Check to see if the bullet has gone to the top
-    if bullet.ycor() > 275:
-        bullet.hideturtle()
-        bulletstate = "ready"
+    # Check to see if the missile has gone to the top
+    if missile.ycor() > 275:
+        missile.hideturtle()
+        missile_state = "armed"
