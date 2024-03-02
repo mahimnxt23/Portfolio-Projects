@@ -1,50 +1,28 @@
-from turtle import Screen, Turtle
-# from winsound import PlaySound, SND_ASYNC
+
 
 
 # general_speed = 0
-border_range = (-300, -300)
-border_thickness = 5
-player_position = (0, -280)
-player_move_distance = 15
 enemy_starting_position = (-200, 280)
-enemy_move_distance = 2
+ = 2
 bullet_move_distance = 3
-
+shoot = False
+game_on = True
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - SCREEN SECTION - - - - - - - - - - - - - - - - - - - - - - - -
-screen = Screen()
-screen.setup(width=650, height=650)
-screen.title("Space Invader Alike")
+
+
 screen.bgcolor("black")
 # screen.tracer(1)
 # - - - - - - - - - - - - - - - - - - - - - - - - - SCREEN SECTION - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - BORDER SECTION - - - - - - - - - - - - - - - - - - - - - - - -
-border = Turtle()
-border.speed(0)
-border.color("white")
-border.hideturtle()
-border.penup()
-border.setposition(border_range)
-border.pendown()
-border.pensize(border_thickness)
 
-for each_side in range(4):
-    border.fd(600)
-    border.lt(90)
 # - - - - - - - - - - - - - - - - - - - - - - - - - BORDER SECTION - - - - - - - - - - - - - - - - - - - - - - - -
 
 
 # - - - - - - - - - - - - - - - - - - - - - - - - - PLAYER SECTION - - - - - - - - - - - - - - - - - - - - - - - -
-player = Turtle()
-player.speed(0)
-player.penup()
-player.color("purple")
-player.shape("arrow")
-player.setposition(player_position)
-player.setheading(to_angle=90)
+
 
 
 def player_moves_left():
@@ -82,6 +60,7 @@ bullet.hideturtle()
 
 
 def fire_bullet():
+    global shoot
     shoot = True
 
     bullet_arming_point = (
@@ -91,8 +70,8 @@ def fire_bullet():
     bullet.setposition(bullet_arming_point)
     bullet.showturtle()
 
-    while shoot:
-        bullet_y_position = bullet.ycor()
+    if shoot:
+        bullet_y_position = bullet_arming_point[1]
         bullet_y_position += bullet_move_distance
         bullet.sety(bullet_y_position)
 
@@ -109,7 +88,7 @@ def fire_bullet():
 screen.listen()
 screen.onkeypress(player_moves_left, "Left")
 screen.onkeypress(player_moves_right, "Right")
-screen.onkey(fire_bullet, "space")
+screen.onkeypress(fire_bullet, "space")
 # - - - - - - - - - - - - - - - - - - - - - - - - KEYBOARD BINDINGS - - - - - - - - - - - - - - - - - - - - - - - -
 
 
@@ -123,32 +102,33 @@ enemy_ufo.setposition(enemy_starting_position)
 
 
 def move_enemy_ufo():
-    global enemy_move_distance
-    game_on = True
-    
-    while game_on:
+    global enemy_move_distance, game_on
+
+    if game_on:
         enemy_x_position = enemy_ufo.xcor()
         enemy_x_position += enemy_move_distance
         enemy_ufo.setx(enemy_x_position)
-    
+
         if enemy_x_position >= 280 or enemy_x_position <= -280:
             enemy_y_position = enemy_ufo.ycor()
             enemy_y_position -= 20
             enemy_move_distance *= -1
-    
+
             if enemy_y_position <= -280:
                 enemy_ufo.setposition(enemy_starting_position)
+                game_on = False
             else:
                 enemy_ufo.sety(enemy_y_position)
 
-
+        screen.ontimer(move_enemy_ufo, 10)
 # - - - - - - - - - - - - - - - - - - - - - - - - - ENEMY SECTION - - - - - - - - - - - - - - - - - - - - - - - -
 
 
-# while True:
-#     move_enemy_ufo()
-#     screen.update()
-
-# screen.mainloop()
-move_enemy_ufo()
-screen.update()
+while True:
+    move_enemy_ufo()
+    
+    if is_pressed("shift"):
+        fire_bullet()
+    
+    # screen.mainloop()
+    screen.update()

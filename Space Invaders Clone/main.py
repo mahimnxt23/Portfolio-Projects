@@ -29,10 +29,10 @@ for side in range(4):
 border_pen.hideturtle()
 
 
-# Set the score to 0
+# Set the current_score to 0
 score = 0
 
-# Draw the score on stage
+# Draw the current_score on stage
 score_pen = turtle.Turtle()
 score_pen.speed(0)
 score_pen.color("white")
@@ -180,7 +180,7 @@ while True:
             x = random.randint(-200, 200)
             y = random.randint(100, 200)
             enemy.setposition(x, y)
-            # Update the score
+            # Update the current_score
             score += 10
             scorestring = "Score: %s" % score
             score_pen.clear()

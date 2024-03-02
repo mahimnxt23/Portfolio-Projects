@@ -43,7 +43,7 @@ def run_scrapper():
     for index, item in enumerate(posts):
         title = posts[index].getText()
         href = links[index].get(key="href", default=None)
-        vote_texts = subtexts[index].select(".score")
+        vote_texts = subtexts[index].select(".current_score")
 
         if len(vote_texts):
             points = int(vote_texts[0].getText().replace(" points", ""))  # converting into an integer...
