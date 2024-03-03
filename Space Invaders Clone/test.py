@@ -137,7 +137,7 @@ def fire_missile():
         missile.showturtle()
 
 
-def is_colliding(point1, point2):
+def is_colliding_between(point1, point2):
     squared_distance_difference_of_x = pow(point1.xcor() - point2.xcor(), 2)
     squared_distance_difference_of_y = pow(point1.ycor() - point2.ycor(), 2)
 
@@ -176,7 +176,7 @@ while True:
             enemy_move_distance *= -1  # Change enemy direction
 
         # Check for a collision between the missile and the enemy
-        if is_colliding(missile, enemy_ufo):
+        if is_colliding_between(missile, enemy_ufo):
             PlaySound(explosion_sound, SND_ASYNC)
             # Reset the missile
             missile.hideturtle()
@@ -190,7 +190,7 @@ while True:
             score_card.clear()
             update_scorecard()
 
-        if is_colliding(player, enemy_ufo):
+        if is_colliding_between(player, enemy_ufo):
             PlaySound(explosion_sound, SND_ASYNC)
             player.hideturtle()
             enemy_ufo.hideturtle()
