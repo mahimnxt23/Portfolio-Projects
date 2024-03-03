@@ -5,10 +5,7 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website">
-      <change beforePath="$PROJECT_DIR$/.idea/misc.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/misc.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/main.py" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/test.py" beforeDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -84,7 +81,7 @@
     "ignore.virus.scanning.warn.message": "true",
     "last_opened_file_path": "D:/Portfolio-Projects",
     "settings.build.tools.auto.reload": "ALL",
-    "settings.editor.selected.configurable": "configurable.group.appearance",
+    "settings.editor.selected.configurable": "com.jetbrains.python.configuration.PyActiveSdkModuleConfigurable",
     "settings.editor.splitter.proportion": "0.2925586"
   }
 }]]></component>
