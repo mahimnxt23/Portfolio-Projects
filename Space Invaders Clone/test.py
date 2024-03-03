@@ -13,18 +13,20 @@ enemy_move_distance = 2
 current_score = 0
 missile_move_distance = 20
 missile_state = "armed"
+fire_sound = "sounds/laser.wav"
+explosion_sound = "sounds/explosion.wav"
 
 
 # Set up the screen
 screen = Screen()
 screen.setup(width=650, height=650)
 screen.title("Space Invader Alike")
-screen.bgpic("space_invaders_background.gif")
+screen.bgpic("images/space_invaders_background.gif")
 
 
 # Register the shapes
-register_shape("invader.gif")
-register_shape("player.gif")
+register_shape("images/invader.gif")
+register_shape("images/player.gif")
 
 
 # Draw border
@@ -66,7 +68,7 @@ player = Turtle()
 player.speed(0)
 player.penup()
 player.color("purple")
-player.shape("player.gif")
+player.shape("images/player.gif")
 player.setposition(player_position)
 player.setheading(to_angle=90)
 
@@ -82,7 +84,7 @@ for _ in range(number_of_enemies):  # Add enemies to the list
     an_enemy_ufo = Turtle()
     an_enemy_ufo.speed(0)
     an_enemy_ufo.penup()
-    an_enemy_ufo.shape("invader.gif")
+    an_enemy_ufo.shape("images/invader.gif")
     place_an_enemy(obj=an_enemy_ufo)
 
     enemie_ufos.append(an_enemy_ufo)
@@ -124,7 +126,7 @@ def fire_missile():
     global missile_state
 
     if missile_state == "armed":
-        PlaySound("laser.wav", SND_ASYNC)
+        PlaySound(fire_sound, SND_ASYNC)
         missile_state = "launch_missile"
 
         missile_arming_point = (
@@ -175,7 +177,7 @@ while True:
 
         # Check for a collision between the missile and the enemy
         if is_colliding(missile, enemy_ufo):
-            PlaySound("explosion.wav", SND_ASYNC)
+            PlaySound(explosion_sound, SND_ASYNC)
             # Reset the missile
             missile.hideturtle()
             missile_state = "armed"
@@ -189,7 +191,7 @@ while True:
             update_scorecard()
 
         if is_colliding(player, enemy_ufo):
-            PlaySound("explosion.wav", SND_ASYNC)
+            PlaySound(explosion_sound, SND_ASYNC)
             player.hideturtle()
             enemy_ufo.hideturtle()
             print("Game Over")

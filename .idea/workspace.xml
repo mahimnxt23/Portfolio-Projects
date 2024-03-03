@@ -5,7 +5,15 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website">
-      <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/explosion.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/sounds/explosion.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/invader.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/images/invader.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/laser.wav" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/sounds/laser.wav" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/logic_test/main.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/logic_test/movements.py" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/main.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/player.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/images/player.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/space_invaders_background.gif" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/images/space_invaders_background.gif" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/temp.py" beforeDir="false" />
       <change beforePath="$PROJECT_DIR$/Space Invaders Clone/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -103,11 +111,11 @@
       <recent name="D:\Portfolio-Projects\Cafe List Website" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Portfolio-Projects\Space Invaders Clone\sounds" />
+      <recent name="D:\Portfolio-Projects\Space Invaders Clone\images" />
       <recent name="D:\Portfolio-Projects\Web Scrapper Project" />
       <recent name="D:\Portfolio-Projects\Cafe List Website\instance" />
       <recent name="D:\Portfolio-Projects\Cafe List Website" />
-      <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Typing Speed Checker" />
-      <recent name="D:\( - - Portfolio-Projects - - )\Portfolio-Projects\Automatic Photo Watermarker" />
     </key>
   </component>
   <component name="RunManager">
