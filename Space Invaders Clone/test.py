@@ -71,14 +71,19 @@ player.setposition(player_position)
 player.setheading(to_angle=90)
 
 
+def place_an_enemy(obj):
+    enemy_x_position, enemy_y_position = ((randint(-200, 200)), (randint(100, 250)))
+    obj.setposition(enemy_x_position, enemy_y_position)
+    return
+
+
 enemie_ufos = []
 for _ in range(number_of_enemies):  # Add enemies to the list
-    enemy_x_position, enemy_y_position = ((randint(-200, 200)), (randint(100, 250)))
     an_enemy_ufo = Turtle()
     an_enemy_ufo.speed(0)
     an_enemy_ufo.penup()
     an_enemy_ufo.shape("invader.gif")
-    an_enemy_ufo.setposition(enemy_x_position, enemy_y_position)
+    place_an_enemy(obj=an_enemy_ufo)
 
     enemie_ufos.append(an_enemy_ufo)
 
@@ -122,14 +127,22 @@ def fire_missile():
         PlaySound("laser.wav", SND_ASYNC)
         missile_state = "launch_missile"
 
-        missile_arming_point = ((player.xcor()), (player.ycor() + 10))  # appear just above the player...
+        missile_arming_point = (
+            (player.xcor()),
+            (player.ycor() + 10),
+        )  # appear just above the player...
         missile.setposition(missile_arming_point)
         missile.showturtle()
 
 
-def is_colliding(t1, t2):
-    distance = sqrt(pow(t1.xcor() - t2.xcor(), 2) + pow(t1.ycor() - t2.ycor(), 2))
-    if distance < 15:
+def is_colliding(point1, point2):
+    squared_distance_difference_of_x = pow(point1.xcor() - point2.xcor(), 2)
+    squared_distance_difference_of_y = pow(point1.ycor() - point2.ycor(), 2)
+
+    position_distance = sqrt(
+        squared_distance_difference_of_x + squared_distance_difference_of_y
+    )
+    if position_distance < 15:
         return True
     else:
         return False
@@ -137,68 +150,58 @@ def is_colliding(t1, t2):
 
 # Create keyboard bindings
 screen.listen()
-screen.onkeypress(player_moves_left, "Left")
-screen.onkeypress(player_moves_right, "Right")
-screen.onkey(fire_missile, "space")
+screen.onkeypress(player_moves_left, key="Left")
+screen.onkeypress(player_moves_right, key="Right")
+screen.onkey(fire_missile, key="space")
 
 # Main game loop
 while True:
 
-    for enemy in enemie_ufos:
-        # Move the enemy
-        x = enemy.xcor()
-        x += enemy_move_distance
-        enemy.setx(x)
+    for enemy_ufo in enemie_ufos:
+        ufo_x_position = enemy_ufo.xcor()
+        ufo_x_position += enemy_move_distance
+        enemy_ufo.setx(ufo_x_position)
 
-        # Move the enemy back and down
-        if enemy.xcor() > 280:
-            # Move all enemies down
-            for e in enemie_ufos:
-                y = e.ycor()
-                y -= 40
-                e.sety(y)
-            # Change enemy direction
-            enemy_move_distance *= -1
+        if (
+            ufo_x_position >= 280 or ufo_x_position <= -280
+        ):  # Move the enemy back and down
 
-        if enemy.xcor() < -280:
-            # Move all enemies down
-            for e in enemie_ufos:
-                y = e.ycor()
-                y -= 40
-                e.sety(y)
-            # Change enemy direction
-            enemy_move_distance *= -1
+            for ufo in enemie_ufos:
+                ufo_y_position = ufo.ycor()
+                ufo_y_position -= 20  # Move all enemies down
+                ufo.sety(ufo_y_position)
+
+            enemy_move_distance *= -1  # Change enemy direction
 
         # Check for a collision between the missile and the enemy
-        if is_colliding(missile, enemy):
+        if is_colliding(missile, enemy_ufo):
             PlaySound("explosion.wav", SND_ASYNC)
             # Reset the missile
             missile.hideturtle()
             missile_state = "armed"
-            missile.setposition(0, -400)
+            missile.setposition(-900, -900)
             # Reset the enemy
-            x = randint(-200, 200)
-            y = randint(100, 250)
-            enemy.setposition(x, y)
+            place_an_enemy(obj=enemy_ufo)
+            
             # Update the current_score
             current_score += 10
             score_card.clear()
             update_scorecard()
 
-        if is_colliding(player, enemy):
+        if is_colliding(player, enemy_ufo):
             PlaySound("explosion.wav", SND_ASYNC)
             player.hideturtle()
-            enemy.hideturtle()
+            enemy_ufo.hideturtle()
             print("Game Over")
             break
 
     # Move the missile
     if missile_state == "launch_missile":
-        y = missile.ycor()
-        y += missile_move_distance
-        missile.sety(y)
+        missile_y_position = missile.ycor()
+        missile_y_position += missile_move_distance
+        missile.sety(missile_y_position)
 
     # Check to see if the missile has gone to the top
-    if missile.ycor() > 275:
-        missile.hideturtle()
-        missile_state = "armed"
+        if missile_y_position >= 275:
+            missile.hideturtle()
+            missile_state = "armed"

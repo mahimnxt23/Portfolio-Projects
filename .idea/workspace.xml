@@ -6,7 +6,6 @@
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website">
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/Space Invaders Clone/temp.py" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/temp.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/Space Invaders Clone/test.py" beforeDir="false" afterPath="$PROJECT_DIR$/Space Invaders Clone/test.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -65,6 +64,7 @@
     &quot;Python.laaf.executor&quot;: &quot;Run&quot;,
     &quot;Python.main.executor&quot;: &quot;Run&quot;,
     &quot;Python.photo_watermark.executor&quot;: &quot;Run&quot;,
+    &quot;Python.scrap.executor&quot;: &quot;Run&quot;,
     &quot;Python.scrape.executor&quot;: &quot;Run&quot;,
     &quot;Python.space_invader.executor&quot;: &quot;Run&quot;,
     &quot;Python.temp.executor&quot;: &quot;Run&quot;,
