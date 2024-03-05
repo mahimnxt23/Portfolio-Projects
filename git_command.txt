@@ -1,1 +1,1 @@
-git add -A && git commit -m "initial commit for Space Invaders Clone" && git push
+git status && git add -A && git commit -m "initial skeleton code for Stock Market watcher (with API)" && git push
