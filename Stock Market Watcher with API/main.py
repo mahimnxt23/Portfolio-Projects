@@ -1,50 +1,52 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
-import requests
+from pprint import pprint
+from requests import get
 
+
+HOME_URL = "http://api.marketstack.com/v1/tickers?"
 MY_API_KEY = "84ff9226e6ae854bc448f2de0157bde5"
+
 
 app = Flask(__name__)
 Bootstrap(app)
 
 
+def serve_api_data(from_url):
+    response = get(url=from_url, params={"access_key": MY_API_KEY})
+    return response
+
+
 @app.route("/")
 def home():
-    responses = requests.get(
-        url="http://api.marketstack.com/v1/tickers?",
-        params={"access_key": MY_API_KEY},
-    )
-    coins = responses.json()["data"]
-    # print(coins)
-    return render_template("main.html", coins=coins)
+    coins = serve_api_data(from_url=HOME_URL).json()["data"]
+    pprint(coins)
+    return render_template("index.html", coins=coins)
 
 
 @app.route("/search")
 def search():
     coin = request.args.get("coin")
+    search_url = f"http://api.marketstack.com/v1/tickers?symbol={coin}"
+
     if coin:
-        responses = requests.get(
-            url=f"http://api.marketstack.com/v1/tickers?symbol={coin}",
-            params={"access_key": "84ff9226e6ae854bc448f2de0157bde5"},
-        )
-        responses = responses.json()["data"]
-        # print(responses)
-        return render_template("main.html", coins=responses)
+        responses = serve_api_data(from_url=search_url).json()["data"]
+        pprint(responses)
+        return render_template("coin.html", coins=responses)
+    
     else:
-        responses = requests.get(
-            url="http://api.marketstack.com/v1/tickers?",
-            params={"access_key": "84ff9226e6ae854bc448f2de0157bde5"},
-        )
-    return render_template("main.html", coins=responses)
+        responses = serve_api_data(from_url=HOME_URL).json()["data"]
+        return render_template("index.html", coins=responses)
 
 
-# @app.route("/end_of_day")
-# def end_of_day():
-#     coin = request.args.get("coin")
-#     eod = requests.get(url=f"http://api.marketstack.com/v1/eod?symbol={coin}",
-#     params={"access_key": "84ff9226e6ae854bc448f2de0157bde5"})
-#     eod = eod.json()
-#     print(eod)
+@app.route("/eod")
+def end_of_day():
+    coin = request.args.get("coin")
+    eod_url = f"http://api.marketstack.com/v1/eod?symbol={coin}"
+    
+    eod = serve_api_data(from_url=eod_url).json()["data"]
+    pprint(eod)
+    return render_template("eod.html", eod=eod)
 
 
 if __name__ == "__main__":
