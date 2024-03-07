@@ -14,12 +14,12 @@ Bootstrap(app)
 
 def serve_api_data(from_url):
     response = get(url=from_url, params={"access_key": MY_API_KEY})
-    return response
+    return response.json()["data"]
 
 
 @app.route("/")
 def home():
-    coins = serve_api_data(from_url=HOME_URL).json()["data"]
+    coins = serve_api_data(from_url=HOME_URL)
     pprint(coins)
     return render_template("index.html", coins=coins)
 
@@ -30,12 +30,12 @@ def search():
     search_url = f"http://api.marketstack.com/v1/tickers?symbol={coin}"
 
     if coin:
-        responses = serve_api_data(from_url=search_url).json()["data"]
+        responses = serve_api_data(from_url=search_url)
         pprint(responses)
         return render_template("coin.html", coins=responses)
-    
+
     else:
-        responses = serve_api_data(from_url=HOME_URL).json()["data"]
+        responses = serve_api_data(from_url=HOME_URL)
         return render_template("index.html", coins=responses)
 
 
@@ -43,8 +43,8 @@ def search():
 def end_of_day():
     coin = request.args.get("coin")
     eod_url = f"http://api.marketstack.com/v1/eod?symbol={coin}"
-    
-    eod = serve_api_data(from_url=eod_url).json()["data"]
+
+    eod = serve_api_data(from_url=eod_url)
     pprint(eod)
     return render_template("eod.html", eod=eod)
 
