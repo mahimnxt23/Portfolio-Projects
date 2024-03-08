@@ -1,6 +1,6 @@
 from flask import Flask, render_template, request
 from flask_bootstrap import Bootstrap
-from pprint import pprint
+# from pprint import pprint
 from requests import get
 
 
@@ -12,40 +12,40 @@ app = Flask(__name__)
 Bootstrap(app)
 
 
-def serve_api_data(from_url):
+def get_data_from_api(from_url):
     response = get(url=from_url, params={"access_key": MY_API_KEY})
     return response.json()["data"]
 
 
 @app.route("/")
 def home():
-    coins = serve_api_data(from_url=HOME_URL)
-    pprint(coins)
-    return render_template("index.html", coins=coins)
+    company_symbols = get_data_from_api(from_url=HOME_URL)
+    # pprint(company_symbols)
+    return render_template("index.html", company_symbols=company_symbols)
 
 
 @app.route("/search")
 def search():
-    coin = request.args.get("coin")
-    search_url = f"http://api.marketstack.com/v1/tickers?symbol={coin}"
+    company_symbol = request.args.get("company_symbol")
+    eod_url = f"http://api.marketstack.com/v1/eod?symbols={company_symbol}"
 
-    if coin:
-        responses = serve_api_data(from_url=search_url)
-        pprint(responses)
-        return render_template("coin.html", coins=responses)
+    if company_symbol:
+        responses = get_data_from_api(from_url=eod_url)
+        # pprint(responses)
+        return render_template("eod.html", company_symbols=responses)
 
     else:
-        responses = serve_api_data(from_url=HOME_URL)
-        return render_template("index.html", coins=responses)
+        responses = get_data_from_api(from_url=HOME_URL)
+        return render_template("index.html", company_symbols=responses)
 
 
 @app.route("/eod")
 def end_of_day():
-    coin = request.args.get("coin")
-    eod_url = f"http://api.marketstack.com/v1/eod?symbol={coin}"
+    company_symbol = request.args.get("company_symbol")
+    eod_url = f"http://api.marketstack.com/v1/eod?symbols={company_symbol}"
 
-    eod = serve_api_data(from_url=eod_url)
-    pprint(eod)
+    eod = get_data_from_api(from_url=eod_url)
+    # pprint(eod)
     return render_template("eod.html", eod=eod)
 
 
