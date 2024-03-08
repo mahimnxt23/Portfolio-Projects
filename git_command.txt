@@ -1,1 +1,1 @@
-git status && git add -A && git commit -m "initial skeleton code for Stock Market watcher (with API)" && git push
+git status && git add -A && git commit -m "testing SMW (API) [v3]" && git push
