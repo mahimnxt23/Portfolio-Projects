@@ -1,20 +1,12 @@
-# from flask_login import UserMixin
-# from flask_sqlalchemy import SQLAlchemy
-# from flask import Flask
-# from flask import render_template, request, url_for, redirect, flash
+# from flask import Flask, render_template, request, url_for, redirect, flash
+# from flask_login import UserMixin, login_user, LoginManager, login_required, current_user, logout_user
 # from werkzeug.security import generate_password_hash, check_password_hash
-# from flask_login import (
-#     login_user,
-#     LoginManager,
-#     login_required,
-#     current_user,
-#     logout_user,
-# )
+# from flask_sqlalchemy import SQLAlchemy
 # import stripe
 #
 #
 # app = Flask(__name__)
-# app.config["SECRET_KEY"] = "secret-key-goes-here"
+# app.config["SECRET_KEY"] = "a-super-secure-key"
 # app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 # app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 # db = SQLAlchemy(app)
@@ -23,8 +15,9 @@
 # class User(UserMixin, db.Model):
 #     id = db.Column(db.Integer, primary_key=True)
 #     email = db.Column(db.String(100), unique=True)
-#     password = db.Column(db.String(100))
-#     name = db.Column(db.String(1000))
+#     password = db.Column(db.String(100), nullable=False)
+#     name = db.Column(db.String(1000), nullable=False)
+#
 #     cart_items = db.relationship("Cart", backref="user", lazy=True)
 #
 #
@@ -47,10 +40,10 @@
 #
 # login_manager = LoginManager()
 # login_manager.init_app(app)
-# stripe.api_key = (
-#     "sk_test_51OtY3LCUs5SzWLs8KvITVYikf2LLj9jlMnbst5cF6inFg7mhhO7rmymxzK1rTgQcuxOmWj"
-#     "114fKia9cezQm2PXox00cAG3d3kz"
-# )
+#
+# TEST_KEY = "sk_test_51OtY3LCUs5SzWLs8KvITVYikf2LLj9jlMnbst5cF6inFg7mhhO7rmymxzK1rTgQcuxOmWj114fKia9cezQm2PXox00cAG3d3kz"
+# stripe.api_key = TEST_KEY
+#
 # items_in_cart = []
 #
 #
