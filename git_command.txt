@@ -1,3 +1,5 @@
-git status && git add -A && git commit -m "initializing e-commerce website functions" && git push
+git add -A && git commit -m "initializing e-commerce website functions" && git push
 
-git status && git add -A && git commit -m "testing e-commerce website [v3]" && git push
+git add -A && git commit -m "misc updates" && git push
+
+git add -A && git commit -m "testing e-commerce website [v3]" && git push
