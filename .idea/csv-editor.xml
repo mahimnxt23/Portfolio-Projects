@@ -3,6 +3,41 @@
   <component name="CsvFileAttributes">
     <option name="attributeMap">
       <map>
+        <entry key="D:\(imp) 100 Days of Code - project_ideas\Day 99\Fatal+Force+(start)\Deaths_by_Police_US.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="D:\(imp) 100 Days of Code - project_ideas\Day 99\Fatal+Force+(start)\Median_Household_Income_2015.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="D:\(imp) 100 Days of Code - project_ideas\Day 99\Fatal+Force+(start)\Pct_Over_25_Completed_High_School.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="D:\(imp) 100 Days of Code - project_ideas\Day 99\Fatal+Force+(start)\Pct_People_Below_Poverty_Level.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
+        <entry key="D:\(imp) 100 Days of Code - project_ideas\Day 99\Fatal+Force+(start)\Share_of_Race_By_City.csv">
+          <value>
+            <Attribute>
+              <option name="separator" value="," />
+            </Attribute>
+          </value>
+        </entry>
         <entry key="\Space Mission Analysis (Data Science)\mission_launches.csv">
           <value>
             <Attribute>
