@@ -18,14 +18,14 @@
     rel="stylesheet">
 
     <!-- Css Styles -->
-    <link rel="stylesheet" href="./static/css/bootstrap.min.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/font-awesome.min.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/elegant-icons.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/jquery-ui.min.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/magnific-popup.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/owl.carousel.min.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/slicknav.min.css" type="text/css">
-    <link rel="stylesheet" href="./static/css/style.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/bootstrap.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/font-awesome.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/elegant-icons.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/jquery-ui.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/magnific-popup.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/owl.carousel.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/slicknav.min.css" type="text/css">
+    <link rel="stylesheet" href="/static/css/style.css" type="text/css">
 </head>
 
 <body>
@@ -41,17 +41,17 @@
             <div class="row">
                 <div class="col-xl-3 col-lg-2">
                     <div class="header__logo">
-                        <a href="{{ url_for('home') }}"><img src="./static/img/logo.png" alt=""></a>
+                        <a href="{{ url_for('homepage') }}"><img src="/static/img/logo.png" alt=""></a>
                     </div>
                 </div>
                 <div class="col-xl-6 col-lg-7">
                     <nav class="header__menu">
                         <ul>
-                            <li><a href="{{ url_for('home') }}">Home</a></li>
+                            <li><a href="{{ url_for('homepage') }}">Home</a></li>
                             <li><a href="{{ url_for('shop') }}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="{{ url_for('product_details') }}">Product Details</a></li>
+                                    <li><a href="#">Product Details</a></li>
                                     <li><a href="{{ url_for('shop_cart') }}">Shopping Cart</a></li>
                                     <li><a href="{{ url_for('checkout') }}">Checkout</a></li>
                                 </ul>
