@@ -1,11 +1,16 @@
 from flask import Flask, render_template
 from flask_login import UserMixin
 from flask_sqlalchemy import SQLAlchemy
+from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm
+from wtforms import StringField, SubmitField, PasswordField
+from wtforms.validators import InputRequired, Email
 
 
 # app initialization...
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "a-super-secure-key"
+Bootstrap(app)
 
 
 # db setup...
@@ -39,6 +44,19 @@ class Cart(db.Model):
     items = db.Column(db.Integer, nullable=False)
     quantity = db.Column(db.Integer, nullable=False)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    
+    
+class RegisterUserForm(FlaskForm):
+    name = StringField('USERNAME', validators=[InputRequired()])
+    email = StringField('EMAIL', validators=[InputRequired(), Email()])
+    password = PasswordField('PASSWORD', validators=[InputRequired()])
+    submit = SubmitField('Register Me!')
+
+
+class LoginUserForm(FlaskForm):
+    email = StringField("EMAIL", validators=[InputRequired(), Email()])
+    password = PasswordField('PASSWORD', validators=[InputRequired()])
+    submit = SubmitField('Let Me In!')
 
 
 @app.route("/")
@@ -53,14 +71,20 @@ def product_detail(item_id):
     return render_template("product-detail.html", item=item_to_show)
 
 
+@app.route("/register")
+def register_page():
+    register_form = RegisterUserForm()
+    return render_template("register.html", form=register_form)
+
+
+@app.route("/login")
+def login_page():
+    return render_template("login.html")
+
+
 @app.route("/checkout")
 def checkout():
     return render_template("checkout.html")
-
-
-@app.route("/shop")
-def shop():
-    return render_template("shop.html")
 
 
 @app.route("/shop-cart")

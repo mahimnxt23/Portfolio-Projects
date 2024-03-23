@@ -48,10 +48,8 @@
                     <nav class="header__menu">
                         <ul>
                             <li><a href="{{ url_for('homepage') }}">Home</a></li>
-                            <li><a href="{{ url_for('shop') }}">Shop</a></li>
                             <li><a href="#">Pages</a>
                                 <ul class="dropdown">
-                                    <li><a href="#">Product Details</a></li>
                                     <li><a href="{{ url_for('shop_cart') }}">Shopping Cart</a></li>
                                     <li><a href="{{ url_for('checkout') }}">Checkout</a></li>
                                 </ul>
@@ -62,8 +60,8 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="#">Login</a>
-                            <a href="#">Register</a>
+                            <a href="{{ url_for('login_page') }}">Login</a>
+                            <a href="{{ url_for('register_page') }}">Register</a>
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>
