@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, redirect, url_for
-from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
+from flask_login import UserMixin, LoginManager, login_user, logout_user, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -42,9 +42,13 @@ class EshopItem(db.Model):
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    items = db.Column(db.Integer, nullable=False)
-    quantity = db.Column(db.Integer, nullable=False)
-    user_id = db.Column(db.Integer, db.ForeignKey("user.id"), nullable=False)
+    items = db.Column(db.Integer)
+    quantity = db.Column(db.Integer)
+    user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
+    
+    
+# with app.app_context():
+#     db.create_all()
     
     
 class RegisterUserForm(FlaskForm):
@@ -66,7 +70,7 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(user_id):
-    return User.query.get(int(user_id))
+    return db.session.get(User, int(user_id))
 
 
 @app.route("/register", methods=['GET', 'POST'])
@@ -143,12 +147,6 @@ def checkout():
 @app.route("/shop-cart", methods=['GET'])
 def shop_cart():
     return render_template("shop-cart.html")
-
-
-def delete_user():
-    toppino_user = User.query.filter_by(id=2).first()
-    db.session.delete(toppino_user)
-    db.session.commit()
 
 
 if __name__ == "__main__":
