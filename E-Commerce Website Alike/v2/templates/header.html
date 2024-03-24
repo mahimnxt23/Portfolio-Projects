@@ -60,8 +60,14 @@
                 <div class="col-lg-3">
                     <div class="header__right">
                         <div class="header__right__auth">
-                            <a href="{{ url_for('login_page') }}">Login</a>
-                            <a href="{{ url_for('register_page') }}">Register</a>
+
+	                        {% if not this_user.is_authenticated: %}
+	                            <a href="{{ url_for('login_page') }}">Login</a>
+	                            <a href="{{ url_for('register_page') }}">Register</a>
+	                        {% else: %}
+	                            <a href="{{ url_for('outcast_user') }}">Logout <strong>{{ this_user.name }}</strong></a>
+	                        {% endif %}
+
                         </div>
                         <ul class="header__right__widget">
                             <li><span class="icon_search search-switch"></span></li>

@@ -55,7 +55,7 @@
                         </ul>
                     </div>
                     <div class="product__item__text">
-                        <h6><a href="{{ url_for('product_detail', item_id=item.id) }}">{{ item.name }}</a></h6>
+                        <h6><a href="{{ url_for('product_detail', item_id=item.id) }}"><strong>{{ item.name }}</strong></a></h6>
                         <div class="rating">
 	                          {% for _ in range(5): %}
                                 <i class="fa fa-star"></i>

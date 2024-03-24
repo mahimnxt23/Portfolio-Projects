@@ -1,10 +1,11 @@
-from flask import Flask, render_template
-from flask_login import UserMixin
+from flask import Flask, render_template, flash, redirect, url_for
+from flask_login import UserMixin, LoginManager, login_user, logout_user, login_required, current_user
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Email
+from werkzeug.security import generate_password_hash, check_password_hash
 
 
 # app initialization...
@@ -59,38 +60,95 @@ class LoginUserForm(FlaskForm):
     submit = SubmitField('Let Me In!')
 
 
-@app.route("/")
+login_manager = LoginManager()
+login_manager.init_app(app)
+
+
+@login_manager.user_loader
+def load_user(user_id):
+    return User.query.get(int(user_id))
+
+
+@app.route("/register", methods=['GET', 'POST'])
+def register_page():
+    register_form = RegisterUserForm()
+    password = register_form.password.data
+    
+    if register_form.validate_on_submit():
+        
+        if User.query.filter_by(email=register_form.email.data).first():  # User already exists...
+            flash(message='You\'ve already signed up with this email, consider logging in...')
+            return redirect(url_for('login_page'))
+        
+        hashed_and_salted_password = generate_password_hash(password, method='pbkdf2:sha256', salt_length=16)
+        # noinspection PyArgumentList
+        new_user = User(
+            email=register_form.email.data,
+            name=register_form.name.data.title(),
+            password=hashed_and_salted_password
+        )
+        db.session.add(new_user)
+        db.session.commit()
+        login_user(new_user)  # logs in immediately...
+        return redirect(url_for('homepage'))
+            
+    return render_template("register.html", form=register_form, this_user=current_user)
+
+
+@app.route("/login", methods=['GET', 'POST'])
+def login_page():
+    login_form = LoginUserForm()
+    
+    if login_form.validate_on_submit():
+        email = login_form.email.data
+        password = login_form.password.data
+        user = User.query.filter_by(email=email).first()
+        
+        if not user:
+            flash(message=f'This email({email}) does not exist. Please check and try again!')
+            
+        elif not check_password_hash(user.password, password):
+            flash(message='Oh no! You have mistaken the password. Did you forget your precious password?')
+            
+        else:
+            login_user(user)
+            return redirect(url_for('homepage'))
+        
+    return render_template("login.html", form=login_form, this_user=current_user)
+
+
+@app.route("/logout")
+def outcast_user():
+    logout_user()
+    return redirect(url_for('homepage'))
+
+
+@app.route("/", methods=['GET'])
 def homepage():
     eshop_items = EshopItem.query.all()
-    return render_template("index.html", eshop_items=eshop_items)
+    return render_template("index.html", eshop_items=eshop_items, this_user=current_user)
 
 
-@app.route("/detail/<int:item_id>/")
+@app.route("/detail/<int:item_id>/", methods=['GET'])
 def product_detail(item_id):
     item_to_show = EshopItem.query.filter_by(id=item_id).first()
     return render_template("product-detail.html", item=item_to_show)
 
 
-@app.route("/register")
-def register_page():
-    register_form = RegisterUserForm()
-    return render_template("register.html", form=register_form)
-
-
-@app.route("/login")
-def login_page():
-    login_form = LoginUserForm()
-    return render_template("login.html", form=login_form)
-
-
-@app.route("/checkout")
+@app.route("/checkout", methods=['GET'])
 def checkout():
     return render_template("checkout.html")
 
 
-@app.route("/shop-cart")
+@app.route("/shop-cart", methods=['GET'])
 def shop_cart():
     return render_template("shop-cart.html")
+
+
+def delete_user():
+    toppino_user = User.query.filter_by(id=2).first()
+    db.session.delete(toppino_user)
+    db.session.commit()
 
 
 if __name__ == "__main__":
