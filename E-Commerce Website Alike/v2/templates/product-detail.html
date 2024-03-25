@@ -40,6 +40,9 @@
                             <span>( 138 ratings )</span>
                         </div>
                         <div class="product__details__price">$ {{ item.price }} <!-- <span>$ 83.0</span> --></div>
+
+
+	                    {% if item.stock > 0: %}
                         <div class="product__details__button">
                             <div class="quantity">
                                 <span>Quantity:</span>
@@ -56,12 +59,11 @@
                             <ul>
                                 <li>
                                     <span>Availability:</span>
-                                    <div class="stock__checkbox">
-                                        <label for="stockin">
-                                            In Stock
-                                            <input type="checkbox" id="stockin">
-                                            <span class="checkmark"></span>
-                                        </label>
+                                    <div>
+	                                    <p class="stock-status">
+		                                    In Stock.
+		                                    <i class="items-left">[{{ item.stock }} left!]</i>
+	                                    </p>
                                     </div>
                                 </li>
                                 <li>
@@ -70,6 +72,21 @@
                                 </li>
                             </ul>
                         </div>
+
+	                    {% else: %}
+	                    <div class="product__details__widget">
+                            <ul>
+                                <li>
+                                    <span>Availability:</span>
+                                    <div>
+	                                    <p class="stock-status" style="color: red">Out of Stock!</p>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+
+	                    {% endif %}
+
                     </div>
                 </div>
                 <div class="col-lg-12">
@@ -113,3 +130,10 @@
 
 
 {% include "footer.html" %}
+
+
+<!--                                        <label for="stockin">-->
+<!--                                            In Stock-->
+<!--                                            <input type="checkbox" id="stockin">-->
+<!--                                            <span class="checkmark"></span>-->
+<!--                                        </label>-->

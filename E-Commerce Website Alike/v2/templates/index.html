@@ -45,7 +45,7 @@
 <!-- - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - - -->
 
 	      {% for item in eshop_items: %}
-            <div class="col-lg-3 col-md-4 col-sm-6 mix">
+            <div class="col-lg-3 col-md-4 col-sm-6 mix-auto">
                 <div class="product__item">
                     <div class="product__item__pic set-bg" data-setbg="{{ item.image }}">
                         <ul class="product__hover">
@@ -62,6 +62,7 @@
 	                          {% endfor %}
                         </div>
                         <div class="product__price">$ {{ item.price }}</div>
+	                    <div class="btn btn-danger">Add to Cart</div>
                     </div>
                 </div>
             </div>

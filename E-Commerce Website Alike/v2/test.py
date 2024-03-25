@@ -1,5 +1,5 @@
 from flask import Flask, render_template, flash, redirect, url_for
-from flask_login import UserMixin, LoginManager, login_user, logout_user, current_user
+from flask_login import UserMixin, LoginManager, login_user, logout_user, current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
@@ -122,6 +122,7 @@ def login_page():
 
 
 @app.route("/logout")
+@login_required
 def outcast_user():
     logout_user()
     return redirect(url_for('homepage'))
@@ -136,7 +137,7 @@ def homepage():
 @app.route("/detail/<int:item_id>/", methods=['GET'])
 def product_detail(item_id):
     item_to_show = EshopItem.query.filter_by(id=item_id).first()
-    return render_template("product-detail.html", item=item_to_show)
+    return render_template("product-detail.html", item=item_to_show, this_user=current_user)
 
 
 @app.route("/checkout", methods=['GET'])
