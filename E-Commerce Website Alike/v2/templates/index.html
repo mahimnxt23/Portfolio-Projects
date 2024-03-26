@@ -62,7 +62,11 @@
 	                          {% endfor %}
                         </div>
                         <div class="product__price">$ {{ item.price }}</div>
-	                    <div class="btn btn-danger">Add to Cart</div>
+	                    <div class="btn btn-danger">
+		                    <a href="{{ url_for('product_detail', item_id=item.id) }}" class="add-cart-link-text">
+			                    Add to Cart
+		                    </a>
+	                    </div>
                     </div>
                 </div>
             </div>

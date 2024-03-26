@@ -214,17 +214,32 @@ Created: Colorib
 	proQty.on('click', '.qtybtn', function () {
 		var $button = $(this);
 		var oldValue = $button.parent().find('input').val();
+		var newVal = 0;
 		if ($button.hasClass('inc')) {
-			var newVal = parseFloat(oldValue) + 1;
+			newVal = parseFloat(oldValue) + 1;
 		} else {
 			// Don't allow decrementing below zero
 			if (oldValue > 0) {
-				var newVal = parseFloat(oldValue) - 1;
-			} else {
-				newVal = 0;
+				newVal = parseFloat(oldValue) - 1;
 			}
 		}
 		$button.parent().find('input').val(newVal);
+
+		// Get the item ID from a data attribute or another method
+		var item_id = $button.parent().data('item-id');
+
+		// Send the AJAX request to the Flask route
+		$.ajax({
+		    url: '/add_to_cart/' + item_id,
+            type: 'POST',
+            data: {quantity: newVal},
+            success: function (response) {
+                console.log(response);
+            },
+            error: function (error) {
+                console.log(error);
+            }
+        });
     });
     
     /*-------------------

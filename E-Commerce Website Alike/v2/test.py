@@ -1,4 +1,4 @@
-from flask import Flask, render_template, flash, redirect, url_for
+from flask import Flask, render_template, flash, redirect, url_for, request
 from flask_login import UserMixin, LoginManager, login_user, logout_user, current_user, login_required
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
@@ -138,6 +138,29 @@ def homepage():
 def product_detail(item_id):
     item_to_show = EshopItem.query.filter_by(id=item_id).first()
     return render_template("product-detail.html", item=item_to_show, this_user=current_user)
+
+
+@app.route("/add_to_cart/<item_id>", methods=['POST'])
+def item_already_in_cart(item_id):
+    user_cart_items = Cart.query.filter_by(items=item_id, user_id=current_user.id).first()
+    return user_cart_items is not None
+
+
+def add_to_cart(item_id):
+    quantity = int(request.form.get('quantity', 1))  # capturing incoming value through AJAX & converting to integer...
+    
+    if item_already_in_cart(item_id):
+        item_to_update = Cart.query.filter_by(items=item_id, user_id=current_user.id).first()
+        
+        if item_to_update:
+            item_to_update.quantity = quantity
+            db.session.commit()
+            
+    else:
+        new_cart_record = Cart(items=item_id, quantity=quantity, user_id=current_user.id)
+        db.session.add(new_cart_record)
+        db.session.commit()
+        return redirect(url_for("homepage"))
 
 
 @app.route("/checkout", methods=['GET'])

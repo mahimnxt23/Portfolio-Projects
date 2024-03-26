@@ -1153,6 +1153,16 @@ ol {
   Product
 -----------------------*/
 
+.add-cart-link-text {
+    font-size: 14px;
+    color: #fff;
+}
+
+.add-cart-link-text:hover {
+    font-size: 14px;
+    color: #fff;
+}
+
 .product {
 	padding-top: 60px;
 	padding-bottom: 50px;
