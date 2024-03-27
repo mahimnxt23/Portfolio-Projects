@@ -9,6 +9,34 @@ Created: Colorib
 
 'use strict';
 
+
+/*-------------------
+	Add Items to Cart
+--------------------- */
+/*this was here before function --> "$('.cart-btn').click("  */
+function add_to_cart(item_id) {
+    // Get the item ID from a data attribute or another method
+    var quantity = $('.pro-qty[data-item-id="' + item_id + '"]').find('input').val();
+
+    if (typeof item_id !== 'undefined') {
+        // Send the AJAX request to the Flask route
+        $.ajax({
+            url: '/add_to_cart/' + item_id,
+            type: 'POST',
+            data: {quantity: quantity},
+            success: function (response) {
+                console.log('Item added to cart: ', response);
+            },
+            error: function (error) {
+                console.log('Error adding item to cart:', error);
+            }
+        });
+    } else {
+        console.log('Error: Item_id is undefined!');
+    }
+};
+
+
 (function ($) {
 
     /*------------------
@@ -16,7 +44,7 @@ Created: Colorib
     --------------------*/
     $(window).on('load', function () {
         $(".loader").fadeOut();
-        $("#preloder").delay(200).fadeOut("slow");
+        $("#preloder").delay(50).fadeOut("slow");
 
         /*------------------
             Product filter
@@ -204,44 +232,45 @@ Created: Colorib
 			$('.product__big__img').attr({src: imgurl});
 		}
     });
-    
+
+    /*-------------------
+		CSRF token for AJAX
+	--------------------- */
+    // Get the CSRF token from the meta tag
+    var csrf_token = $('meta[name="csrf-token"]').attr('content');
+
+    // Set up AJAX to include the CSRF token in the header
+    $.ajaxSetup({
+        beforeSend: function(xhr, settings) {
+            if (!/^(GET|HEAD|OPTIONS|TRACE)$/i.test(settings.type) && !this.crossDomain) {
+                xhr.setRequestHeader("X-CSRFToken", csrf_token);
+            }
+        }
+    });
+
     /*-------------------
 		Quantity change
 	--------------------- */
-    var proQty = $('.pro-qty');
-	proQty.prepend('<span class="dec qtybtn">-</span>');
-	proQty.append('<span class="inc qtybtn">+</span>');
-	proQty.on('click', '.qtybtn', function () {
-		var $button = $(this);
-		var oldValue = $button.parent().find('input').val();
-		var newVal = 0;
-		if ($button.hasClass('inc')) {
-			newVal = parseFloat(oldValue) + 1;
-		} else {
-			// Don't allow decrementing below zero
-			if (oldValue > 0) {
-				newVal = parseFloat(oldValue) - 1;
-			}
-		}
-		$button.parent().find('input').val(newVal);
-
-		// Get the item ID from a data attribute or another method
-		var item_id = $button.parent().data('item-id');
-
-		// Send the AJAX request to the Flask route
-		$.ajax({
-		    url: '/add_to_cart/' + item_id,
-            type: 'POST',
-            data: {quantity: newVal},
-            success: function (response) {
-                console.log(response);
-            },
-            error: function (error) {
-                console.log(error);
+	$(document).ready(function() {
+        var proQty = $('.pro-qty');
+        proQty.prepend('<span class="dec qtybtn">-</span>');
+        proQty.append('<span class="inc qtybtn">+</span>');
+        proQty.on('click', '.qtybtn', function () {
+            var $button = $(this);
+            var oldValue = $button.parent().find('input').val();
+            var newVal = 0;
+            if ($button.hasClass('inc')) {
+                newVal = parseFloat(oldValue) + 1;
+            } else {
+                // Don't allow decrementing below zero
+                if (oldValue > 0) {
+                    newVal = parseFloat(oldValue) - 1;
+                }
             }
+            $button.parent().find('input').val(newVal);
         });
     });
-    
+
     /*-------------------
 		Radio Btn
 	--------------------- */

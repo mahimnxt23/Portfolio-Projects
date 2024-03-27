@@ -3,6 +3,7 @@ from flask_login import UserMixin, LoginManager, login_user, logout_user, curren
 from flask_sqlalchemy import SQLAlchemy
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
+from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Email
 from werkzeug.security import generate_password_hash, check_password_hash
@@ -11,6 +12,7 @@ from werkzeug.security import generate_password_hash, check_password_hash
 # app initialization...
 app = Flask(__name__)
 app.config["SECRET_KEY"] = "a-super-secure-key"
+csrf = CSRFProtect(app)
 Bootstrap(app)
 
 
@@ -42,7 +44,7 @@ class EshopItem(db.Model):
 
 class Cart(db.Model):
     id = db.Column(db.Integer, primary_key=True)
-    items = db.Column(db.Integer)
+    items_id = db.Column(db.Integer)
     quantity = db.Column(db.Integer)
     user_id = db.Column(db.Integer, db.ForeignKey("user.id"))
     
@@ -145,14 +147,15 @@ def add_to_cart(item_id):
     quantity = int(request.form.get('quantity', 1))  # capturing incoming value through AJAX & converting to integer...
     
     if item_already_in_cart(item_id):
-        item_to_update = Cart.query.filter_by(items=item_id, user_id=current_user.id).first()
+        item_to_update = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
         
         if item_to_update:
             item_to_update.quantity += quantity
             db.session.commit()
-            
+            return jsonify({'status': 'success', 'item_id': item_id, 'quantity': item_to_update.quantity})
+        
     else:
-        new_cart_record = Cart(items=item_id, quantity=quantity, user_id=current_user.id)
+        new_cart_record = Cart(items_id=item_id, quantity=quantity, user_id=current_user.id)
         db.session.add(new_cart_record)
         db.session.commit()
         # return redirect(url_for("homepage"))
@@ -160,7 +163,7 @@ def add_to_cart(item_id):
 
 
 def item_already_in_cart(item_id):
-    user_cart_items = Cart.query.filter_by(items=item_id, user_id=current_user.id).first()
+    user_cart_items = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
     return user_cart_items is not None
 
 
