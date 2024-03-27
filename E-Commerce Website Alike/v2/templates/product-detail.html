@@ -46,11 +46,11 @@
                         <div class="product__details__button">
                             <div class="quantity">
                                 <span>Quantity:</span>
-                                <div class="pro-qty">
+                                <div class="pro-qty" data-item-id="{{ item.id }}">
                                     <input type="text" value="1">
                                 </div>
                             </div>
-                            <a href="../add_to_cart/{{ item.id }}" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</a>
+                            <button type="button" onclick="add_to_cart({{ item.id }})" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
                             <ul>
                                 <li><a href="#"><span class="icon_heart_alt"></span></a></li>
                             </ul>
