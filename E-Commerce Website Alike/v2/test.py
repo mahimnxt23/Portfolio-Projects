@@ -136,7 +136,7 @@ def homepage():
     return render_template("index.html", eshop_items=eshop_items, this_user=current_user)
 
 
-@app.route("/detail/<int:item_id>/", methods=['GET'])
+@app.route("/detail/<int:item_id>", methods=['GET'])
 def product_detail(item_id):
     item_to_show = EshopItem.query.filter_by(id=item_id).first()
     return render_template("product-detail.html", item=item_to_show, this_user=current_user)
@@ -155,6 +155,7 @@ def add_to_cart(item_id):
             return jsonify({'status': 'success', 'item_id': item_id, 'quantity': item_to_update.quantity})
         
     else:
+        # noinspection PyArgumentList
         new_cart_record = Cart(items_id=item_id, quantity=quantity, user_id=current_user.id)
         db.session.add(new_cart_record)
         db.session.commit()

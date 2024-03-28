@@ -1153,6 +1153,34 @@ ol {
   Product
 -----------------------*/
 
+.cart-btn.login-first {
+    position: relative;
+    overflow: hidden;
+    transition: all 0.5s ease;
+}
+
+.cart-btn.login-first::before {
+    content: 'Add to cart';
+    visibility: visible;
+    opacity: 1;
+    transition: visibility 0s linear 0.3s, opacity 0.3s linear;
+}
+
+.cart-btn.login-first:hover::before {
+    content: 'You need to LOGIN FIRST!';
+    visibility: visible;
+    opacity: 1;
+    transition-delay: 0s;
+}
+
+.cart-btn.login-first span {
+    transition-delay: 0s;
+    visibility: visible;
+	float: left;
+	margin-right: 5px;
+	margin-top: 2px;
+}
+
 .add-cart-link-text {
     font-size: 14px;
     color: #fff;

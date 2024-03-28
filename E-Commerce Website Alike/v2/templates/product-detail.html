@@ -50,10 +50,16 @@
                                     <input type="text" value="1">
                                 </div>
                             </div>
-                            <button type="button" onclick="add_to_cart({{ item.id }})" data-item-id="{{ item.id }}" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
-                            <ul>
-                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
-                            </ul>
+
+	                        {% if this_user.is_authenticated: %}
+	                            <button type="button" onclick="add_to_cart({{ item.id }})" data-item-id="{{ item.id }}" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
+	                            <ul>
+	                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
+	                            </ul>
+	                        {% else: %}
+	                        	<a href="{{ url_for('login_page') }}" class="cart-btn login-first"><span class="icon_bag_alt"></span></a>
+	                        {% endif %}
+
                         </div>
                         <div class="product__details__widget">
                             <ul>
