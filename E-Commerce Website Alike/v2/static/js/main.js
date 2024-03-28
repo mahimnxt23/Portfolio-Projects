@@ -13,9 +13,8 @@ Created: Colorib
 /*-------------------
 	Add Items to Cart
 --------------------- */
-/*this was here before function --> "$('.cart-btn').click("  */
 function add_to_cart(item_id) {
-    // Get the item ID from a data attribute or another method
+    // Get the item ID from a data attribute
     var quantity = $('.pro-qty[data-item-id="' + item_id + '"]').find('input').val();
 
     if (typeof item_id !== 'undefined') {
@@ -25,15 +24,56 @@ function add_to_cart(item_id) {
             type: 'POST',
             data: {quantity: quantity},
             success: function (response) {
-                console.log('Item added to cart: ', response);
+                if(response.status === 'success') {
+                    console.log('Item added to cart: ', response);
+                    showError('Item added to cart successfully!', 'success');
+                } else {
+                    console.log(response.error, 'error');
+                    showError(response.error, 'error');
+                }
             },
             error: function (error) {
                 console.log('Error adding item to cart:', error);
+                showError('ORDER exceeds current STOCK LIMIT!');
             }
         });
     } else {
         console.log('Error: Item_id is undefined!');
     }
+};
+
+    /*-------------------
+		Error Display
+	--------------------- */
+// Function to open the modal with a specific message
+function showError(message) {
+  document.getElementById('errorMessage').innerText = message;
+  modal.style.display = 'block';
+};
+
+document.addEventListener('DOMContentLoaded', function() {
+
+    if (document.getElementById('productDetailsPage')) {
+        // Get the modal and close button
+        var modal = document.getElementById('errorModal');
+        var span = document.getElementsByClassName('close')[0];
+
+        if (span) {
+            // When the user clicks on <span> (x), close the modal
+            span.onclick = function() {
+              modal.style.display = 'none';
+            };
+        } else {
+            console.log('The close button was not found, maybe it is not the product details page?');
+        }
+    }
+});
+
+// When the user clicks anywhere outside of the modal, close it
+window.onclick = function(event) {
+  if (event.target == modal) {
+    modal.style.display = 'none';
+  }
 };
 
 

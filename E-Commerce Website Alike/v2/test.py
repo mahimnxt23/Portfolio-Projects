@@ -145,22 +145,29 @@ def product_detail(item_id):
 @app.route("/add_to_cart/<int:item_id>", methods=['POST'])
 def add_to_cart(item_id):
     quantity = int(request.form.get('quantity', 1))  # capturing incoming value through AJAX & converting to integer...
+    buying_item = EshopItem.query.filter_by(id=item_id).first()
+    
+    if not buying_item or buying_item.stock < quantity:
+        return jsonify({'status': 'fail', 'error': 'Not enough stock available!'})
     
     if item_already_in_cart(item_id):
         item_to_update = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
         
         if item_to_update:
+            
+            if item_to_update.quantity + quantity > buying_item.stock:
+                return jsonify({'status': 'fail', 'error': 'Not enough stock available'})
+            
             item_to_update.quantity += quantity
-            db.session.commit()
             return jsonify({'status': 'success', 'item_id': item_id, 'quantity': item_to_update.quantity})
         
     else:
         # noinspection PyArgumentList
         new_cart_record = Cart(items_id=item_id, quantity=quantity, user_id=current_user.id)
         db.session.add(new_cart_record)
-        db.session.commit()
-        # return redirect(url_for("homepage"))
-        return jsonify({'status': 'success', 'item_id': item_id, 'quantity': quantity})
+        
+    db.session.commit()
+    return jsonify({'status': 'success', 'item_id': item_id, 'quantity': quantity})
 
 
 def item_already_in_cart(item_id):

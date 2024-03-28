@@ -1181,6 +1181,57 @@ ol {
 	margin-top: 2px;
 }
 
+
+
+/* Error Modal */
+/* The Modal (background) */
+.modal {
+  display: none;
+  position: fixed;
+  z-index: 1;
+  left: 0;
+  top: 0;
+  width: 100%;
+  height: 100%;
+  overflow: auto; /* Enable scroll if needed */
+  background-color: rgb(0,0,0); /* Fallback color */
+  background-color: rgba(0,0,0,0.1); /* Black w/ opacity */
+}
+
+/* Modal Content */
+.modal-content {
+  background-color: #fefefe;
+  margin: 15% auto; /* 15% from the top and centered */
+  padding: 20px;
+  border: 1px solid #888;
+  width: 50%; /* Could be more or less, depending on screen size */
+  text-align: center;
+}
+
+/*
+.modal-content p#errorMessage {
+  color: black;
+  font-weight: bold;
+  font-size: 20px;
+}
+*/
+
+/* The Close Button */
+.modal-content span.close {
+  color: #aaa;
+  float: right;
+  font-size: 28px;
+  font-weight: bold;
+}
+
+.modal-content span.close:hover,
+.modal-content span.close.close:focus {
+  color: black;
+  text-decoration: none;
+  cursor: pointer;
+}
+
+
 .add-cart-link-text {
     font-size: 14px;
     color: #fff;

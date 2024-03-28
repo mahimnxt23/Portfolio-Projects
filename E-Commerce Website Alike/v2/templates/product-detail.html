@@ -1,6 +1,8 @@
 {% include "header.html" %}
 
 
+	<div id="productDetailsPage"></div>
+
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -21,6 +23,15 @@
     <section class="product-details spad">
         <div class="container">
             <div class="row">
+	            <div class="col-12">
+	                <!-- Error Modal -->
+					<div id="errorModal" class="modal">
+					    <div class="modal-content">
+					        <p id="errorMessage">Some error message...</p>
+					        <span class="close">×</span>
+					    </div>
+					</div>
+		        </div>
                 <div class="col-lg-6">
                     <div class="product__details__pic">
 	                      <a class="pt active" href="#">
@@ -52,6 +63,7 @@
                             </div>
 
 	                        {% if this_user.is_authenticated: %}
+	                        <div class="inline-notification"></div>
 	                            <button type="button" onclick="add_to_cart({{ item.id }})" data-item-id="{{ item.id }}" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
 	                            <ul>
 	                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
