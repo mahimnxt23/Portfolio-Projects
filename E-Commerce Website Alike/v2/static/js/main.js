@@ -14,8 +14,7 @@ Created: Colorib
 	Add Items to Cart
 --------------------- */
 function add_to_cart(item_id) {
-    // Get the item ID from a data attribute
-    var quantity = $('.pro-qty[data-item-id="' + item_id + '"]').find('input').val();
+    var quantity = $('.pro-qty[data-item-id="' + item_id + '"]').find('input').val();  // Getting item ID from data attribute
 
     if (typeof item_id !== 'undefined') {
         // Send the AJAX request to the Flask route
@@ -26,15 +25,15 @@ function add_to_cart(item_id) {
             success: function (response) {
                 if(response.status === 'success') {
                     console.log('Item added to cart: ', response);
-                    showError('Item added to cart successfully!', 'success');
+                    showNotification('Item added to cart successfully!', 'success');
                 } else {
                     console.log(response.error, 'error');
-                    showError(response.error, 'error');
+                    showNotification(response.error, 'error');
                 }
             },
             error: function (error) {
                 console.log('Error adding item to cart:', error);
-                showError('ORDER exceeds current STOCK LIMIT!');
+                showNotification('ORDER exceeds current STOCK LIMIT!');
             }
         });
     } else {
@@ -45,17 +44,20 @@ function add_to_cart(item_id) {
     /*-------------------
 		Error Display
 	--------------------- */
-// Function to open the modal with a specific message
-function showError(message) {
-  document.getElementById('errorMessage').innerText = message;
-  modal.style.display = 'block';
+var modal;
+
+function showNotification(message) {
+    document.getElementById('notificationMessage').innerText = message;
+    modal.style.display = 'block';
+
+    setTimeout(function() {
+        modal.style.display = 'none';
+    }, 3000);
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-
     if (document.getElementById('productDetailsPage')) {
-        // Get the modal and close button
-        var modal = document.getElementById('errorModal');
+        modal = document.getElementById('notificationModal');
         var span = document.getElementsByClassName('close')[0];
 
         if (span) {
@@ -64,7 +66,7 @@ document.addEventListener('DOMContentLoaded', function() {
               modal.style.display = 'none';
             };
         } else {
-            console.log('The close button was not found, maybe it is not the product details page?');
+            console.log('The close button was not found. Did you change the html identifier?');
         }
     }
 });
