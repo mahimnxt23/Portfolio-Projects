@@ -64,7 +64,7 @@
 
 	                        {% if this_user.is_authenticated: %}
 	                        <div class="inline-notification"></div>
-	                            <button type="button" onclick="add_to_cart({{ item.id }})" data-item-id="{{ item.id }}" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
+	                            <button type="button" onclick="add_to_cart({{ item.id }})" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
 	                            <ul>
 	                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
 	                            </ul>
@@ -80,7 +80,7 @@
                                     <div>
 	                                    <p class="stock-status">
 		                                    In Stock.
-		                                    <i class="items-left">[{{ item.stock }} left!]</i>
+		                                    <i class="items-left" data-item-id="{{ item.id }}">[{{ item.stock }} left!]</i>
 	                                    </p>
                                     </div>
                                 </li>

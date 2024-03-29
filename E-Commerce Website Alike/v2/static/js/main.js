@@ -25,6 +25,7 @@ function add_to_cart(item_id) {
             success: function (response) {
                 if(response.status === 'success') {
                     console.log('Item added to cart: ', response);
+                    updateStockLabel(item_id, quantity);
                     showNotification('Item added to cart successfully!', 'success');
                 } else {
                     console.log(response.error, 'error');
@@ -33,13 +34,44 @@ function add_to_cart(item_id) {
             },
             error: function (error) {
                 console.log('Error adding item to cart:', error);
-                showNotification('ORDER exceeds current STOCK LIMIT!');
+                showNotification('Some Error occured, please try again later.');
             }
         });
     } else {
         console.log('Error: Item_id is undefined!');
     }
 };
+
+
+/*-------------------
+    Instantly Update Stock
+--------------------- */
+function updateStockLabel(item_id, quantity) {
+    $(document).ready(function() {
+        if (document.getElementById('productDetailsPage')) {
+            var stockElement = $('.items-left[data-item-id="' + item_id + '"]');
+            var currentStockText = stockElement.text();  // e.g., "[10 left!]"
+            var matches = currentStockText.match(/\d+/);  // to find digits
+
+            if (matches) {
+                var currentStock = parseInt(matches[0], 10);
+                var newStock = currentStock - quantity;
+                stockElement.text('[' + newStock + ' left!]');  // Update the stock label on the page
+
+                // If newStock is 0, refresh the page after 3 seconds
+                if (newStock === 0) {
+                    setTimeout(function() {
+                        location.reload();
+                    }, 1500);
+                }
+
+            } else {
+                console.log('Could not find stock number in the element\'s text.');
+            }
+        };
+    });
+};
+
 
     /*-------------------
 		Error Display
@@ -52,7 +84,7 @@ function showNotification(message) {
 
     setTimeout(function() {
         modal.style.display = 'none';
-    }, 3000);
+    }, 2500);
 };
 
 document.addEventListener('DOMContentLoaded', function() {
