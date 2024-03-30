@@ -48,6 +48,11 @@
             <div class="col-lg-3 col-md-4 col-sm-6 mix-auto">
                 <div class="product__item">
                     <div class="product__item__pic set-bg" data-setbg="{{ item.image }}">
+
+	                    {% if item.stock == 0: %}
+	                        <div class="label stockout">Out of Stock!</div>
+	                    {% endif %}
+
                         <ul class="product__hover">
                             <li><a href="{{ item.image }}" class="image-popup"><span class="arrow_expand"></span></a></li>
                             <li><a href="#"><span class="icon_heart_alt"></span></a></li>

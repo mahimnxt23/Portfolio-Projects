@@ -22,41 +22,47 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="shop__cart__table">
-	                    {% for eshop_item in eshop_items %}
-                            <table>
+                        <table>
                             <thead>
                                 <tr>
-                                    <th>Product</th>
-                                    <th>Price</th>
-                                    <th>Quantity</th>
-                                    <th>Total</th>
-                                    <th></th>
-                                </tr>
-                            </thead>
+	                            <th>Product</th>
+	                            <th>Price</th>
+	                            <th>Quantity</th>
+	                            <th>Total</th>
+	                            <th></th>
+                            </tr>
+                        </thead>
                             <tbody>
-                                <tr>
-                                    <td class="cart__product__item">
-                                        <img src="./static/img/shop-cart/cp-1.jpg" alt="">
-                                        <div class="cart__product__item__title">
-                                            <h6>Chain bucket bag</h6>
-                                            <div class="rating">
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                                <i class="fa fa-star"></i>
-                                            </div>
-                                        </div>
-                                    </td>
-                                    <td class="cart__price">$ 150.0</td>
-                                    <td class="cart__quantity">
-                                        <div class="pro-qty">
-                                            <input type="text" value="1">
-                                        </div>
-                                    </td>
-                                    <td class="cart__total">$ 300.0</td>
-                                    <td class="cart__close"><span class="icon_close"></span></td>
-                                </tr>
+		                        {% for eshop_item in eshop_items: %}
+	                                {% for cart_item in cart_items: %}
+	                                    {% if cart_item.items_id == eshop_item.id %}
+	                                        <tr>
+			                                    <td class="cart__product__item">
+			                                        <img src="/{{ eshop_item.image }}" alt="{{ eshop_item.name }}-product-image">
+			                                        <div class="cart__product__item__title">
+			                                            <h6>{{ eshop_item.name }}</h6>
+			                                            <div class="rating">
+
+				                                            {% for _ in range(5): %}
+			                                                    <i class="fa fa-star"></i>
+				                                            {% endfor %}
+
+			                                            </div>
+			                                        </div>
+			                                    </td>
+			                                    <td class="cart__price">$ {{ eshop_item.price }}</td>
+			                                    <td class="cart__quantity">
+			                                        <div class="pro-qty">
+			                                            <input type="text" value="{{ cart_item.quantity }}">
+			                                        </div>
+			                                    </td>
+			                                    <td class="cart__total">$ {{ (eshop_item.price) * (cart_item.quantity) }}</td>
+			                                    <td class="cart__close"><span class="icon_close"></span></td>
+	                                        </tr>
+
+	                                    {% endif %}
+	                                {% endfor %}
+                                {% endfor %}
                             </tbody>
                         </table>
                     </div>
@@ -65,12 +71,12 @@
             <div class="row">
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn">
-                        <a href="#">Continue Shopping</a>
+                        <a href="{{ url_for('homepage') }}">Continue Shopping</a>
                     </div>
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn update__btn">
-                        <a href="#"><span class="icon_loading"></span> Update cart</a>
+                        <a href="{{ url_for('shop_cart') }}"><span class="icon_loading"></span> Update cart</a>
                     </div>
                 </div>
             </div>
@@ -78,8 +84,8 @@
                 <div class="col-lg-6">
                     <div class="discount__content">
                         <h6>Discount codes</h6>
-                        <form action="#">
-                            <input type="text" placeholder="Enter your coupon code">
+                        <form action="#" method="POST">
+                            <input type="text" placeholder="Enter your coupon code" id="discount_code">
                             <button type="submit" class="site-btn">Apply</button>
                         </form>
                     </div>
@@ -88,8 +94,9 @@
                     <div class="cart__total__procced">
                         <h6>Cart total</h6>
                         <ul>
-                            <li>Subtotal <span>$ 750.0</span></li>
-                            <li>Total <span>$ 750.0</span></li>
+                            <li>Subtotal <span>$ {{ final_prices[0] }}</span></li>
+                            <li>Delivery Charge <span>$ 99.0</span></li>
+                            <li>Total <span>$ {{ final_prices[1] }}</span></li>
                         </ul>
                         <a href="#" class="primary-btn">Proceed to checkout</a>
                     </div>

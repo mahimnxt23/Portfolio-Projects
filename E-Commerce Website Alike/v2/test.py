@@ -184,12 +184,36 @@ def checkout():
     return render_template("checkout.html", this_user=current_user)
 
 
+subtotal_price, total_price, delivery_cost = (float(0), float(0), float(99))
+
+
+def calculate_total_checkout_price(from_shop, from_cart):
+    global subtotal_price, total_price, delivery_cost
+    
+    for shop_item in from_shop:
+        for cart_item in from_cart:
+            if shop_item.id == cart_item.items_id:
+                subtotal_price += float(shop_item.price * cart_item.quantity)
+                
+    if not subtotal_price >= float(500):
+        total_price = float(subtotal_price + delivery_cost)
+    total_price = subtotal_price
+    
+    return subtotal_price, total_price
+
+
 @app.route("/shop-cart", methods=['GET'])
 def shop_cart():
-    items_in_cart = Cart.query.filter_by(user_id=current_user.id).all()
-    items_in_shop = EshopItem.query.all()
-    return render_template("shop-cart.html", this_user=current_user, eshop_items=items_in_shop,
-                           cart_items=items_in_cart)
+    
+    if current_user.is_authenticated:
+        items_in_cart = Cart.query.filter_by(user_id=current_user.id).all()
+        items_in_shop = EshopItem.query.all()
+        checkout_prices = calculate_total_checkout_price(items_in_shop, items_in_cart)
+        
+        return render_template("shop-cart.html", this_user=current_user, eshop_items=items_in_shop,
+                               cart_items=items_in_cart, final_prices=checkout_prices)
+    else:
+        return redirect(url_for('login_page'))
 
 
 if __name__ == "__main__":

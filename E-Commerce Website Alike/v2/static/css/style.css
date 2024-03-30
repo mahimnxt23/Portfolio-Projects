@@ -1300,6 +1300,7 @@ ol {
 }
 
 .product__item__pic {
+	width: 100%;
 	height: 360px;
 	position: relative;
 	overflow: hidden;
@@ -1322,7 +1323,9 @@ ol {
 }
 
 .product__item__pic .label.stockout {
-	background: #111111;
+	background: #ca1515;
+	color: white;
+	font-weight: bold;
 }
 
 .product__item__pic .label.stockblue {
@@ -2263,11 +2266,14 @@ ol {
 .shop__cart__table tbody tr .cart__product__item img {
 	float: left;
 	margin-right: 25px;
+	max-width: 40%;
+	height: auto;
 }
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title {
 	overflow: hidden;
 	padding-top: 23px;
+	margin-top: 82px;
 }
 
 .shop__cart__table tbody tr .cart__product__item .cart__product__item__title h6 {
