@@ -181,12 +181,15 @@ def item_already_in_cart(item_id):
 
 @app.route("/checkout", methods=['GET'])
 def checkout():
-    return render_template("checkout.html")
+    return render_template("checkout.html", this_user=current_user)
 
 
 @app.route("/shop-cart", methods=['GET'])
 def shop_cart():
-    return render_template("shop-cart.html")
+    items_in_cart = Cart.query.filter_by(user_id=current_user.id).all()
+    items_in_shop = EshopItem.query.all()
+    return render_template("shop-cart.html", this_user=current_user, eshop_items=items_in_shop,
+                           cart_items=items_in_cart)
 
 
 if __name__ == "__main__":
