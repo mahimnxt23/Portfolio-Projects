@@ -142,8 +142,8 @@ def product_detail(item_id):
     return render_template("product-detail.html", item=item_to_show, this_user=current_user)
 
 
-@app.route("/add_to_cart/<int:item_id>", methods=['GET', 'POST'])
-def add_to_cart(item_id):
+@app.route("/update_cart/<int:item_id>", methods=['GET', 'POST'])
+def update_cart(item_id):
     quantity = int(request.form.get('quantity', 1))  # capturing incoming value through AJAX & converting to integer...
     buying_item = EshopItem.query.filter_by(id=item_id).first()
     
@@ -184,11 +184,8 @@ def checkout():
     return render_template("checkout.html", this_user=current_user)
 
 
-subtotal_price, total_price, delivery_cost = (float(0), float(0), float(99))
-
-
 def calculate_total_checkout_price(from_shop, from_cart):
-    global subtotal_price, total_price, delivery_cost
+    subtotal_price, total_price, delivery_cost = (float(0), float(0), float(99))
     
     for shop_item in from_shop:
         for cart_item in from_cart:
@@ -197,7 +194,8 @@ def calculate_total_checkout_price(from_shop, from_cart):
                 
     if not subtotal_price >= float(500):
         total_price = float(subtotal_price + delivery_cost)
-    total_price = subtotal_price
+    else:
+        total_price = subtotal_price
     
     return subtotal_price, total_price
 

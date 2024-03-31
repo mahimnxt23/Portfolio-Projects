@@ -11,15 +11,15 @@ Created: Colorib
 
 
 /*-------------------
-	Add Items to Cart
+	Add Items to Cart & Update Cart
 --------------------- */
-function add_to_cart(item_id) {
+function update_cart(item_id) {
     var quantity = $('.pro-qty[data-item-id="' + item_id + '"]').find('input').val();  // Getting item ID from data attribute
 
     if (typeof item_id !== 'undefined') {
         // Send the AJAX request to the Flask route
         $.ajax({
-            url: '/add_to_cart/' + item_id,
+            url: '/update_cart/' + item_id,
             type: 'POST',
             data: {quantity: quantity},
             success: function (response) {
@@ -70,6 +70,14 @@ function updateStockLabel(item_id, quantity) {
             }
         };
     });
+};
+
+
+    /*-------------------
+		Handle change on Shop-Cart
+	--------------------- */
+function handleQuantityChange(item_id) {
+    update_cart(item_id, quantity);
 };
 
 
