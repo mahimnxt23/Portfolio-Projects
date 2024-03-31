@@ -58,13 +58,15 @@
                             <div class="quantity">
                                 <span>Quantity:</span>
                                 <div class="pro-qty" data-item-id="{{ item.id }}">
+	                                <span class="dec qtybtn">-</span>
                                     <input type="text" value="1">
+	                                <span class="inc qtybtn">+</span>
                                 </div>
                             </div>
 
 	                        {% if this_user.is_authenticated: %}
 	                        <div class="inline-notification"></div>
-	                            <button type="button" onclick="update_cart({{ item.id }})" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
+	                            <button onclick="add_to_cart({{ item.id }})" class="cart-btn"><span class="icon_bag_alt"></span> Add to cart</button>
 	                            <ul>
 	                                <li><a href="#"><span class="icon_heart_alt"></span></a></li>
 	                            </ul>

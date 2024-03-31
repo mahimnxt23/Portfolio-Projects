@@ -13,13 +13,13 @@ Created: Colorib
 /*-------------------
 	Add Items to Cart & Update Cart
 --------------------- */
-function update_cart(item_id) {
+function add_to_cart(item_id) {
     var quantity = $('.pro-qty[data-item-id="' + item_id + '"]').find('input').val();  // Getting item ID from data attribute
 
     if (typeof item_id !== 'undefined') {
         // Send the AJAX request to the Flask route
         $.ajax({
-            url: '/update_cart/' + item_id,
+            url: '/add_to_cart/' + item_id,
             type: 'POST',
             data: {quantity: quantity},
             success: function (response) {
@@ -77,8 +77,24 @@ function updateStockLabel(item_id, quantity) {
 		Handle change on Shop-Cart
 	--------------------- */
 function handleQuantityChange(item_id) {
-    update_cart(item_id, quantity);
+    if (document.getElementById('shopCartPage')) {
+        var decrease = $('.pro-qty .dec');
+        var increase = $('.pro-qty .inc');
+
+        // Listen for decrease button click
+        decrease.on('click', function() {
+            console.log('dec triggered');
+            update_cart(item_id);
+        });
+
+        // Listen for increase button click
+        increase.on('click', function() {
+            console.log('inc triggered');
+            update_cart(item_id);
+        });
+    }
 };
+
 
 
     /*-------------------
@@ -87,12 +103,14 @@ function handleQuantityChange(item_id) {
 var modal;
 
 function showNotification(message) {
-    document.getElementById('notificationMessage').innerText = message;
-    modal.style.display = 'block';
+    if (document.getElementById('productDetailsPage')) {
+        document.getElementById('notificationMessage').innerText = message;
+        modal.style.display = 'block';
 
-    setTimeout(function() {
-        modal.style.display = 'none';
-    }, 2500);
+        setTimeout(function() {
+            modal.style.display = 'none';
+        }, 2500);
+    }
 };
 
 document.addEventListener('DOMContentLoaded', function() {
@@ -335,8 +353,8 @@ window.onclick = function(event) {
 	--------------------- */
 	$(document).ready(function() {
         var proQty = $('.pro-qty');
-        proQty.prepend('<span class="dec qtybtn">-</span>');
-        proQty.append('<span class="inc qtybtn">+</span>');
+//        proQty.prepend('<span class="dec qtybtn">-</span>');
+//        proQty.append('<span class="inc qtybtn">+</span>');
         proQty.on('click', '.qtybtn', function () {
             var $button = $(this);
             var oldValue = $button.parent().find('input').val();

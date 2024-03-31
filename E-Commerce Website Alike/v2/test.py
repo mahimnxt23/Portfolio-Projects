@@ -142,8 +142,8 @@ def product_detail(item_id):
     return render_template("product-detail.html", item=item_to_show, this_user=current_user)
 
 
-@app.route("/update_cart/<int:item_id>", methods=['GET', 'POST'])
-def update_cart(item_id):
+@app.route("/add_to_cart/<int:item_id>", methods=['GET', 'POST'])
+def add_to_cart(item_id):
     quantity = int(request.form.get('quantity', 1))  # capturing incoming value through AJAX & converting to integer...
     buying_item = EshopItem.query.filter_by(id=item_id).first()
     
@@ -212,6 +212,10 @@ def shop_cart():
                                cart_items=items_in_cart, final_prices=checkout_prices)
     else:
         return redirect(url_for('login_page'))
+    
+    
+def adjust_cart():
+    pass
 
 
 if __name__ == "__main__":
