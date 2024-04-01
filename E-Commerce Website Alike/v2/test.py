@@ -186,29 +186,27 @@ def checkout():
 
 
 def calculate_total_checkout_price(from_shop, from_cart):
-    subtotal_price, total_price, delivery_cost = (float(0), float(0), float(99))
+    subtotal_price, total_price, delivery_cost = (float(0), float(0), float(199))
     
     for shop_item in from_shop:
         for cart_item in from_cart:
             if shop_item.id == cart_item.items_id:
                 subtotal_price += float(shop_item.price * cart_item.quantity)
                 
-    if not subtotal_price >= float(500):
+    if not subtotal_price >= float(599):
         total_price = float(subtotal_price + delivery_cost)
     else:
         total_price = subtotal_price
     
-    return subtotal_price, total_price
+    return subtotal_price, delivery_cost, total_price
 
 
 @app.route("/shop-cart", methods=['GET'])
 def shop_cart():
-    
     if current_user.is_authenticated:
         items_in_cart = Cart.query.filter_by(user_id=current_user.id).all()
         items_in_shop = EshopItem.query.all()
         checkout_prices = calculate_total_checkout_price(items_in_shop, items_in_cart)
-        
         return render_template("shop-cart.html", this_user=current_user, eshop_items=items_in_shop,
                                cart_items=items_in_cart, final_prices=checkout_prices)
     else:
@@ -225,11 +223,30 @@ def update_cart():
         increase = int(update['increase'])
         decrease = int(update['decrease'])
 
-        product_selected = EshopItem.query.filter_by(id=item_id).first()  # Retrieve current stock for product
-        products_current_stock = product_selected.stock
-
-        new_stock = products_current_stock - increase + decrease
-        product_selected.stock = new_stock
+        selected_product_in_shop = EshopItem.query.filter_by(id=item_id).first()
+        selected_product_in_cart = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
+        
+        current_stock = selected_product_in_shop.stock
+        current_quantity = selected_product_in_cart.quantity
+        
+        def set_values_for(mode):
+            if mode == 'update':
+                selected_product_in_shop.stock = current_stock - increase + decrease
+                selected_product_in_cart.quantity = current_quantity + increase - decrease
+            elif mode == 'delete':
+                selected_product_in_shop.stock = current_stock + current_quantity
+                selected_product_in_cart.quantity = 0
+                db.session.delete(selected_product_in_cart)
+        
+        decrease_amount = (current_quantity - decrease + increase)
+            
+        if 1 <= increase <= current_stock:
+            set_values_for('update')
+        elif decrease >= 1 and decrease_amount > 0:
+            set_values_for('update')
+        elif decrease_amount <= 0:
+            set_values_for('delete')
+    
         db.session.commit()
         
     return redirect(url_for('shop_cart'))

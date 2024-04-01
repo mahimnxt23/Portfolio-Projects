@@ -99,14 +99,8 @@
                         <h6>Cart total</h6>
                         <ul>
                             <li>Subtotal <span>$ {{ final_prices[0] }}</span></li>
-
-	                        {% if final_prices[0] > 50500: %}
-                                <li><s>Delivery Charge <span>$ 0</span></s></li>
-	                        {% else: %}
-                                <li>Delivery Charge <span>$ 99.0</span></li>
-	                        {% endif %}
-
-	                        <li>Total <span>$ {{ final_prices[1] }}</span></li>
+	                        <li>Delivery Charge <span>$ {{ final_prices[1] }}</span></li>
+	                        <li>Total <span>$ {{ final_prices[2] }}</span></li>
                         </ul>
                         <a href="#" class="primary-btn">Proceed to checkout</a>
                     </div>
