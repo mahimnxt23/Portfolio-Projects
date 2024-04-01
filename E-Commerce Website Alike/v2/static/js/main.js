@@ -43,6 +43,58 @@ function add_to_cart(item_id) {
 };
 
 
+$(document).ready(function() {
+    $('.pro-qty').each(function() {
+        var $qty = $(this);
+        $qty.data('increase', 0); // Track increase clicks
+        $qty.data('decrease', 0); // Track decrease clicks
+    });
+
+    $('.pro-qty').on('click', '.qtybtn', function() {
+        var $button = $(this);
+        var $qty = $button.parent();
+//        var currentValue = parseInt($qty.find('input').val());
+        var itemId = $qty.data('item-id');
+
+        if ($button.hasClass('inc')) {
+            $qty.data('increase', $qty.data('increase') + 1);
+            console.log('clicked me! [ 1 ]')
+        } else {
+//            if (currentValue > 1) {
+            $qty.data('decrease', $qty.data('decrease') + 1);
+            console.log('clicked me! [ 2 ]')
+//            }
+        }
+    });
+
+    // When the user is ready to update the cart
+    $('#update-cart-button').on('click', function() {
+        // Collect data for all items
+        var updates = $('.pro-qty').map(function() {
+            return {
+                item_id: $(this).data('item-id'),
+                increase: $(this).data('increase'),
+                decrease: $(this).data('decrease')
+            };
+        }).get();
+
+        // Send AJAX request to server
+        $.ajax({
+            url: '/update_cart',
+            type: 'POST',
+            data: { updates: JSON.stringify(updates) },
+            success: function(response) {
+                if(response.status === 'success') {
+                    console.log('Successfully updated: ', response);
+                } else {
+                    console.log(response.error, 'Something\'s FUCKED up!');
+                }
+            }
+        });
+    });
+});
+
+
 /*-------------------
     Instantly Update Stock
 --------------------- */
@@ -71,30 +123,6 @@ function updateStockLabel(item_id, quantity) {
         };
     });
 };
-
-
-    /*-------------------
-		Handle change on Shop-Cart
-	--------------------- */
-function handleQuantityChange(item_id) {
-    if (document.getElementById('shopCartPage')) {
-        var decrease = $('.pro-qty .dec');
-        var increase = $('.pro-qty .inc');
-
-        // Listen for decrease button click
-        decrease.on('click', function() {
-            console.log('dec triggered');
-            update_cart(item_id);
-        });
-
-        // Listen for increase button click
-        increase.on('click', function() {
-            console.log('inc triggered');
-            update_cart(item_id);
-        });
-    }
-};
-
 
 
     /*-------------------

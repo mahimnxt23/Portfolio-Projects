@@ -7,6 +7,7 @@ from flask_wtf.csrf import CSRFProtect
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Email
 from werkzeug.security import generate_password_hash, check_password_hash
+import json
 
 
 # app initialization...
@@ -214,8 +215,24 @@ def shop_cart():
         return redirect(url_for('login_page'))
     
     
-def adjust_cart():
-    pass
+@app.route('/update_cart', methods=['POST'])
+def update_cart():
+    updates = request.form.get('updates')
+    updates = json.loads(updates)
+
+    for update in updates:
+        item_id = update['item_id']
+        increase = int(update['increase'])
+        decrease = int(update['decrease'])
+
+        product_selected = EshopItem.query.filter_by(id=item_id).first()  # Retrieve current stock for product
+        products_current_stock = product_selected.stock
+
+        new_stock = products_current_stock - increase + decrease
+        product_selected.stock = new_stock
+        db.session.commit()
+        
+    return redirect(url_for('shop_cart'))
 
 
 if __name__ == "__main__":

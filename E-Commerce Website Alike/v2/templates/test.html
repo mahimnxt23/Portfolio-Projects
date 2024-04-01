@@ -1,0 +1,52 @@
+
+
+<tbody>
+{% for eshop_item in eshop_items: %}
+{% for cart_item in cart_items: %}
+{% if cart_item.items_id == eshop_item.id %}
+<tr>
+	<td class="cart__product__item">
+		<img src="/{{ eshop_item.image }}" alt="{{ eshop_item.name }}-product-image">
+		<div class="cart__product__item__title">
+			<h6>{{ eshop_item.name }}</h6>
+			<div class="rating">
+				{% for _ in range(5): %}
+				<i class="fa fa-star"></i>
+				{% endfor %}
+			</div>
+		</div>
+	</td>
+	<td class="cart__price">$ {{ eshop_item.price }}</td>
+	<td class="cart__quantity">
+		<div class="pro-qty" data-item-id="{{ cart_item.id }}">
+			<span class="dec qtybtn">-</span>
+			<input type="text" value="{{ cart_item.quantity }}" readonly>
+			<span class="inc qtybtn">+</span>
+		</div>
+	</td>
+	<td class="cart__total">$ {{ (eshop_item.price) * (cart_item.quantity) }}</td>
+	<td class="cart__close"><span class="icon_close"></span></td>
+</tr>
+{% endif %}
+{% endfor %}
+{% endfor %}
+</tbody>
+
+
+	$(document).ready(function() {
+        var proQty = $('.pro-qty');
+        proQty.on('click', '.qtybtn', function () {
+            var $button = $(this);
+            var oldValue = $button.parent().find('input').val();
+            var newVal = 0;
+            if ($button.hasClass('inc')) {
+                newVal = parseFloat(oldValue) + 1;
+            } else {
+                if (oldValue > 0) {
+                    newVal = parseFloat(oldValue) - 1;
+                }
+            }
+            $button.parent().find('input').val(newVal);
+        });
+    });
+
