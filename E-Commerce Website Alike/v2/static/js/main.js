@@ -53,24 +53,20 @@ $(document).ready(function() {
     $('.pro-qty').on('click', '.qtybtn', function() {
         var $button = $(this);
         var $qty = $button.parent();
-//        var currentValue = parseInt($qty.find('input').val());
         var itemId = $qty.data('item-id');
 
         if ($button.hasClass('inc')) {
             $qty.data('increase', $qty.data('increase') + 1);
             console.log('clicked me! [ 1 ]')
         } else {
-//            if (currentValue > 1) {
             $qty.data('decrease', $qty.data('decrease') + 1);
             console.log('clicked me! [ 2 ]')
-//            }
         }
     });
 
     // When the user is ready to update the cart
     $('#update-cart-button').on('click', function() {
-        // Collect data for all items
-        var updates = $('.pro-qty').map(function() {
+        var updates = $('.pro-qty').map(function() {  // Collect data for all items
             return {
                 item_id: $(this).data('item-id'),
                 increase: $(this).data('increase'),
@@ -85,9 +81,30 @@ $(document).ready(function() {
             data: { updates: JSON.stringify(updates) },
             success: function(response) {
                 if(response.status === 'success') {
+                    showNotification('Update Successful!  Reloading page in 1 seconds...')
                     console.log('Successfully updated: ', response);
+
+                    setTimeout(function() {  // reload the page after 1.5 seconds
+//                    window.location.reload(true);
+                    window.location.href = '/shop-cart';
+                    }, 1500);
+
                 } else {
-                    console.log(response.error, 'Something\'s FUCKED up!');
+                    console.log('Error updating cart: ', response.error);
+                }
+            },
+
+            error: function(xhr, status, error) {
+                // Log the error to the console for debugging
+                console.error('AJAX request failed:', status, error);
+
+                // Display a user-friendly error message
+                showNotification('An error occurred while updating the cart. Please try again.');
+
+                if (status === 'timeout') {
+                    showNotification('The request timed out. Please check your internet connection and try again.');
+                } else if (status === 'abort') {
+                    showNotification('The request was aborted. Please try again.');
                 }
             }
         });
@@ -131,18 +148,16 @@ function updateStockLabel(item_id, quantity) {
 var modal;
 
 function showNotification(message) {
-    if (document.getElementById('productDetailsPage')) {
-        document.getElementById('notificationMessage').innerText = message;
-        modal.style.display = 'block';
+    document.getElementById('notificationMessage').innerText = message;
+    modal.style.display = 'block';
 
-        setTimeout(function() {
-            modal.style.display = 'none';
-        }, 2500);
-    }
+    setTimeout(function() {
+        modal.style.display = 'none';
+    }, 2500);
 };
 
 document.addEventListener('DOMContentLoaded', function() {
-    if (document.getElementById('productDetailsPage')) {
+    if (document.getElementById('productDetailsPage') || document.getElementById('shopCartPage')) {
         modal = document.getElementById('notificationModal');
         var span = document.getElementsByClassName('close')[0];
 
@@ -386,6 +401,7 @@ window.onclick = function(event) {
         proQty.on('click', '.qtybtn', function () {
             var $button = $(this);
             var oldValue = $button.parent().find('input').val();
+            var stockLimit = $button.parent().find('input').data('stock-limit');
             var newVal = 0;
             if ($button.hasClass('inc')) {
                 newVal = parseFloat(oldValue) + 1;

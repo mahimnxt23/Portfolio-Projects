@@ -32,21 +32,177 @@
 {% endfor %}
 </tbody>
 
+<div class="row">
+	<div class="col-lg-6 col-md-6 col-sm-6">
+		<div class="cart__btn">
+			<a href="{{ url_for('homepage') }}">Continue Shopping</a>
+		</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-6">
+		<div class="cart__btn update__btn">
+			<a href="{{ url_for('shop_cart') }}" id="update-cart-button"><span class="icon_loading"></span> Update cart</a>
+		</div>
+	</div>
+</div>
 
-	$(document).ready(function() {
-        var proQty = $('.pro-qty');
-        proQty.on('click', '.qtybtn', function () {
-            var $button = $(this);
-            var oldValue = $button.parent().find('input').val();
-            var newVal = 0;
-            if ($button.hasClass('inc')) {
-                newVal = parseFloat(oldValue) + 1;
-            } else {
-                if (oldValue > 0) {
-                    newVal = parseFloat(oldValue) - 1;
+
+$(document).ready(function() {
+    $('.pro-qty').each(function() {
+        var $qty = $(this);
+        $qty.data('increase', 0);
+        $qty.data('decrease', 0);
+    });
+
+    $('.pro-qty').on('click', '.qtybtn', function() {
+        var $button = $(this);
+        var $qty = $button.parent();
+        var itemId = $qty.data('item-id');
+
+        if ($button.hasClass('inc')) {
+            $qty.data('increase', $qty.data('increase') + 1);
+        } else {
+            $qty.data('decrease', $qty.data('decrease') + 1);
+        }
+    });
+
+    $('#update-cart-button').on('click', function() {
+        var updates = $('.pro-qty').map(function() {
+            return {
+                item_id: $(this).data('item-id'),
+                increase: $(this).data('increase'),
+                decrease: $(this).data('decrease')
+            };
+        }).get();
+
+        $.ajax({
+            url: '/update_cart',
+            type: 'POST',
+            data: { updates: JSON.stringify(updates) },
+        });
+    });
+});
+
+@app.route('/update_cart', methods=['POST'])
+def update_cart():
+    updates = request.form.get('updates')
+    updates = json.loads(updates)
+
+    for update in updates:
+        item_id = update['item_id']
+        increase = int(update['increase'])
+        decrease = int(update['decrease'])
+
+        selected_product_in_shop = EshopItem.query.filter_by(id=item_id).first()
+        selected_product_in_cart = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
+
+        current_stock = selected_product_in_shop.stock
+        current_quantity = selected_product_in_cart.quantity
+
+        def set_values_for(mode):
+            if mode == 'update':
+                selected_product_in_shop.stock = current_stock - increase + decrease
+                selected_product_in_cart.quantity = current_quantity + increase - decrease
+            elif mode == 'delete':
+                selected_product_in_shop.stock = current_stock + current_quantity
+                selected_product_in_cart.quantity = 0
+                db.session.delete(selected_product_in_cart)
+
+        decrease_amount = (current_quantity - decrease + increase)
+
+        if 1 <= increase <= current_stock:
+            set_values_for('update')
+        elif decrease >= 1 and decrease_amount > 0:
+            set_values_for('update')
+        elif decrease_amount <= 0:
+            set_values_for('delete')
+        else:
+            print('This was never executed!')
+
+        db.session.commit()
+
+<!-- Notification Modal -->
+<div id="notificationModal" class="modal">
+	<div class="modal-content">
+		<p id="notificationMessage">Some error message...</p>
+		<span class="close">×</span>
+	</div>
+</div>
+
+
+$(document).ready(function() {
+    $('.pro-qty').each(function() {
+        var $qty = $(this);
+        $qty.data('increase', 0); // Track increase clicks
+        $qty.data('decrease', 0); // Track decrease clicks
+    });
+
+    $('.pro-qty').on('click', '.qtybtn', function() {
+        var $button = $(this);
+        var $qty = $button.parent();
+        var itemId = $qty.data('item-id');
+
+        if ($button.hasClass('inc')) {
+            $qty.data('increase', $qty.data('increase') + 1);
+            console.log('clicked me! [ 1 ]')
+        } else {
+            $qty.data('decrease', $qty.data('decrease') + 1);
+            console.log('clicked me! [ 2 ]')
+        }
+    });
+
+    // When the user is ready to update the cart
+    $('#update-cart-button').on('click', function() {
+        var updates = $('.pro-qty').map(function() {  // Collect data for all items
+            return {
+                item_id: $(this).data('item-id'),
+                increase: $(this).data('increase'),
+                decrease: $(this).data('decrease')
+            };
+        }).get();
+
+        // Send AJAX request to server
+        $.ajax({
+            url: '/update_cart',
+            type: 'POST',
+            data: { updates: JSON.stringify(updates) },
+            success: function(response) {
+                if(response.status === 'success') {
+                    console.log('Successfully updated: ', response);
+
+                    showNotification('Update Successful! Reloading page in 1 seconds...')
+
+                    setTimeout(function() {  // reload the page after 1.5 seconds
+                    window.location.reload();
+                    }, 1500);
+
+                } else {
+                    console.log('Error updating cart: ', response.error);
                 }
             }
-            $button.parent().find('input').val(newVal);
         });
+    });
+});
+
+    $('.pro-qty').on('click', '.qtybtn', function() {
+        var $button = $(this);
+        var $qty = $button.parent();
+        var $input = $qty.find('input');
+        var stockLimit = parseInt($input.data('stock-limit'), 10);
+        var currentVal = parseInt($input.val(), 10);
+
+        // Check if the increment button is clicked and if the stock limit is reached
+        if ($button.hasClass('inc') && currentVal < stockLimit) {
+            $qty.data('increase', $qty.data('increase') + 1);
+            console.log('clicked me! [ 1 ]');
+            // If after clicking, the value reaches the stock limit, disable the button
+            if (currentVal + 1 >= stockLimit) {
+                $button.prop('disabled', true);
+            }
+        } else if ($button.hasClass('dec')) {
+            $qty.data('decrease', $qty.data('decrease') + 1);
+            console.log('clicked me! [ 2 ]');
+            // Re-enable the increment button if it was disabled
+            $qty.find('.inc').prop('disabled', false);
+        }
     });
 

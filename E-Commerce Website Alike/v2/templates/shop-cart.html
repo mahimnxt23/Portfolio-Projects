@@ -18,6 +18,14 @@
     </div>
     <!-- Breadcrumb End -->
 
+	<!-- Notification Modal -->
+	<div id="notificationModal" class="modal">
+		<div class="modal-content">
+			<p id="notificationMessage">Some error message...</p>
+			<span class="close">×</span>
+		</div>
+	</div>
+
     <!-- Shop Cart Section Begin -->
     <section class="shop-cart spad">
         <div class="container">
@@ -54,9 +62,9 @@
 			                                    </td>
 			                                    <td class="cart__price">$ {{ eshop_item.price }}</td>
 			                                    <td class="cart__quantity">
-			                                        <div class="pro-qty" data-item-id="{{ cart_item.id }}">
+			                                        <div class="pro-qty" data-item-id="{{ cart_item.items_id }}">
 				                                        <span class="dec qtybtn">-</span>
-			                                            <input type="text" value="{{ cart_item.quantity }}" readonly>
+			                                            <input type="text" value="{{ cart_item.quantity }}" data-stock-limit="{{ eshop_item.stock }}" readonly>
 				                                        <span class="inc qtybtn">+</span>
 			                                        </div>
 			                                    </td>
@@ -80,7 +88,7 @@
                 </div>
                 <div class="col-lg-6 col-md-6 col-sm-6">
                     <div class="cart__btn update__btn">
-                        <a href="{{ url_for('shop_cart') }}" id="update-cart-button"><span class="icon_loading"></span> Update cart</a>
+                        <button id="update-cart-button"><span class="icon_loading"></span> Update cart</button>
                     </div>
                 </div>
             </div>
@@ -99,8 +107,14 @@
                         <h6>Cart total</h6>
                         <ul>
                             <li>Subtotal <span>$ {{ final_prices[0] }}</span></li>
-	                        <li>Delivery Charge <span>$ {{ final_prices[1] }}</span></li>
-	                        <li>Total <span>$ {{ final_prices[2] }}</span></li>
+
+	                        {% if final_prices[0] >= 599: %}
+	                            <li>Delivery Charge <span>$ 0</span></li>
+	                        {% else: %}
+	                            <li>Delivery Charge <span>$ 199</span></li>
+	                        {% endif %}
+
+	                        <li>Total <span>$ {{ final_prices[1] }}</span></li>
                         </ul>
                         <a href="#" class="primary-btn">Proceed to checkout</a>
                     </div>
