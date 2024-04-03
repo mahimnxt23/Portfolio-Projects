@@ -21,7 +21,7 @@
 	<!-- Notification Modal -->
 	<div id="notificationModal" class="modal">
 		<div class="modal-content">
-			<p id="notificationMessage">Some error message...</p>
+			<p id="notificationMessage" style="color: black;">Some error message...</p>
 			<span class="close">×</span>
 		</div>
 	</div>
@@ -69,7 +69,7 @@
 			                                        </div>
 			                                    </td>
 			                                    <td class="cart__total">$ {{ (eshop_item.price) * (cart_item.quantity) }}</td>
-			                                    <td class="cart__close"><span class="icon_close"></span></td>
+			                                    <td class="cart__close"><span class="icon_close" id="delete_from_cart"></span></td>
 	                                        </tr>
 
 	                                    {% endif %}
@@ -92,34 +92,32 @@
                     </div>
                 </div>
             </div>
-            <div class="row">
-                <div class="col-lg-6">
-                    <div class="discount__content">
-                        <h6>Discount codes</h6>
-                        <form action="#" method="POST">
-                            <input type="text" placeholder="Enter your coupon code" id="discount_code">
-                            <button type="submit" class="site-btn">Apply</button>
-                        </form>
-                    </div>
-                </div>
-                <div class="col-lg-4 offset-lg-2">
-                    <div class="cart__total__procced">
-                        <h6>Cart total</h6>
-                        <ul>
-                            <li>Subtotal <span>$ {{ final_prices[0] }}</span></li>
 
-	                        {% if final_prices[0] >= 599: %}
-	                            <li>Delivery Charge <span>$ 0</span></li>
-	                        {% else: %}
-	                            <li>Delivery Charge <span>$ 199</span></li>
-	                        {% endif %}
+	        {% if cart_items: %}
+	            <div class="row">
+	                <div class="col-lg-6">
+	                    <div class="discount__content">
+	                        <h6>Discount codes</h6>
+	                        <form action="#" method="POST">
+	                            <input type="text" placeholder="Enter your coupon code" id="discount_code">
+	                            <button type="submit" class="site-btn">Apply</button>
+	                        </form>
+	                    </div>
+	                </div>
+	                <div class="col-lg-4 offset-lg-2">
+	                    <div class="cart__total__procced">
+	                        <h6>Cart total</h6>
+	                        <ul>
+	                            <li>Subtotal <span>$ {{ final_prices[0] }}</span></li>
+		                        <li>Delivery Charge <span>$ {{ final_prices[1] }}</span></li>
+		                        <li>Total <span>$ {{ final_prices[2] }}</span></li>
+	                        </ul>
+	                        <a href="#" class="primary-btn">Proceed to checkout</a>
+	                    </div>
+	                </div>
+	            </div>
+	        {% endif %}
 
-	                        <li>Total <span>$ {{ final_prices[1] }}</span></li>
-                        </ul>
-                        <a href="#" class="primary-btn">Proceed to checkout</a>
-                    </div>
-                </div>
-            </div>
         </div>
     </section>
     <!-- Shop Cart Section End -->

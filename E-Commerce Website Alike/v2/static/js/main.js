@@ -46,8 +46,16 @@ function add_to_cart(item_id) {
 $(document).ready(function() {
     $('.pro-qty').each(function() {
         var $qty = $(this);
+        $qty.data('deleted', false);
         $qty.data('increase', 0); // Track increase clicks
         $qty.data('decrease', 0); // Track decrease clicks
+    });
+
+    // Set the delete flag to true when the delete icon is clicked
+    $('.cart__close').on('click', '.icon_close', function() {
+        var $qty = $(this).closest('tr').find('.pro-qty');
+        $qty.data('deleted', true);
+        showNotification('Item will be deleted upon refresh, click Update cart button.')
     });
 
     $('.pro-qty').on('click', '.qtybtn', function() {
@@ -70,7 +78,8 @@ $(document).ready(function() {
             return {
                 item_id: $(this).data('item-id'),
                 increase: $(this).data('increase'),
-                decrease: $(this).data('decrease')
+                decrease: $(this).data('decrease'),
+                deleted: $(this).data('deleted')
             };
         }).get();
 
@@ -81,7 +90,7 @@ $(document).ready(function() {
             data: { updates: JSON.stringify(updates) },
             success: function(response) {
                 if(response.status === 'success') {
-                    showNotification('Update Successful!  Reloading page in 1 seconds...')
+                    showNotification('Update Cart Successful! Reloading page in 1 seconds...')
                     console.log('Successfully updated: ', response);
 
                     setTimeout(function() {  // reload the page after 1.5 seconds

@@ -185,35 +185,23 @@ def checkout():
     return render_template("checkout.html", this_user=current_user)
 
 
-# def calculate_total_checkout_price(from_shop, from_cart):
-#     subtotal_price, total_price, delivery_cost = (float(0), float(0), float(199))
-#
-#     for shop_item in from_shop:
-#         for cart_item in from_cart:
-#             if shop_item.id == cart_item.items_id:
-#                 subtotal_price += float(shop_item.price * cart_item.quantity)
-#
-#     if not subtotal_price >= float(599):
-#         total_price = float(subtotal_price + delivery_cost)
-#     else:
-#         total_price = subtotal_price
-#
-#     return subtotal_price, total_price
-
-
 def calculate_total_checkout_price(from_shop, from_cart):
     
-    item_prices = {item.id: item.price for item in from_shop}
-    item_quantities = {item.items_id: item.quantity for item in from_cart}
+    if not from_cart:
+        return 0, 0, 0
     
-    subtotal_price = sum(item_prices[item_id] * quantity for item_id, quantity in item_quantities.items())
-    delivery_cost = 199 if subtotal_price < 599 else 0
-    total_price = subtotal_price + delivery_cost
+    else:
+        item_prices = {item.id: item.price for item in from_shop}
+        item_quantities = {item.items_id: item.quantity for item in from_cart}
+        
+        subtotal_price = sum(item_prices[item_id] * quantity for item_id, quantity in item_quantities.items())
+        delivery_cost = 199 if subtotal_price < 599 else 0
+        total_price = subtotal_price + delivery_cost
     
-    return subtotal_price, total_price
+        return subtotal_price, delivery_cost, total_price
 
 
-@app.route("/shop-cart", methods=['GET'])
+@app.route("/shop-cart", methods=['GET', 'POST'])
 def shop_cart():
     try:
         if current_user.is_authenticated:
@@ -238,6 +226,7 @@ def update_cart():
         item_id = update['item_id']
         increase = int(update['increase'])
         decrease = int(update['decrease'])
+        delete_from_cart = update['deleted']
 
         selected_product_in_shop = EshopItem.query.filter_by(id=item_id).first()
         selected_product_in_cart = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
@@ -246,22 +235,37 @@ def update_cart():
         current_quantity = selected_product_in_cart.quantity
         
         def set_values_for(mode):
+            new_stock_amount = selected_product_in_shop.stock
+            new_quantity_amount = selected_product_in_cart.quantity
+            
             if mode == 'update':
-                selected_product_in_shop.stock = current_stock - increase + decrease
-                selected_product_in_cart.quantity = current_quantity + increase - decrease
+                new_stock_amount = current_stock - increase + decrease
+                new_quantity_amount = current_quantity + increase - decrease
+                
             elif mode == 'delete':
-                selected_product_in_shop.stock = current_stock + current_quantity
-                selected_product_in_cart.quantity = 0
+                new_stock_amount = current_stock + current_quantity
+                new_quantity_amount = 0
+                db.session.delete(selected_product_in_cart)
+                
+            elif mode == 'remove':
+                new_stock_amount += current_quantity
+                new_quantity_amount = 0
                 db.session.delete(selected_product_in_cart)
         
         decrease_amount = (current_quantity - decrease + increase)
             
         if 1 <= increase <= current_stock:
-            set_values_for('update')
+            set_values_for(mode='update')
+            
         elif decrease >= 1 and decrease_amount > 0:
-            set_values_for('update')
+            set_values_for(mode='update')
+            
         elif decrease_amount <= 0:
-            set_values_for('delete')
+            set_values_for(mode='delete')
+            
+        elif delete_from_cart:
+            set_values_for(mode='remove')
+            
         else:
             print('This was never executed!')
     

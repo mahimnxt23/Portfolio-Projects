@@ -206,3 +206,53 @@ $(document).ready(function() {
         }
     });
 
+	                        {% if final_prices[0] >= 599: %}
+	                            <li>Delivery Charge <span>$ 0</span></li>
+	                        {% else: %}
+	                            <li>Delivery Charge <span>$ 199</span></li>
+	                        {% endif %}
+
+
+from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
+
+app = Flask(__name__)
+db = SQLAlchemy(app)
+
+@app.route('/update_cart', methods=['POST'])
+def update_cart():
+    updates = request.form.get('updates')
+    if not updates:
+        return jsonify({'status': 'error', 'message': 'No updates received'}), 400
+
+    try:
+        updates = json.loads(updates)
+        with db.session.begin_nested():  # Start a nested transaction
+            for update in updates:
+                item_id = update.get('item_id')
+                increase = int(update.get('increase', 0))
+                decrease = int(update.get('decrease', 0))
+                delete_from_cart = update.get('deleted', False)
+
+                # Validate item_id and fetch the necessary records
+                selected_product_in_shop = EshopItem.query.get(item_id)
+                selected_product_in_cart = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
+
+                if not selected_product_in_shop or not selected_product_in_cart:
+                    continue  # Skip this update if the item is not found
+
+                current_stock = selected_product_in_shop.stock
+                current_quantity = selected_product_in_cart.quantity
+
+                # Define the logic for updating values
+                # ...
+
+            db.session.commit()  # Commit the transaction if all updates succeed
+        return jsonify({'status': 'success', 'message': 'Updated Everything!'})
+    except SQLAlchemyError as e:
+        db.session.rollback()  # Rollback the transaction on error
+        app.logger.error(f'Update cart failed: {str(e)}')
+        return jsonify({'status': 'error', 'message': 'An error occurred while updating the cart'}), 500
+
+
