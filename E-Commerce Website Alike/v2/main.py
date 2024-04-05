@@ -67,17 +67,17 @@ class LoginUserForm(FlaskForm):
 class UserDetails:
     def __init__(self, user_id):
         self.user_id = user_id
-        self.items_in_cart = self.items_in_cart()
-        self.items_in_shop = self.items_in_shop()
+        self.items_in_cart = self.items_from_cart()
+        self.items_in_shop = self.items_from_shop()
     
-    def items_in_cart(self):
+    def items_from_cart(self):
         return Cart.query.filter_by(user_id=self.user_id).all()
     
     # noinspection PyMethodMayBeStatic
-    def items_in_shop(self):
+    def items_from_shop(self):
         return EshopItem.query.all()
     
-    def calculate_checkout_details(self):
+    def calculate_purchasing_cost(self):
         
         if not self.items_in_cart:
             return 0, 0, 0
@@ -210,31 +210,17 @@ def item_already_in_cart(item_id):
     return user_cart_items is not None
 
 
-def calculate_total_checkout_price(from_shop, from_cart):
-    
-    if not from_cart:
-        return 0, 0, 0
-    
-    else:
-        item_prices = {item.id: item.price for item in from_shop}
-        item_quantities = {item.items_id: item.quantity for item in from_cart}
-        
-        subtotal_price = sum(item_prices[item_id] * quantity for item_id, quantity in item_quantities.items())
-        delivery_cost = 199 if subtotal_price < 599 else 0
-        total_price = subtotal_price + delivery_cost
-    
-        return subtotal_price, delivery_cost, total_price
-
-
 @app.route("/shop-cart", methods=['GET', 'POST'])
 def shop_cart():
     try:
         if current_user.is_authenticated:
-            items_in_cart = Cart.query.filter_by(user_id=current_user.id).all()
-            items_in_shop = EshopItem.query.all()
-            checkout_prices = calculate_total_checkout_price(items_in_shop, items_in_cart)
-            return render_template("shop-cart.html", this_user=current_user, eshop_items=items_in_shop,
-                                   cart_items=items_in_cart, final_prices=checkout_prices)
+            user_info = UserDetails(current_user.id)
+            cart_items = user_info.items_in_cart
+            shop_items = user_info.items_in_shop
+            checkout_prices = user_info.calculate_purchasing_cost()
+            
+            return render_template("shop-cart.html", this_user=current_user, eshop_items=shop_items,
+                                   cart_items=cart_items, final_prices=checkout_prices)
         else:
             return redirect(url_for('login_page'))
         
@@ -261,21 +247,19 @@ def update_cart():
         
         # noinspection PyUnusedLocal
         def set_values_for(mode):
-            new_stock_amount = selected_product_in_shop.stock
-            new_quantity_amount = selected_product_in_cart.quantity
             
-            if mode == ('update' or 1):
-                new_stock_amount = current_stock - increase + decrease
-                new_quantity_amount = current_quantity + increase - decrease
+            if mode == 'update':
+                selected_product_in_shop.stock = current_stock - increase + decrease
+                selected_product_in_cart.quantity = current_quantity + increase - decrease
                 
-            elif mode == ('reduce_quantity' or 2):
-                new_stock_amount = current_stock + current_quantity
-                new_quantity_amount = 0
+            elif mode == 'reduce_quantity':
+                selected_product_in_shop.stock = current_stock + current_quantity
+                selected_product_in_cart.quantity = 0
                 db.session.delete(selected_product_in_cart)
                 
-            elif mode == ('wipe_from_cart' or 3):
-                new_stock_amount += current_quantity
-                new_quantity_amount = 0
+            elif mode == 'wipe_from_cart':
+                selected_product_in_shop.stock += current_quantity
+                selected_product_in_cart.quantity = 0
                 db.session.delete(selected_product_in_cart)
         
         decrease_amount = (current_quantity - decrease + increase)
@@ -284,13 +268,13 @@ def update_cart():
             set_values_for(mode='update')
             
         elif decrease >= 1 and decrease_amount > 0:
-            set_values_for(mode=1)  # 'update'
+            set_values_for(mode='update')
             
-        elif decrease_amount <= 0 or delete_from_cart:
-            set_values_for(mode=3)  # 'wipe_from_cart'
+        elif decrease_amount <= 0:
+            set_values_for(mode='reduce_quantity')
             
-        # elif delete_from_cart:
-        #     set_values_for(mode=3)  # 'wipe_from_cart'
+        elif delete_from_cart:
+            set_values_for(mode='wipe_from_cart')
             
         else:
             print('This was never executed!')
@@ -301,9 +285,18 @@ def update_cart():
 
 
 @app.route("/checkout", methods=['GET', 'POST'])
-@login_required
 def checkout_page():
-    return render_template("checkout.html", this_user=current_user)
+    if current_user.is_authenticated:
+        
+        user_info = UserDetails(current_user.id)
+        cart_items = user_info.items_in_cart
+        shop_items = user_info.items_in_shop
+        checkout_prices = user_info.calculate_purchasing_cost()
+        
+        return render_template("checkout.html", this_user=current_user, eshop_items=shop_items,
+                               cart_items=cart_items, final_prices=checkout_prices)
+    else:
+        return redirect(url_for('login_page'))
 
 
 if __name__ == "__main__":
