@@ -2460,6 +2460,7 @@ ol {
 	border-radius: 50px;
 	text-align: center;
 	padding: 12px 0 10px;
+	color: white;
 }
 
 /*---------------------
@@ -2627,6 +2628,40 @@ ol {
 	margin-bottom: 14px;
 	line-height: 24px;
 }
+
+.checkout__order__product ul li.product-flex-container {
+    display: flex;
+    align-items: baseline;
+    flex-wrap: wrap;
+}
+
+.product-flex-container .product-index {
+    font-weight: bold;
+    float: left;
+    margin-right: 10px;
+}
+
+.product-flex-container .product-name {
+    font-style: italic;
+    float: left;
+    margin-right: 5px;
+    flex-grow: 1;
+    min-width: 0; /* Prevents flex items from growing too large */
+}
+
+.product-flex-container .product-quantity {
+	font-size: 12px;
+	color: red;
+	font-weight: bold;
+	line-height: 24px;
+}
+
+
+.product-flex-container .product-price {
+    color: #ca1515;
+    white-space: nowrap; /* Keeps the price in one line */
+}
+
 
 .checkout__order__product ul li:last-child {
 	margin-bottom: 0;
