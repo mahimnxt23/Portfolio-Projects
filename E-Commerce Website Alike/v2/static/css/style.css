@@ -2619,15 +2619,17 @@ ol {
 	padding-bottom: 22px;
 }
 
+
 .checkout__order__product ul li {
 	list-style: none;
 	font-size: 14px;
 	color: #444444;
 	font-weight: 500;
 	overflow: hidden;
-	margin-bottom: 14px;
-	line-height: 24px;
+	margin-bottom: 15px;
+	line-height: 25px;
 }
+
 
 .checkout__order__product ul li.product-flex-container {
     display: flex;
@@ -2650,7 +2652,7 @@ ol {
 }
 
 .product-flex-container .product-quantity {
-	font-size: 12px;
+	font-size: 11px;
 	color: red;
 	font-weight: bold;
 	line-height: 24px;
@@ -2659,19 +2661,13 @@ ol {
 
 .product-flex-container .product-price {
     color: #ca1515;
-    white-space: nowrap; /* Keeps the price in one line */
+    font-weight: 550;
+    float: right;
 }
 
 
 .checkout__order__product ul li:last-child {
 	margin-bottom: 0;
-}
-
-.checkout__order__product ul li span {
-	font-size: 14px;
-	color: #111111;
-	font-weight: 600;
-	float: right;
 }
 
 .checkout__order__product ul li .top__text {
