@@ -9,6 +9,8 @@ from flask_wtf.csrf import CSRFProtect
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
 import stripe
+from os import getenv
+from dotenv import load_dotenv
 
 
 # app initialization...
@@ -24,6 +26,9 @@ app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
 db = SQLAlchemy(app)
 # db.init_app(app)
+
+load_dotenv()
+stripe_api_key = getenv('STRIPE_API_KEY')
 
 
 class User(UserMixin, db.Model):
@@ -320,7 +325,7 @@ def checkout_page():
         return redirect(url_for('login_page'))
     
     
-@app.route('/create-checkout-session', methods=['POST'])
+@app.route('/create-checkout-session', methods=['GET', 'POST'])
 def checkout_session():
     try:
         user_info = UserDetails(current_user.id)
@@ -333,10 +338,11 @@ def checkout_session():
             success_url=url_for('success', _external=True),
             cancel_url=url_for('cancel', _external=True),
         )
-        return redirect(session.url, code=303)
+        # return redirect(session.url, code=303)
+        return jsonify({'status': 'success', 'checkoutUrl': session.url})
     except Exception as e:
-        # Handle exceptions
-        return str(e)
+        # return str(e)
+        return jsonify({'status': 'error', 'error': str(e)})
 
 
 @app.route('/success')

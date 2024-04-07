@@ -3,6 +3,8 @@ from flask_login import UserMixin, login_user, LoginManager, login_required, cur
 from werkzeug.security import generate_password_hash, check_password_hash
 from flask_sqlalchemy import SQLAlchemy
 import stripe
+from os import getenv
+from dotenv import load_dotenv
 
 
 app = Flask(__name__)
@@ -10,6 +12,9 @@ app.config["SECRET_KEY"] = "a-super-secure-key"
 app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///users.db"
 app.config["SQLALCHEMY_TRACK_MODIFICATIONS"] = False
 db = SQLAlchemy(app)
+
+load_dotenv()
+stripe.api_key = getenv('STRIPE_API_KEY')
 
 
 class User(UserMixin, db.Model):
@@ -41,9 +46,6 @@ class Cart(db.Model):
 login_manager = LoginManager()
 login_manager.init_app(app)
 
-TEST_KEY = "sk_test_51OtY3LCUs5SzWLs8KvITVYikf2LLj9jlMnbst5cF6inFg7mhhO7rmymxzK1rTgQcuxOmWj114fKia9cezQm2PXox00cAG3d3kz"
-stripe.api_key = TEST_KEY
-
 items_in_cart = []
 
 
@@ -68,7 +70,7 @@ def home():
 def create_checkout_session():
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],
-        line_items  =items_in_cart,
+        line_items=items_in_cart,
         mode="payment",
         success_url="http://127.0.0.1:5000/success/",
         cancel_url="https://templates/cancel.html",

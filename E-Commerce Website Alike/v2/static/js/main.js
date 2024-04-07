@@ -189,6 +189,29 @@ window.onclick = function(event) {
 };
 
 
+/*-------------------
+    Proceed to Payment
+--------------------- */
+$('#place-order').on('click', function(e) {
+    e.preventDefault();
+    $.ajax({
+        url: '/create-checkout-session', // Your endpoint for creating the session
+        method: 'POST',
+        data: {
+            // Include any necessary data you want to send to the server
+        },
+        success: function(response) {
+            // 'response' should contain the URL to which the user should be redirected
+            window.location.href = response.checkoutUrl; // Redirect the user to Stripe
+        },
+        error: function(xhr, status, error) {
+            // Handle any errors that occur during the request
+            console.error("Error occurred: " + status, error);
+        }
+    });
+});
+
+
 (function ($) {
 
     /*------------------
