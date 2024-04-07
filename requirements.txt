@@ -15,7 +15,9 @@ contourpy==1.2.0
 cryptography==42.0.5
 cssselect==1.2.0
 cycler==0.12.1
+dnspython==2.6.1
 dominate==2.9.1
+email_validator==2.1.1
 ffmpeg-python==0.2.0
 ffmpy==0.3.2
 filelock==3.13.1
@@ -79,6 +81,7 @@ PyRect==0.2.0
 PyScreeze==0.1.30
 PySocks==1.7.1
 python-dateutil==2.9.0.post0
+python-dotenv==1.0.1
 pyttsx3==2.90
 pytweening==1.2.0
 pytz==2024.1
