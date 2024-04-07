@@ -91,6 +91,34 @@ class UserDetails:
             total_price = subtotal_price + delivery_cost
             
             return subtotal_price, delivery_cost, total_price
+        
+    def serve_cart_items_to_stripe(self):
+        purchasing_items = []
+        currently_in_cart = self.items_in_cart
+        
+        for item in currently_in_cart:
+            product_name = self.items_in_shop.filter_by(id=item.items_id).first().name
+            product_price = self.items_in_shop.filter_by(id=item.items_id).first().price
+            product_quantity = currently_in_cart.filter_by(id=item.items_id).first().quantity
+            
+            print(product_name)
+            print(product_price)
+            print(product_quantity)
+            
+            purchasing_items.append(
+                {
+                    'price_data': {
+                        'currency': 'usd',
+                        'product_data': {
+                            'name': product_name,
+                        },
+                        'unit_amount': product_price,
+                    },
+                    'quantity': item.quantity,
+                }
+            )
+        
+        return purchasing_items
 
 
 # with app.app_context():
@@ -292,6 +320,7 @@ def checkout_page():
         cart_items = user_info.items_in_cart
         shop_items = user_info.items_in_shop
         checkout_prices = user_info.calculate_purchasing_cost()
+        print(user_info.serve_cart_items_to_stripe())
         
         return render_template("checkout.html", this_user=current_user, eshop_items=shop_items,
                                cart_items=cart_items, final_prices=checkout_prices)

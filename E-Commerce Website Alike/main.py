@@ -68,7 +68,7 @@ def home():
 def create_checkout_session():
     session = stripe.checkout.Session.create(
         payment_method_types=["card"],
-        items_in_cart=items_in_cart,
+        line_items  =items_in_cart,
         mode="payment",
         success_url="http://127.0.0.1:5000/success/",
         cancel_url="https://templates/cancel.html",
