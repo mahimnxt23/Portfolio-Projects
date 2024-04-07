@@ -8,6 +8,7 @@ from flask_bootstrap import Bootstrap
 from flask_wtf.csrf import CSRFProtect
 from werkzeug.security import generate_password_hash, check_password_hash
 import json
+import stripe
 
 
 # app initialization...
@@ -67,14 +68,15 @@ class LoginUserForm(FlaskForm):
 class UserDetails:
     def __init__(self, user_id):
         self.user_id = user_id
-        self.items_in_cart = self.items_from_cart()
-        self.items_in_shop = self.items_from_shop()
+        self.items_in_cart = self.get_items_from_cart_by_id()
+        self.items_in_shop = self.get_all_items_from_shop()
+        self.purchasing_item_details = self.serve_cart_items_to_stripe()
     
-    def items_from_cart(self):
+    def get_items_from_cart_by_id(self):
         return Cart.query.filter_by(user_id=self.user_id).all()
     
     # noinspection PyMethodMayBeStatic
-    def items_from_shop(self):
+    def get_all_items_from_shop(self):
         return EshopItem.query.all()
     
     def calculate_purchasing_cost(self):
@@ -93,33 +95,23 @@ class UserDetails:
             return subtotal_price, delivery_cost, total_price
         
     def serve_cart_items_to_stripe(self):
-        purchasing_items = []
-        currently_in_cart = self.items_in_cart
+        cart_items = self.items_in_cart
+        shop_items = {item.id: item for item in self.items_in_shop}
         
-        for item in currently_in_cart:
-            product_name = self.items_in_shop.filter_by(id=item.items_id).first().name
-            product_price = self.items_in_shop.filter_by(id=item.items_id).first().price
-            product_quantity = currently_in_cart.filter_by(id=item.items_id).first().quantity
-            
-            print(product_name)
-            print(product_price)
-            print(product_quantity)
-            
-            purchasing_items.append(
-                {
-                    'price_data': {
-                        'currency': 'usd',
-                        'product_data': {
-                            'name': product_name,
-                        },
-                        'unit_amount': product_price,
+        return [
+            {
+                'price_data': {
+                    'currency': 'usd',
+                    'product_data': {
+                        'name': shop_items[cart_item.items_id].name,
                     },
-                    'quantity': item.quantity,
-                }
-            )
-        
-        return purchasing_items
-
+                    'unit_amount': shop_items[cart_item.items_id].price,
+                },
+                'quantity': cart_item.quantity,
+            }
+            for cart_item in cart_items if cart_item.items_id in shop_items
+        ]
+    
 
 # with app.app_context():
 #     db.create_all()
@@ -326,6 +318,37 @@ def checkout_page():
                                cart_items=cart_items, final_prices=checkout_prices)
     else:
         return redirect(url_for('login_page'))
+    
+    
+@app.route('/create-checkout-session', methods=['POST'])
+def checkout_session():
+    try:
+        user_info = UserDetails(current_user.id)
+        line_items = user_info.purchasing_item_details
+
+        session = stripe.checkout.Session.create(
+            payment_method_types=['card'],
+            line_items=line_items,
+            mode='payment',
+            success_url=url_for('success', _external=True),
+            cancel_url=url_for('cancel', _external=True),
+        )
+        return redirect(session.url, code=303)
+    except Exception as e:
+        # Handle exceptions
+        return str(e)
+
+
+@app.route('/success')
+def success():
+    # Handle post-payment success
+    return 'Payment succeeded!'
+
+
+@app.route('/cancel')
+def cancel():
+    # Handle payment cancellation
+    return 'Payment was cancelled.'
 
 
 if __name__ == "__main__":
