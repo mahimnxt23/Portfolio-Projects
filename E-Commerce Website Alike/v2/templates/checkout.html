@@ -1,6 +1,8 @@
 {% include "header.html" %}
 
 
+	<div id="checkoutPage"></div>
+
     <!-- Breadcrumb Begin -->
     <div class="breadcrumb-option">
         <div class="container">
@@ -25,7 +27,8 @@
                     here to enter your code.</h6>
                 </div>
             </div>
-            <form action="#" method="POST" class="checkout__form">  <!-- {{ url_for('checkout_session') }} -->
+            <form action="" method="POST" class="checkout__form">  <!-- {{ url_for('checkout_session') }} -->
+	            <input type="hidden" name="csrf_token" value="{{ csrf_token }}">
                 <div class="row">
                     <div class="col-6">
                         <h5>Billing detail</h5>
@@ -155,7 +158,9 @@
                                         <span class="checkmark"></span>
                                     </label>
                                 </div>
-	                            <button type="submit" class="site-btn" id="place-order">Place oder</button>
+<!--	                            <a href="{{ url_for('checkout_session') }}">-->
+	                                <button type="submit" class="site-btn" id="place-order">Place order</button>
+<!--		                        </a>-->
                             </div>
                         </div>
                     </div>

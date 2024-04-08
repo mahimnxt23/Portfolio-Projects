@@ -1,16 +1,17 @@
-from flask import Flask, render_template, flash, redirect, url_for, request, jsonify
 from flask_login import UserMixin, LoginManager, login_user, logout_user, current_user, login_required
-from flask_wtf import FlaskForm
+from flask import Flask, render_template, flash, redirect, url_for, request, jsonify
+from werkzeug.security import generate_password_hash, check_password_hash
 from wtforms import StringField, SubmitField, PasswordField
 from wtforms.validators import InputRequired, Email
 from flask_sqlalchemy import SQLAlchemy
-from flask_bootstrap import Bootstrap
 from flask_wtf.csrf import CSRFProtect
-from werkzeug.security import generate_password_hash, check_password_hash
-import json
-import stripe
-from os import getenv
+from flask_bootstrap import Bootstrap
+from flask_wtf import FlaskForm
 from dotenv import load_dotenv
+from pprint import pprint
+from os import getenv
+import stripe
+import json
 
 
 # app initialization...
@@ -28,7 +29,7 @@ db = SQLAlchemy(app)
 # db.init_app(app)
 
 load_dotenv()
-stripe_api_key = getenv('STRIPE_API_KEY')
+stripe.api_key = getenv('STRIPE_API_KEY')
 
 
 class User(UserMixin, db.Model):
@@ -100,8 +101,8 @@ class UserDetails:
             return subtotal_price, delivery_cost, total_price
         
     def serve_cart_items_to_stripe(self):
-        cart_items = self.items_in_cart
         shop_items = {item.id: item for item in self.items_in_shop}
+        cart_items = self.items_in_cart
         
         return [
             {
@@ -110,7 +111,7 @@ class UserDetails:
                     'product_data': {
                         'name': shop_items[cart_item.items_id].name,
                     },
-                    'unit_amount': shop_items[cart_item.items_id].price,
+                    'unit_amount': int(round(shop_items[cart_item.items_id].price * 100)),
                 },
                 'quantity': cart_item.quantity,
             }
@@ -317,7 +318,7 @@ def checkout_page():
         cart_items = user_info.items_in_cart
         shop_items = user_info.items_in_shop
         checkout_prices = user_info.calculate_purchasing_cost()
-        print(user_info.serve_cart_items_to_stripe())
+        pprint(user_info.serve_cart_items_to_stripe())
         
         return render_template("checkout.html", this_user=current_user, eshop_items=shop_items,
                                cart_items=cart_items, final_prices=checkout_prices)
@@ -329,31 +330,32 @@ def checkout_page():
 def checkout_session():
     try:
         user_info = UserDetails(current_user.id)
-        line_items = user_info.purchasing_item_details
+        items_to_pass = user_info.purchasing_item_details
 
         session = stripe.checkout.Session.create(
             payment_method_types=['card'],
-            line_items=line_items,
+            line_items=items_to_pass,
             mode='payment',
             success_url=url_for('success', _external=True),
             cancel_url=url_for('cancel', _external=True),
         )
+        pprint(session.url)
         # return redirect(session.url, code=303)
         return jsonify({'status': 'success', 'checkoutUrl': session.url})
+    
     except Exception as e:
+        pprint(str(e))
         # return str(e)
         return jsonify({'status': 'error', 'error': str(e)})
 
 
 @app.route('/success')
 def success():
-    # Handle post-payment success
     return 'Payment succeeded!'
 
 
 @app.route('/cancel')
 def cancel():
-    # Handle payment cancellation
     return 'Payment was cancelled.'
 
 

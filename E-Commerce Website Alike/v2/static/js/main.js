@@ -195,21 +195,45 @@ window.onclick = function(event) {
 $('#place-order').on('click', function(e) {
     e.preventDefault();
     $.ajax({
-        url: '/create-checkout-session', // Your endpoint for creating the session
-        method: 'POST',
-        data: {
-            // Include any necessary data you want to send to the server
-        },
+        url: '/create-checkout-session',
+        method: 'GET',
         success: function(response) {
-            // 'response' should contain the URL to which the user should be redirected
-            window.location.href = response.checkoutUrl; // Redirect the user to Stripe
+            window.open(response.checkoutUrl, '_blank');
+//            window.location.href = response.checkoutUrl;
         },
         error: function(xhr, status, error) {
-            // Handle any errors that occur during the request
             console.error("Error occurred: " + status, error);
         }
     });
 });
+
+
+//                     ( this one contains some bug which I still can not figure out... )
+//if (document.getElementById('checkoutPage')) {
+//    document.getElementById('place-order').addEventListener('click', function() {
+//
+//        var csrfToken = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+//
+//        fetch('/create-checkout-session', {
+//            method: 'POST',
+//            headers: {
+//                'X-CSRF-Token': csrfToken,
+//                'Content-Type': 'application/json'
+//            },
+//        })
+//        .then(response => response.json())
+//        .then(data => {
+//            if(data.status === 'success') {
+//                window.location.href = data.checkoutUrl;
+//            } else {
+//                console.error('Error:', data.error);
+//            }
+//        })
+//        .catch((error) => {
+//            console.error('Error:', error);
+//        });
+//    });
+//}
 
 
 (function ($) {
@@ -219,7 +243,7 @@ $('#place-order').on('click', function(e) {
     --------------------*/
     $(window).on('load', function () {
         $(".loader").fadeOut();
-        $("#preloder").delay(50).fadeOut("slow");
+        $("#preloder").delay(100).fadeOut("fast");
 
         /*------------------
             Product filter
