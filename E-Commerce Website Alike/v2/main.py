@@ -351,7 +351,12 @@ def checkout_session():
 
 @app.route('/success')
 def success():
-    return 'Payment succeeded!'
+    return render_template("success.html")
+
+
+@app.route('/suck')
+def suck():
+    return render_template("suck.html")
 
 
 @app.route('/cancel')

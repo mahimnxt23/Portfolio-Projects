@@ -72,7 +72,7 @@ def create_checkout_session():
         payment_method_types=["card"],
         line_items=items_in_cart,
         mode="payment",
-        success_url="http://127.0.0.1:5000/success/",
+        success_url="http://127.0.0.1:5100/success/",
         cancel_url="https://templates/cancel.html",
     )
 
