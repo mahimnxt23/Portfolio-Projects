@@ -303,7 +303,7 @@ def update_cart():
             set_values_for(mode='wipe_from_cart')
             
         else:
-            print('This was never executed!')
+            print('Update or remove was never executed!')
     
         db.session.commit()
     
@@ -351,12 +351,7 @@ def checkout_session():
 
 @app.route('/success')
 def success():
-    return render_template("success.html")
-
-
-@app.route('/suck')
-def suck():
-    return render_template("suck.html")
+    return render_template("success.html", this_user=current_user)
 
 
 @app.route('/cancel')

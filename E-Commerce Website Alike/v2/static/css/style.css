@@ -3883,31 +3883,34 @@ ol {
 }
 
 /* success page */
-body {
-  text-align: center;
-  padding: 40px 0;
-  background: #EBF0F5;
+
+.success-message {
+  color: #88B04B;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  font-weight: 900;
+  font-size: 40px;
+  margin-bottom: 10px;
 }
 
 
-h1 {
-    color: #88B04B;
-    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-    font-weight: 900;
-    font-size: 40px;
-    margin-bottom: 10px;
+.success-text {
+  color: #404F5E;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  font-size:20px;
+  margin: 0;
 }
 
 
-p {
-    color: #404F5E;
-    font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-    font-size:20px;
-    margin: 0;
+.checkmark-container {
+    border-radius:200px;
+    height:200px;
+    width:200px;
+    background: #F8FAF5;
+    margin:0 auto;
 }
 
 
-i {
+.checkmark-icon {
   color: #9ABC66;
   font-size: 100px;
   line-height: 200px;
@@ -3915,8 +3918,10 @@ i {
 }
 
 
-.card {
+.success-card {
+  text-align: center;
   background: white;
+  /*background: #EBF0F5;*/
   padding: 60px;
   border-radius: 4px;
   box-shadow: 0 2px 3px #C8D0D8;
