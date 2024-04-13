@@ -350,6 +350,7 @@ def checkout_session():
 
 
 @app.route('/success')
+@login_required
 def success():
     return render_template("success.html", this_user=current_user)
 

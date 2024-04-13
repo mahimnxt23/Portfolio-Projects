@@ -1,2 +1,2 @@
-git add -A && git commit -m "updates on e-cwa v2 (working on success.html creation to show visual responses to users.)" && git push
+git add -A && git commit -m "updates on e-cwa v2 (Payment Success now works fine 👌.)" && git push
 git add -A && git commit -m "updates on e-cwa v2 (working on something to do anything and here's what happening.)" && git push

@@ -3884,12 +3884,30 @@ ol {
 
 /* success page */
 
+.scs {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  height: 100%;
+}
+
+.success-card {
+  text-align: center;
+  background: white;
+  padding: 75px;
+  border-radius: 50px;
+  box-shadow: 0 2px 3px #C8D0D8;
+  display: inline-block;
+}
+
+
 .success-message {
   color: #88B04B;
   font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
   font-weight: 900;
   font-size: 40px;
-  margin-bottom: 10px;
+  margin-top: 20px;
+  margin-bottom: 30px;
 }
 
 
@@ -3897,7 +3915,8 @@ ol {
   color: #404F5E;
   font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
   font-size:20px;
-  margin: 0;
+  font-weight: bold;
+  line-height: 35px;
 }
 
 
@@ -3906,7 +3925,7 @@ ol {
     height:200px;
     width:200px;
     background: #F8FAF5;
-    margin:0 auto;
+    margin: auto;
 }
 
 
@@ -3914,18 +3933,7 @@ ol {
   color: #9ABC66;
   font-size: 100px;
   line-height: 200px;
-  margin-left:-15px;
 }
 
 
-.success-card {
-  text-align: center;
-  background: white;
-  /*background: #EBF0F5;*/
-  padding: 60px;
-  border-radius: 4px;
-  box-shadow: 0 2px 3px #C8D0D8;
-  display: inline-block;
-  margin: 0 auto;
-}
 
