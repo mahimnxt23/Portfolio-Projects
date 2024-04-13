@@ -5,10 +5,11 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website">
-      <change afterPath="$PROJECT_DIR$/E-Commerce Website Alike/v2/templates/cancel.html" afterDir="false" />
+      <change afterPath="$PROJECT_DIR$/E-Commerce Website Alike/v2/static/img/error.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/E-Commerce Website Alike/v2/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/E-Commerce Website Alike/v2/main.py" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/E-Commerce Website Alike/v2/static/css/style.css" beforeDir="false" afterPath="$PROJECT_DIR$/E-Commerce Website Alike/v2/static/css/style.css" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/E-Commerce Website Alike/v2/templates/cancel.html" beforeDir="false" afterPath="$PROJECT_DIR$/E-Commerce Website Alike/v2/templates/cancel.html" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/E-Commerce Website Alike/v2/templates/success.html" beforeDir="false" afterPath="$PROJECT_DIR$/E-Commerce Website Alike/v2/templates/success.html" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
@@ -121,11 +122,11 @@
       <recent name="D:\Portfolio-Projects\E-Commerce Website Alike\templates" />
     </key>
     <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Portfolio-Projects\E-Commerce Website Alike\v2\static\img" />
       <recent name="D:\Portfolio-Projects\Determinants of Earnings Analysis" />
       <recent name="D:\Portfolio-Projects\Fatal Force Analysis (Data Science)" />
       <recent name="D:\Portfolio-Projects\Space Invaders Clone\sounds" />
       <recent name="D:\Portfolio-Projects\Space Invaders Clone\images" />
-      <recent name="D:\Portfolio-Projects\Web Scrapper Project" />
     </key>
   </component>
   <component name="RunManager">

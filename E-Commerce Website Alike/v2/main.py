@@ -356,8 +356,9 @@ def success():
 
 
 @app.route('/cancel')
+@login_required
 def cancel():
-    return 'Payment was cancelled.'
+    return render_template("cancel.html", this_user=current_user)
 
 
 if __name__ == "__main__":

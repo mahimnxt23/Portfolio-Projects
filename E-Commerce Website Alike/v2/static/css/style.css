@@ -3891,32 +3891,13 @@ ol {
   height: 100%;
 }
 
-.success-card {
+.payment-card {
   text-align: center;
   background: white;
   padding: 75px;
   border-radius: 50px;
   box-shadow: 0 2px 3px #C8D0D8;
   display: inline-block;
-}
-
-
-.success-message {
-  color: #88B04B;
-  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-  font-weight: 900;
-  font-size: 40px;
-  margin-top: 20px;
-  margin-bottom: 30px;
-}
-
-
-.success-text {
-  color: #404F5E;
-  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
-  font-size:20px;
-  font-weight: bold;
-  line-height: 35px;
 }
 
 
@@ -3934,6 +3915,34 @@ ol {
   font-size: 100px;
   line-height: 200px;
 }
+
+
+.payment-status {
+  color: #88B04B;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  font-weight: 900;
+  font-size: 40px;
+  margin-top: 20px;
+  margin-bottom: 30px;
+}
+
+
+.status-brief {
+  color: #404F5E;
+  font-family: "Nunito Sans", "Helvetica Neue", sans-serif;
+  font-size:20px;
+  font-weight: bold;
+  line-height: 35px;
+}
+
+
+.cancel {
+    color: red;
+}
+
+
+
+
 
 
 
