@@ -17,7 +17,7 @@ import json
 
 # app initialization...
 app = Flask(__name__)
-app.config["SECRET_KEY"] = "a-super-secure-key"
+app.config["SECRET_KEY"] = getenv('SEQURITY_KEY')
 csrf = CSRFProtect(app)
 Bootstrap(app)
 
