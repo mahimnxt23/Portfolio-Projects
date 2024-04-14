@@ -7,7 +7,7 @@ user_id = 1
 
 
 with app.app_context():
-    user_info = UserDetails(user_id)
+    user_info = UserDetails()
     
     def result_1():
         return user_info.get_unique_product_cart_items_count()
