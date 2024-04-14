@@ -8,6 +8,7 @@ from flask_wtf.csrf import CSRFProtect
 from flask_bootstrap import Bootstrap
 from flask_wtf import FlaskForm
 from dotenv import load_dotenv
+from sqlalchemy import func
 from pprint import pprint
 from os import getenv
 import stripe
@@ -77,6 +78,8 @@ class UserDetails:
         self.items_in_cart = self.get_items_from_cart_by_id()
         self.items_in_shop = self.get_all_items_from_shop()
         self.purchasing_item_details = self.serve_cart_items_to_stripe()
+        self.user_unique_items_count = self.get_unique_product_cart_items_count()
+        self.user_cart_items_count = self.get_total_cart_items_count()
     
     def get_items_from_cart_by_id(self):
         return Cart.query.filter_by(user_id=self.user_id).all()
@@ -95,7 +98,7 @@ class UserDetails:
             item_quantities = {item.items_id: item.quantity for item in self.items_in_cart}
             
             subtotal_price = sum(item_prices[item_id] * quantity for item_id, quantity in item_quantities.items())
-            delivery_cost = 199 if subtotal_price < 599 else 0
+            delivery_cost = 199 if subtotal_price < 499 else 0
             total_price = subtotal_price + delivery_cost
             
             return subtotal_price, delivery_cost, total_price
@@ -117,6 +120,12 @@ class UserDetails:
             }
             for cart_item in cart_items if cart_item.items_id in shop_items
         ]
+    
+    def get_unique_product_cart_items_count(self):
+        return len(self.items_in_cart)
+    
+    def get_total_cart_items_count(self):
+        return db.session.query(func.sum(Cart.quantity)).filter(Cart.user_id == self.user_id).scalar()
     
 
 # with app.app_context():
@@ -154,7 +163,7 @@ def register_page():
         db.session.commit()
         login_user(new_user)  # logs in immediately...
         return redirect(url_for('homepage'))
-            
+        
     return render_template("register.html", form=register_form, this_user=current_user)
 
 
@@ -289,7 +298,7 @@ def update_cart():
                 db.session.delete(selected_product_in_cart)
         
         decrease_amount = (current_quantity - decrease + increase)
-            
+        
         if 1 <= increase <= current_stock:
             set_values_for(mode='update')
             
@@ -326,22 +335,22 @@ def checkout_page():
         return redirect(url_for('login_page'))
     
     
-@app.route('/create-checkout-session', methods=['GET', 'POST'])
+@app.route('/create-checkout-stripe_session', methods=['GET', 'POST'])
 def checkout_session():
     try:
         user_info = UserDetails(current_user.id)
         items_to_pass = user_info.purchasing_item_details
 
-        session = stripe.checkout.Session.create(
+        stripe_session = stripe.checkout.Session.create(
             payment_method_types=['card'],
             line_items=items_to_pass,
             mode='payment',
             success_url=url_for('success', _external=True),
             cancel_url=url_for('cancel', _external=True),
         )
-        pprint(session.url)
-        # return redirect(session.url, code=303)
-        return jsonify({'status': 'success', 'checkoutUrl': session.url})
+        pprint(stripe_session.url)
+        # return redirect(stripe_session.url, code=303)
+        return jsonify({'status': 'success', 'checkoutUrl': stripe_session.url})
     
     except Exception as e:
         pprint(str(e))
