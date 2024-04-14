@@ -423,7 +423,7 @@ def checkout_page():
         return redirect(url_for("login_page"))
 
 
-@app.route("/create-checkout-stripe_session", methods=["GET", "POST"])
+@app.route("/create-checkout-session", methods=["GET", "POST"])
 def checkout_session():
     try:
         user_info = UserDetails()
