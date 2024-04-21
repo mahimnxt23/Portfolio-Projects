@@ -1,0 +1,27 @@
+{% include "header.html" %}
+
+
+	<div class="container-fluid">
+		<div class="row fh5co-post-entry">
+
+			{% for cafe in all_cafes: %}
+			<article class="col-lg-3 col-md-3 col-sm-3 col-xs-6 col-xxs-12 animate-box">
+				<figure>
+					<a href="{{ url_for('show_cafe', cafe_id=cafe.id) }}"><img src="{{ cafe.img_url }}" alt="{{ cafe.name }} Image" class="img-responsive"></a>
+				</figure>
+				<span class="fh5co-meta">{{ cafe.location }}</span>
+				<h2 class="fh5co-article-title"><a href="{{ url_for('show_cafe', cafe_id=cafe.id) }}">{{ cafe.name }}</a></h2>
+				<span class="fh5co-meta fh5co-date">Average Coffee Price: {{ cafe.coffee_price }}</span>
+			</article>
+			{% endfor %}
+
+
+<!--			<div class="clearfix visible-xs-block"></div>-->
+
+<!--			<div class="clearfix visible-lg-block visible-md-block visible-sm-block visible-xs-block"></div>-->
+
+		</div>
+	</div>
+
+{% include "footer.html" %}
+

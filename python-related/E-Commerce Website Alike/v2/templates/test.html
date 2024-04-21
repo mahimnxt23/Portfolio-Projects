@@ -1,0 +1,258 @@
+
+
+<tbody>
+{% for eshop_item in eshop_items: %}
+{% for cart_item in cart_items: %}
+{% if cart_item.items_id == eshop_item.id %}
+<tr>
+	<td class="cart__product__item">
+		<img src="/{{ eshop_item.image }}" alt="{{ eshop_item.name }}-product-image">
+		<div class="cart__product__item__title">
+			<h6>{{ eshop_item.name }}</h6>
+			<div class="rating">
+				{% for _ in range(5): %}
+				<i class="fa fa-star"></i>
+				{% endfor %}
+			</div>
+		</div>
+	</td>
+	<td class="cart__price">$ {{ eshop_item.price }}</td>
+	<td class="cart__quantity">
+		<div class="pro-qty" data-item-id="{{ cart_item.id }}">
+			<span class="dec qtybtn">-</span>
+			<input type="text" value="{{ cart_item.quantity }}" readonly>
+			<span class="inc qtybtn">+</span>
+		</div>
+	</td>
+	<td class="cart__total">$ {{ (eshop_item.price) * (cart_item.quantity) }}</td>
+	<td class="cart__close"><span class="icon_close"></span></td>
+</tr>
+{% endif %}
+{% endfor %}
+{% endfor %}
+</tbody>
+
+<div class="row">
+	<div class="col-lg-6 col-md-6 col-sm-6">
+		<div class="cart__btn">
+			<a href="{{ url_for('homepage') }}">Continue Shopping</a>
+		</div>
+	</div>
+	<div class="col-lg-6 col-md-6 col-sm-6">
+		<div class="cart__btn update__btn">
+			<a href="{{ url_for('shop_cart') }}" id="update-cart-button"><span class="icon_loading"></span> Update cart</a>
+		</div>
+	</div>
+</div>
+
+
+$(document).ready(function() {
+    $('.pro-qty').each(function() {
+        var $qty = $(this);
+        $qty.data('increase', 0);
+        $qty.data('decrease', 0);
+    });
+
+    $('.pro-qty').on('click', '.qtybtn', function() {
+        var $button = $(this);
+        var $qty = $button.parent();
+        var itemId = $qty.data('item-id');
+
+        if ($button.hasClass('inc')) {
+            $qty.data('increase', $qty.data('increase') + 1);
+        } else {
+            $qty.data('decrease', $qty.data('decrease') + 1);
+        }
+    });
+
+    $('#update-cart-button').on('click', function() {
+        var updates = $('.pro-qty').map(function() {
+            return {
+                item_id: $(this).data('item-id'),
+                increase: $(this).data('increase'),
+                decrease: $(this).data('decrease')
+            };
+        }).get();
+
+        $.ajax({
+            url: '/update_cart',
+            type: 'POST',
+            data: { updates: JSON.stringify(updates) },
+        });
+    });
+});
+
+@app.route('/update_cart', methods=['POST'])
+def update_cart():
+    updates = request.form.get('updates')
+    updates = json.loads(updates)
+
+    for update in updates:
+        item_id = update['item_id']
+        increase = int(update['increase'])
+        decrease = int(update['decrease'])
+
+        selected_product_in_shop = EshopItem.query.filter_by(id=item_id).first()
+        selected_product_in_cart = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
+
+        current_stock = selected_product_in_shop.stock
+        current_quantity = selected_product_in_cart.quantity
+
+        def set_values_for(mode):
+            if mode == 'update':
+                selected_product_in_shop.stock = current_stock - increase + decrease
+                selected_product_in_cart.quantity = current_quantity + increase - decrease
+            elif mode == 'delete':
+                selected_product_in_shop.stock = current_stock + current_quantity
+                selected_product_in_cart.quantity = 0
+                db.session.delete(selected_product_in_cart)
+
+        decrease_amount = (current_quantity - decrease + increase)
+
+        if 1 <= increase <= current_stock:
+            set_values_for('update')
+        elif decrease >= 1 and decrease_amount > 0:
+            set_values_for('update')
+        elif decrease_amount <= 0:
+            set_values_for('delete')
+        else:
+            print('This was never executed!')
+
+        db.session.commit()
+
+<!-- Notification Modal -->
+<div id="notificationModal" class="modal">
+	<div class="modal-content">
+		<p id="notificationMessage">Some error message...</p>
+		<span class="close">×</span>
+	</div>
+</div>
+
+
+$(document).ready(function() {
+    $('.pro-qty').each(function() {
+        var $qty = $(this);
+        $qty.data('increase', 0); // Track increase clicks
+        $qty.data('decrease', 0); // Track decrease clicks
+    });
+
+    $('.pro-qty').on('click', '.qtybtn', function() {
+        var $button = $(this);
+        var $qty = $button.parent();
+        var itemId = $qty.data('item-id');
+
+        if ($button.hasClass('inc')) {
+            $qty.data('increase', $qty.data('increase') + 1);
+            console.log('clicked me! [ 1 ]')
+        } else {
+            $qty.data('decrease', $qty.data('decrease') + 1);
+            console.log('clicked me! [ 2 ]')
+        }
+    });
+
+    // When the user is ready to update the cart
+    $('#update-cart-button').on('click', function() {
+        var updates = $('.pro-qty').map(function() {  // Collect data for all items
+            return {
+                item_id: $(this).data('item-id'),
+                increase: $(this).data('increase'),
+                decrease: $(this).data('decrease')
+            };
+        }).get();
+
+        // Send AJAX request to server
+        $.ajax({
+            url: '/update_cart',
+            type: 'POST',
+            data: { updates: JSON.stringify(updates) },
+            success: function(response) {
+                if(response.status === 'success') {
+                    console.log('Successfully updated: ', response);
+
+                    showNotification('Update Successful! Reloading page in 1 seconds...')
+
+                    setTimeout(function() {  // reload the page after 1.5 seconds
+                    window.location.reload();
+                    }, 1500);
+
+                } else {
+                    console.log('Error updating cart: ', response.error);
+                }
+            }
+        });
+    });
+});
+
+    $('.pro-qty').on('click', '.qtybtn', function() {
+        var $button = $(this);
+        var $qty = $button.parent();
+        var $input = $qty.find('input');
+        var stockLimit = parseInt($input.data('stock-limit'), 10);
+        var currentVal = parseInt($input.val(), 10);
+
+        // Check if the increment button is clicked and if the stock limit is reached
+        if ($button.hasClass('inc') && currentVal < stockLimit) {
+            $qty.data('increase', $qty.data('increase') + 1);
+            console.log('clicked me! [ 1 ]');
+            // If after clicking, the value reaches the stock limit, disable the button
+            if (currentVal + 1 >= stockLimit) {
+                $button.prop('disabled', true);
+            }
+        } else if ($button.hasClass('dec')) {
+            $qty.data('decrease', $qty.data('decrease') + 1);
+            console.log('clicked me! [ 2 ]');
+            // Re-enable the increment button if it was disabled
+            $qty.find('.inc').prop('disabled', false);
+        }
+    });
+
+	                        {% if final_prices[0] >= 599: %}
+	                            <li>Delivery Charge <span>$ 0</span></li>
+	                        {% else: %}
+	                            <li>Delivery Charge <span>$ 199</span></li>
+	                        {% endif %}
+
+
+from flask import Flask, request, jsonify
+from flask_sqlalchemy import SQLAlchemy
+from sqlalchemy.exc import SQLAlchemyError
+
+app = Flask(__name__)
+db = SQLAlchemy(app)
+
+@app.route('/update_cart', methods=['POST'])
+def update_cart():
+    updates = request.form.get('updates')
+    if not updates:
+        return jsonify({'status': 'error', 'message': 'No updates received'}), 400
+
+    try:
+        updates = json.loads(updates)
+        with db.session.begin_nested():  # Start a nested transaction
+            for update in updates:
+                item_id = update.get('item_id')
+                increase = int(update.get('increase', 0))
+                decrease = int(update.get('decrease', 0))
+                delete_from_cart = update.get('deleted', False)
+
+                # Validate item_id and fetch the necessary records
+                selected_product_in_shop = EshopItem.query.get(item_id)
+                selected_product_in_cart = Cart.query.filter_by(items_id=item_id, user_id=current_user.id).first()
+
+                if not selected_product_in_shop or not selected_product_in_cart:
+                    continue  # Skip this update if the item is not found
+
+                current_stock = selected_product_in_shop.stock
+                current_quantity = selected_product_in_cart.quantity
+
+                # Define the logic for updating values
+                # ...
+
+            db.session.commit()  # Commit the transaction if all updates succeed
+        return jsonify({'status': 'success', 'message': 'Updated Everything!'})
+    except SQLAlchemyError as e:
+        db.session.rollback()  # Rollback the transaction on error
+        app.logger.error(f'Update cart failed: {str(e)}')
+        return jsonify({'status': 'error', 'message': 'An error occurred while updating the cart'}), 500
+
+

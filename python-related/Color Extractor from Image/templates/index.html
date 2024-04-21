@@ -1,0 +1,15 @@
+{% include "header.html" %}
+
+
+    <div class="container">
+        <div>
+            <h1>Get top 10 image colors</h1>
+            <form action="{{ url_for('get_colors') }}" method="POST" enctype="multipart/form-data">
+                 <input type="file" class="form-control" name="img_file" />
+                 <input type="submit" value="Upload" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+
+
+{% include "footer.html" %}

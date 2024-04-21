@@ -1,0 +1,19 @@
+{% import "bootstrap/wtf.html" as wtf %}
+{% include "header.html" %}
+
+
+<!-- login Section Begin -->
+<section class="login-form">
+	<div class="overlay"><h1>Login</h1></div>
+	<div class="container">
+		<div class="row">
+			<div class="mx-auto">
+				{{ wtf.quick_form(form, novalidate=True, button_map={"submit": "primary"}) }}
+			</div>
+		</div>
+	</div>
+</section>
+<!-- login Section End -->
+
+
+{% include "footer.html" %}

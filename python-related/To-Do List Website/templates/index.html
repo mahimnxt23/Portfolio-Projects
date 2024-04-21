@@ -1,0 +1,43 @@
+
+
+{% include 'header.html' %}
+
+
+<header class="head" style="background-color:#F3F1F5">
+	<div class="container">
+		<div class="row">
+			<div class="col-lg-6">
+				<h1 class="text-head">
+					Create your own To-Do-List
+				</h1>
+				<a href="{{ url_for('create_task') }}" class="btn btn btn-info btn btn-outline-success btn-lg">
+					CREATE TO-DO LIST
+				</a>
+			</div>
+			<div class="col-lg-6">
+				<img class="todo-image" src="{{ url_for('static', filename='images/todo-list.png') }}">
+			</div>
+		</div>
+	</div>
+</header>
+
+<div class="container-fluid" style="background-color:#F3F1F5">
+	<div class="row">
+		<div class="col-lg-4">
+			<h3 class="section-2">Easy to use.</h3>
+			<p class="ltl-desc">So Easy to use, no need to install anything else.</p>
+		</div>
+		<div class="col-lg-4">
+			<h3 class="section-2">Flexible.</h3>
+			<p class="ltl-desc">You could browse your list from anywhere.</p>
+		</div>
+		<div class="col-lg-4">
+			<h3 class="section-2">Guaranteed Working</h3>
+			<p class="ltl-desc">Never forget to remind you about your task.</p>
+		</div>
+	</div>
+</div>
+
+
+{% include 'footer.html' %}
+

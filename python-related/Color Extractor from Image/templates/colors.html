@@ -1,0 +1,25 @@
+{% include "header.html" %}
+
+
+    <div class="colors_container">
+        <div>
+            <h1>Get top 10 image colors</h1>
+            <form action="{{ url_for('get_colors') }}" method="POST" enctype="multipart/form-data">
+                 <input type="file" class="form-control" name="img_file" />
+                 <input type="submit" value="Upload" class="btn btn-primary"/>
+            </form>
+        </div>
+    </div>
+    <img src="{{ image }}" class="main_image figure-img img-fluid rounded" alt="Responsive image">
+    <div class="colors_container">
+        {% for color in top_colors: %}
+            <button style="background-color:rgb{{ color }}"
+                    type="button"
+                    class="btn btn-primary mx-1"
+                    onclick="copyToClipboard('{{ '#{:02x}{:02x}{:02x}'.format(color[0], color[1], color[2]) }}')"
+                    >GET_HEX</button>
+        {% endfor %}
+    </div>
+
+
+{% include "footer.html" %}

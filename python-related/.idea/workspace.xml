@@ -1,0 +1,260 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<project version="4">
+  <component name="AutoImportSettings">
+    <option name="autoReloadType" value="ALL" />
+  </component>
+  <component name="ChangeListManager">
+    <list default="true" id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="starting to work on the cafe list website" />
+    <option name="SHOW_DIALOG" value="false" />
+    <option name="HIGHLIGHT_CONFLICTS" value="true" />
+    <option name="HIGHLIGHT_NON_ACTIVE_CHANGELIST" value="false" />
+    <option name="LAST_RESOLUTION" value="IGNORE" />
+  </component>
+  <component name="FileTemplateManagerImpl">
+    <option name="RECENT_TEMPLATES">
+      <list>
+        <option value="Python Script" />
+        <option value="HTML File" />
+      </list>
+    </option>
+  </component>
+  <component name="Git.Settings">
+    <option name="PREVIOUS_COMMIT_AUTHORS">
+      <list>
+        <option value="Mahi-Bi Alam &lt;mahimnxt23@gmail.com&gt;" />
+        <option value="mahimnxt23 &lt;mahimnxt23@gmail.com&gt;" />
+      </list>
+    </option>
+    <option name="PUSH_AUTO_UPDATE" value="true" />
+    <option name="RECENT_GIT_ROOT_PATH" value="$PROJECT_DIR$" />
+  </component>
+  <component name="GitHubPullRequestSearchHistory">{
+  &quot;lastFilter&quot;: {
+    &quot;state&quot;: &quot;OPEN&quot;,
+    &quot;assignee&quot;: &quot;mahimnxt23&quot;
+  }
+}</component>
+  <component name="GithubPullRequestsUISettings">{
+  &quot;selectedUrlAndAccountId&quot;: {
+    &quot;url&quot;: &quot;https://github.com/mahimnxt23/Portfolio-Projects.git&quot;,
+    &quot;accountId&quot;: &quot;f3f6c05d-0942-4fde-a930-d4c636950206&quot;
+  }
+}</component>
+  <component name="MarkdownSettingsMigration">
+    <option name="stateVersion" value="1" />
+  </component>
+  <component name="ProblemsViewState">
+    <option name="selectedTabId" value="CurrentFile" />
+  </component>
+  <component name="ProjectColorInfo">{
+  &quot;associatedIndex&quot;: 7
+}</component>
+  <component name="ProjectId" id="2ZXteaAvWgFRlCRGnihnY0bxGfr" />
+  <component name="ProjectLevelVcsManager">
+    <ConfirmationsSetting value="2" id="Add" />
+  </component>
+  <component name="ProjectViewState">
+    <option name="autoscrollToSource" value="true" />
+    <option name="hideEmptyMiddlePackages" value="true" />
+    <option name="openDirectoriesWithSingleClick" value="true" />
+    <option name="showLibraryContents" value="true" />
+    <option name="sortKey" value="BY_TIME_DESCENDING" />
+  </component>
+  <component name="PropertiesComponent"><![CDATA[{
+  "keyToString": {
+    "ASKED_ADD_EXTERNAL_FILES": "true",
+    "ASKED_SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "DefaultHtmlFileTemplate": "HTML File",
+    "Python.Insta_scrapper.executor": "Run",
+    "Python.Udemy Free Coupons.executor": "Run",
+    "Python.api.executor": "Run",
+    "Python.app.executor": "Run",
+    "Python.app_tester.executor": "Run",
+    "Python.ball.executor": "Run",
+    "Python.display_test.executor": "Run",
+    "Python.example.executor": "Run",
+    "Python.laaf.executor": "Run",
+    "Python.main.executor": "Run",
+    "Python.photo_watermark.executor": "Run",
+    "Python.scrap.executor": "Run",
+    "Python.scrape.executor": "Run",
+    "Python.space_invader.executor": "Run",
+    "Python.start_us.executor": "Run",
+    "Python.temp.executor": "Run",
+    "Python.test.executor": "Run",
+    "Python.test1.executor": "Run",
+    "Python.test2.executor": "Run",
+    "Python.text_to_morse.executor": "Run",
+    "Python.tic_tac_toe.executor": "Run",
+    "Python.watermark.executor": "Run",
+    "RunOnceActivity.OpenProjectViewOnStart": "true",
+    "RunOnceActivity.ShowReadmeOnStart": "true",
+    "SHARE_PROJECT_CONFIGURATION_FILES": "true",
+    "deletionFromPopupRequiresConfirmation": "false",
+    "git-widget-placeholder": "main",
+    "ignore.virus.scanning.warn.message": "true",
+    "last_opened_file_path": "D:/Portfolio-Projects",
+    "settings.build.tools.auto.reload": "ALL",
+    "settings.editor.selected.configurable": "preferences.pluginManager",
+    "settings.editor.splitter.proportion": "0.2925586"
+  }
+}]]></component>
+  <component name="PyConsoleOptionsProvider">
+    <option name="myPythonConsoleState">
+      <console-settings module-name="Portfolio-Projects" is-module-sdk="true">
+        <option name="myUseModuleSdk" value="true" />
+        <option name="myModuleName" value="Portfolio-Projects" />
+      </console-settings>
+    </option>
+  </component>
+  <component name="RecentsManager">
+    <key name="CopyFile.RECENT_KEYS">
+      <recent name="D:\Portfolio-Projects" />
+      <recent name="D:\Portfolio-Projects\Space Mission Analysis (Data Science)" />
+      <recent name="D:\Portfolio-Projects\E-Commerce Website Alike\instance" />
+      <recent name="D:\Portfolio-Projects\E-Commerce Website Alike\static" />
+      <recent name="D:\Portfolio-Projects\E-Commerce Website Alike\templates" />
+    </key>
+    <key name="MoveFile.RECENT_KEYS">
+      <recent name="D:\Portfolio-Projects\E-Commerce Website Alike\v2\static\img" />
+      <recent name="D:\Portfolio-Projects\Determinants of Earnings Analysis" />
+      <recent name="D:\Portfolio-Projects\Fatal Force Analysis (Data Science)" />
+      <recent name="D:\Portfolio-Projects\Space Invaders Clone\sounds" />
+      <recent name="D:\Portfolio-Projects\Space Invaders Clone\images" />
+    </key>
+  </component>
+  <component name="RunManager">
+    <configuration name="main" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+      <module name="Portfolio-Projects" />
+      <option name="ENV_FILES" value="" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="PARENT_ENVS" value="true" />
+      <envs>
+        <env name="PYTHONUNBUFFERED" value="1" />
+      </envs>
+      <option name="SDK_HOME" value="" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/E-Commerce Website Alike/v2" />
+      <option name="IS_MODULE_SDK" value="true" />
+      <option name="ADD_CONTENT_ROOTS" value="true" />
+      <option name="ADD_SOURCE_ROOTS" value="true" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/E-Commerce Website Alike/v2/main.py" />
+      <option name="PARAMETERS" value="" />
+      <option name="SHOW_COMMAND_LINE" value="false" />
+      <option name="EMULATE_TERMINAL" value="false" />
+      <option name="MODULE_MODE" value="false" />
+      <option name="REDIRECT_INPUT" value="false" />
+      <option name="INPUT_FILE" value="" />
+      <method v="2" />
+    </configuration>
+    <configuration default="true" type="ShConfigurationType">
+      <option name="SCRIPT_TEXT" value="" />
+      <option name="INDEPENDENT_SCRIPT_PATH" value="true" />
+      <option name="SCRIPT_PATH" value="" />
+      <option name="SCRIPT_OPTIONS" value="" />
+      <option name="INDEPENDENT_SCRIPT_WORKING_DIRECTORY" value="true" />
+      <option name="SCRIPT_WORKING_DIRECTORY" value="$PROJECT_DIR$" />
+      <option name="INDEPENDENT_INTERPRETER_PATH" value="true" />
+      <option name="INTERPRETER_PATH" value="powershell.exe" />
+      <option name="INTERPRETER_OPTIONS" value="" />
+      <option name="EXECUTE_IN_TERMINAL" value="true" />
+      <option name="EXECUTE_SCRIPT_FILE" value="true" />
+      <envs />
+      <method v="2" />
+    </configuration>
+    <recent_temporary>
+      <list>
+        <item itemvalue="Python.main" />
+      </list>
+    </recent_temporary>
+  </component>
+  <component name="SharedIndexes">
+    <attachedChunks>
+      <set>
+        <option value="bundled-python-sdk-0509580d9d50-746f403e7f0c-com.jetbrains.pycharm.community.sharedIndexes.bundled-PC-241.14494.241" />
+      </set>
+    </attachedChunks>
+  </component>
+  <component name="SpellCheckerSettings" RuntimeDictionaries="0" Folders="0" CustomDictionaries="0" DefaultDictionary="application-level" UseSingleDictionary="true" transferred="true" />
+  <component name="SvnConfiguration">
+    <configuration>C:\Users\MaHim\AppData\Roaming\Subversion</configuration>
+  </component>
+  <component name="TaskManager">
+    <task active="true" id="Default" summary="Default task">
+      <changelist id="bb900d3b-6a95-4e65-8ac9-490fe249744d" name="Changes" comment="" />
+      <created>1691847430683</created>
+      <option name="number" value="Default" />
+      <option name="presentableId" value="Default" />
+      <updated>1691847430683</updated>
+    </task>
+    <task id="LOCAL-00001" summary="Resurface everything inside">
+      <option name="closed" value="true" />
+      <created>1702581779298</created>
+      <option name="number" value="00001" />
+      <option name="presentableId" value="LOCAL-00001" />
+      <option name="project" value="LOCAL" />
+      <updated>1702581779298</updated>
+    </task>
+    <task id="LOCAL-00002" summary="Update and Fix">
+      <option name="closed" value="true" />
+      <created>1702740502229</created>
+      <option name="number" value="00002" />
+      <option name="presentableId" value="LOCAL-00002" />
+      <option name="project" value="LOCAL" />
+      <updated>1702740502229</updated>
+    </task>
+    <task id="LOCAL-00003" summary="Update and Fix">
+      <option name="closed" value="true" />
+      <created>1702747745921</created>
+      <option name="number" value="00003" />
+      <option name="presentableId" value="LOCAL-00003" />
+      <option name="project" value="LOCAL" />
+      <updated>1702747745921</updated>
+    </task>
+    <task id="LOCAL-00004" summary="complete automatic watermarker project">
+      <option name="closed" value="true" />
+      <created>1702832148874</created>
+      <option name="number" value="00004" />
+      <option name="presentableId" value="LOCAL-00004" />
+      <option name="project" value="LOCAL" />
+      <updated>1702832148874</updated>
+    </task>
+    <task id="LOCAL-00005" summary="starting to work on the cafe list website">
+      <option name="closed" value="true" />
+      <created>1704567546810</created>
+      <option name="number" value="00005" />
+      <option name="presentableId" value="LOCAL-00005" />
+      <option name="project" value="LOCAL" />
+      <updated>1704567546810</updated>
+    </task>
+    <task id="LOCAL-00006" summary="starting to work on the cafe list website">
+      <option name="closed" value="true" />
+      <created>1704567699895</created>
+      <option name="number" value="00006" />
+      <option name="presentableId" value="LOCAL-00006" />
+      <option name="project" value="LOCAL" />
+      <updated>1704567699895</updated>
+    </task>
+    <option name="localTasksCounter" value="7" />
+    <servers />
+  </component>
+  <component name="Vcs.Log.Tabs.Properties">
+    <option name="TAB_STATES">
+      <map>
+        <entry key="MAIN">
+          <value>
+            <State />
+          </value>
+        </entry>
+      </map>
+    </option>
+  </component>
+  <component name="VcsManagerConfiguration">
+    <option name="ADD_EXTERNAL_FILES_SILENTLY" value="true" />
+    <MESSAGE value="commit first folder and py3 file" />
+    <MESSAGE value="Resurface everything inside" />
+    <MESSAGE value="Update and Fix" />
+    <MESSAGE value="complete automatic watermarker project" />
+    <MESSAGE value="starting to work on the cafe list website" />
+    <option name="LAST_COMMIT_MESSAGE" value="starting to work on the cafe list website" />
+  </component>
+</project>
