@@ -1,1 +1,0 @@
-this project will showcase some of the cafes in London with the necessities best suited for programmers.

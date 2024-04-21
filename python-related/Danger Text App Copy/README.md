@@ -1,1 +1,0 @@
-This project is somewhat an copy-like towards the famous "Danger Text App" where if you don't type anything for 5 seconds. It'll delete everything which you typed till then, making it a big loss if you had a longer streak. So, be careful!

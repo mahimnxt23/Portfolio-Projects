@@ -1,1 +1,0 @@
-git add -A && git commit -m "updates on e-cwa v2 (Payment Success now works fine 👌.)" && git push

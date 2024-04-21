@@ -1,1 +1,0 @@
-this project will take a pdf file as input, extract and say the words aloud for the user.
