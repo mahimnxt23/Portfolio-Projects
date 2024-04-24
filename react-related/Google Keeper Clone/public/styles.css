@@ -4,17 +4,14 @@
   box-sizing: border-box;
 }
 
-
 html {
   font-family: "Montserrat", sans-serif;
 }
-
 
 body {
   background: #eee;
   padding: 0 16px;
 }
-
 
 header {
   background-color: #f5ba13;
@@ -22,7 +19,6 @@ header {
   padding: 16px 32px;
   box-shadow: 0 0 10px 0 rgba(0, 0, 0, 0.3);
 }
-
 
 header h1 {
   color: #fff;
@@ -38,11 +34,9 @@ footer {
   height: 2.5rem;
 }
 
-
 footer p {
   color: #ccc;
 }
-
 
 .note {
   background: #fff;
@@ -54,12 +48,10 @@ footer p {
   float: left;
 }
 
-
 .note h1 {
   font-size: 1.1em;
   margin-bottom: 6px;
 }
-
 
 .note p {
   font-size: 1.1em;
@@ -67,4 +59,3 @@ footer p {
   white-space: pre-wrap;
   word-wrap: break-word;
 }
-
